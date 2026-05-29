@@ -2,75 +2,75 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>My Online TV</title>
+<title>Prayer Online TV</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
 body {
-margin: 0;
-font-family: Arial;
-background: #111;
-color: white;
+    margin: 0;
+    font-family: Arial;
+    background: #111;
+    color: white;
 }
 
 h1 {
-text-align: center;
-background: #222;
-padding: 10px;
-margin: 0;
+    text-align: center;
+    background: #222;
+    padding: 10px;
+    margin: 0;
 }
 
 .container {
-display: flex;
+    display: flex;
 }
 
 .channels {
-width: 35%;
-height: 100vh;
-overflow-y: auto;
-background: #1c1c1c;
+    width: 35%;
+    height: 100vh;
+    overflow-y: auto;
+    background: #1c1c1c;
 }
 
 .channels button {
-width: 100%;
-padding: 12px;
-background: #333;
-color: white;
-border: none;
-border-bottom: 1px solid #444;
-cursor: pointer;
-text-align: left;
+    width: 100%;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+    text-align: left;
 }
 
 .channels button:hover {
-background: #555;
+    background: #555;
 }
 
 .player {
-width: 65%;
-display: flex;
-justify-content: center;
-align-items: center;
-background: black;
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
 }
 
 video {
-width: 95%;
-max-height: 90vh;
+    width: 95%;
+    max-height: 90vh;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📺 LIVE TV by F.M.PRAYER </h1>
+<h1>📺 My Online TV</h1>
 
 <div class="container">
 
 <div class="channels" id="channelList"></div>
 
 <div class="player">
-<video id="video" controls autoplay></video>
+    <video id="video" controls autoplay></video>
 </div>
 
 </div>
@@ -163,35 +163,31 @@ const channels = [
 
 { name:"44. CNN Now", url:"https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8" },
 
-{ name:"45. Star Jalsha", url:"https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" },
-
-{ name:"46. Espn", url:"https://edge2.roarzone.net:8447/roarzone/edge5/espn/index.m3u8?token=a15599cbb4854abf81c3b1f800d0cc1d093f6546-6ed27504adc9f9b8f7a6d0a94f00ba4c-1780059536-1780048736
-" },
-
+{ name:"45. Star Jalsha", url:"https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" }
 ];
 
 const list = document.getElementById("channelList");
 const video = document.getElementById("video");
 
 function loadChannels(){
-channels.forEach((ch)=>{
-let btn = document.createElement("button");
-btn.innerText = ch.name;
-btn.onclick = ()=>play(ch.url);
-list.appendChild(btn);
-});
+    channels.forEach((ch)=>{
+        let btn = document.createElement("button");
+        btn.innerText = ch.name;
+        btn.onclick = ()=>play(ch.url);
+        list.appendChild(btn);
+    });
 }
 
 function play(url){
-if(Hls.isSupported()){
-let hls = new Hls();
-hls.loadSource(url);
-hls.attachMedia(video);
-hls.on(Hls.Events.MANIFEST_PARSED, ()=> video.play());
-} else {
-video.src = url;
-video.play();
-}
+    if(Hls.isSupported()){
+        let hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, ()=> video.play());
+    } else {
+        video.src = url;
+        video.play();
+    }
 }
 
 loadChannels();
