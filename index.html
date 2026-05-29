@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Online TV</title>
+    <title>Live TV by F. M. Prayer</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
     <style>
+        :root {
+            --bg: #0a0a0f;
+            --panel-bg: #12121a;
+            --card-bg: #1a1a28;
+            --card-hover: #252540;
+            --accent: #e63946;
+            --accent-glow: rgba(230, 57, 70, 0.6);
+            --text: #ddd;
+            --text-light: #aaa;
+            --border: #2a2a3a;
+            --header-bg: #0d0d14;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,124 +26,148 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0b0b0f;
-            color: #fff;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', 'Noto Sans Bengali', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* ===== HEADER ===== */
+        /* HEADER */
         .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 10px 20px;
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid #e74c3c;
-            z-index: 10;
-            flex-shrink: 0;
-            gap: 15px;
             flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            z-index: 10;
         }
 
-        .header .logo {
+        .logo {
             font-size: 22px;
-            font-weight: bold;
+            font-weight: 700;
             letter-spacing: 1px;
-            white-space: nowrap;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .header .social-links {
+        .logo .tv-icon {
+            font-size: 28px;
+            color: var(--accent);
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 6px 18px;
+            border: 1px solid var(--border);
+            flex: 1;
+            max-width: 350px;
+            transition: 0.3s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+            padding: 6px;
+        }
+
+        .search-bar .search-icon {
+            color: var(--text-light);
+            margin-right: 8px;
+        }
+
+        .social-btns {
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 25px;
+            text-decoration: none;
             font-size: 13px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
             color: white;
-            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            cursor: pointer;
         }
 
         .telegram-btn {
             background: #0088cc;
+            border-color: #0088cc;
         }
         .telegram-btn:hover {
             background: #0077b5;
-            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 136, 204, 0.6);
         }
 
         .messenger-btn {
             background: #006aff;
+            border-color: #006aff;
         }
         .messenger-btn:hover {
             background: #0055cc;
-            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 106, 255, 0.6);
         }
 
-        .social-btn i {
-            font-size: 16px;
-        }
-
-        .search-box {
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #444;
-            background: #1e1e2a;
-            color: white;
-            font-size: 14px;
-            outline: none;
-            min-width: 200px;
-            transition: 0.3s;
-        }
-        .search-box:focus {
-            border-color: #e74c3c;
-            background: #2a2a3a;
-        }
-
-        /* ===== MAIN LAYOUT ===== */
+        /* MAIN LAYOUT */
         .main-container {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
 
-        /* ===== CHANNEL GRID PANEL ===== */
+        /* CHANNEL PANEL (LEFT SIDEBAR / GRID) */
         .channel-panel {
-            width: 45%;
-            background: #111118;
+            width: 40%;
+            background: var(--panel-bg);
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #2a2a2a;
-            overflow: hidden;
+            border-right: 1px solid var(--border);
         }
 
-        .channel-panel-header {
-            padding: 10px 15px;
-            background: #1a1a25;
-            font-weight: bold;
+        .panel-header {
+            padding: 12px 18px;
+            font-weight: 600;
             font-size: 14px;
-            border-bottom: 1px solid #2a2a2a;
-            flex-shrink: 0;
             letter-spacing: 1px;
+            color: var(--accent);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .channel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 10px;
             padding: 15px;
             overflow-y: auto;
@@ -140,80 +176,105 @@
         }
 
         .channel-grid::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         .channel-grid::-webkit-scrollbar-thumb {
-            background: #e74c3c;
+            background: var(--accent);
             border-radius: 10px;
         }
 
         .channel-card {
-            background: #1e1e2c;
-            border-radius: 12px;
-            padding: 15px 10px;
-            cursor: pointer;
-            transition: all 0.3s;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px 5px;
             text-align: center;
+            cursor: pointer;
             border: 2px solid transparent;
+            transition: all 0.25s;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            gap: 5px;
+            font-size: 13px;
             font-weight: 500;
-            word-break: break-word;
-            min-height: 70px;
+            color: var(--text-light);
             position: relative;
+            overflow: hidden;
             user-select: none;
         }
 
+        .channel-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
         .channel-card:hover {
-            background: #2a2a3e;
-            border-color: #e74c3c;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            color: white;
+            background: var(--card-hover);
+        }
+
+        .channel-card:hover::before {
+            opacity: 0.4;
         }
 
         .channel-card.active {
-            background: #e74c3c;
-            border-color: #e74c3c;
+            background: var(--accent);
+            border-color: var(--accent);
             color: white;
             font-weight: bold;
-            box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
-            transform: scale(1.03);
+            box-shadow: 0 0 25px var(--accent-glow);
+            transform: scale(1.02);
+        }
+        .channel-card.active::before {
+            display: none;
         }
 
-        .channel-card .card-icon {
-            font-size: 24px;
-            margin-right: 6px;
+        .channel-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
         }
 
-        /* ===== PLAYER PANEL ===== */
+        /* PLAYER PANEL (RIGHT) */
         .player-panel {
-            width: 55%;
+            width: 60%;
             display: flex;
             flex-direction: column;
             background: #000;
+            position: relative;
         }
 
         .player-header {
             padding: 10px 20px;
-            background: #1a1a25;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #2a2a2a;
-            flex-shrink: 0;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .live-badge {
-            background: #e74c3c;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            animation: pulse 1.5s infinite;
+        .channel-title {
+            font-weight: 600;
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .live-tag {
+            background: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -226,11 +287,11 @@
             }
         }
 
-        .video-wrapper {
+        .video-container {
             flex: 1;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             position: relative;
             background: black;
         }
@@ -239,45 +300,33 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            outline: none;
         }
 
-        .loading-overlay {
+        .overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 18px;
-            color: #e74c3c;
-            display: none;
-            z-index: 5;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            pointer-events: none;
+            transition: opacity 0.3s;
         }
 
-        .loading-overlay.show {
-            display: block;
+        .loading-overlay {
+            color: var(--accent);
+            display: none;
         }
 
         .error-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 0, 0, 0.8);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 14px;
+            color: #ff6b6b;
             display: none;
-            z-index: 5;
-        }
-        .error-overlay.show {
-            display: block;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
             .main-container {
                 flex-direction: column;
             }
@@ -287,41 +336,13 @@
                 height: 50%;
             }
             .channel-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 8px;
-                padding: 10px;
-            }
-            .channel-card {
-                font-size: 12px;
-                min-height: 55px;
-                padding: 10px 5px;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
             .header {
-                padding: 8px 12px;
+                padding: 10px 15px;
             }
-            .header .logo {
+            .logo {
                 font-size: 18px;
-            }
-            .social-btn {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-            .search-box {
-                min-width: 130px;
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .channel-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .social-links {
-                justify-content: center;
             }
         }
     </style>
@@ -329,167 +350,182 @@
 <body>
 
     <!-- HEADER -->
-    <div class="header">
-        <div class="logo">📺 My Online TV</div>
-        <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels...">
-        <div class="social-links">
-            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn telegram-btn">
-                ✈️ Telegram
-            </a>
-            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn messenger-btn">
-                💬 Messenger
-            </a>
+    <header class="header">
+        <div class="logo">
+            <span class="tv-icon">📺</span> Live TV <span style="color:var(--accent);">by F. M. Prayer</span>
         </div>
-    </div>
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchBox" placeholder="Search channels...">
+        </div>
+        <div class="social-btns">
+            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn telegram-btn">✈️ Telegram</a>
+            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn messenger-btn">💬 Messenger</a>
+        </div>
+    </header>
 
     <!-- MAIN -->
     <div class="main-container">
-        <!-- CHANNELS -->
+        <!-- CHANNEL GRID -->
         <div class="channel-panel">
-            <div class="channel-panel-header">📋 All Channels</div>
+            <div class="panel-header">📋 Channel List</div>
             <div class="channel-grid" id="channelGrid"></div>
         </div>
 
-        <!-- PLAYER -->
+        <!-- VIDEO PLAYER -->
         <div class="player-panel">
             <div class="player-header">
-                <span id="currentChannelName">Select a Channel</span>
-                <span class="live-badge" id="liveBadge" style="display:none;">● LIVE</span>
+                <span class="channel-title" id="currentChannelTitle">Select a channel</span>
+                <span class="live-tag" id="liveTag" style="display:none;">LIVE</span>
             </div>
-            <div class="video-wrapper">
+            <div class="video-container">
                 <video id="video" controls autoplay playsinline></video>
-                <div class="loading-overlay" id="loadingOverlay">⏳ Loading stream...</div>
-                <div class="error-overlay" id="errorOverlay">❌ Stream unavailable</div>
+                <div class="overlay loading-overlay" id="loadingOverlay">⏳ Loading stream...</div>
+                <div class="overlay error-overlay" id="errorOverlay">❌ Channel unavailable</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Channel list
+        // Full channel list with icons
         const channels = [
-            { name: "FIFA Plus", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8",
-                icon: "⚽" },
-            { name: "Willow TV", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", icon: "🏏" },
-            { name: "T Sports HD", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", icon: "🏆" },
-            { name: "Goal TV HD", url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8",
-            icon: "🥅" },
-            { name: "ASports HD", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", icon: "🏅" },
-            { name: "Sports Grid", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8",
-                icon: "📊" },
-            { name: "Star Sports 1", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", icon: "⭐" },
-            { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", icon: "📺" },
-            { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", icon: "🔴" },
-            { name: "Channel I HD", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8",
-                icon: "🅸" },
-            { name: "Deepto TV", url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8", icon: "💡" },
-            { name: "NTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8",
-                icon: "🅽" },
-            { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8",
-                icon: "9️⃣" },
-            { name: "Bangla Vision", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8",
-                icon: "👁️" },
-            { name: "Ekattor TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8", icon: "❼" },
-            { name: "Ekushe TV", url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8", icon: "📡" },
-            { name: "Maasranga TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8", icon: "🌈" },
-            { name: "Channel S", url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8",
-                icon: "🅢" },
-            { name: "Boishakhi TV", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8",
-                icon: "🌸" },
-            { name: "GTV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8",
-                icon: "🅶" },
-            { name: "Mohona TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8",
-                icon: "🌊" },
-            { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", icon: "🇧🇩" },
-            { name: "Bijoy TV", url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8",
-                icon: "✌️" },
-            { name: "Nexus TV", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", icon: "🔗" },
-            { name: "Global TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8",
-                icon: "🌍" },
-            { name: "Channel 1", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8",
-                icon: "1️⃣" },
-            { name: "Ayna TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8",
-                icon: "🪞" },
-            { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/1710-audio_113402_eng=113200-video=1181200.m3u8",
-                icon: "📰" },
-            { name: "Jago News", url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8",
-                icon: "⏰" },
-            { name: "Jamuna TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", icon: "🏞️" },
-            { name: "DBC News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", icon: "📋" },
-            { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", icon: "🕐" },
-            { name: "News 24", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8", icon: "🔤" },
-            { name: "Somoy TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", icon: "⌚" },
-            { name: "Channel 24", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8",
-                icon: "🔢" },
-            { name: "Independent TV", url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8",
-                icon: "🆓" },
-            { name: "ATN News", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", icon: "📡" },
-            { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8",
-                icon: "🐱" },
-            { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8",
-                icon: "🤖" },
-            { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8",
-                icon: "🧸" },
-            { name: "Cartoon Network", url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8",
-                icon: "🎨" },
-            { name: "Gopal Bhar", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8",
-                icon: "👳" },
-            { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8",
-                icon: "🌐" },
-            { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", icon: "🌟" }
+            { name: "FIFA Plus", icon: "⚽",
+                url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8" },
+            { name: "Willow TV", icon: "🏏", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8" },
+            { name: "T Sports HD", icon: "🏆",
+            url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Goal TV HD", icon: "🥅",
+                url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8" },
+            { name: "ASports HD", icon: "🏅",
+            url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Sports Grid", icon: "📊",
+                url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Star Sports 1", icon: "⭐",
+            url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8" },
+            { name: "BTV", icon: "📺", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8" },
+            { name: "RTV Live", icon: "🔴", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Channel I HD", icon: "🅸",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8" },
+            { name: "Deepto TV", icon: "💡",
+            url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8" },
+            { name: "NTV", icon: "🅽",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8" },
+            { name: "Channel 9", icon: "9️⃣",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8" },
+            { name: "Bangla Vision", icon: "👁️",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8" },
+            { name: "Ekattor TV", icon: "❼",
+            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8" },
+            { name: "Ekushe TV", icon: "📡",
+            url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Maasranga TV", icon: "🌈",
+            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8" },
+            { name: "Channel S", icon: "🅢",
+                url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8" },
+            { name: "Boishakhi TV", icon: "🌸",
+                url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8" },
+            { name: "GTV", icon: "🅶",
+                url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8" },
+            { name: "Mohona TV", icon: "🌊",
+                url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8" },
+            { name: "Desh TV", icon: "🇧🇩",
+            url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Bijoy TV", icon: "✌️",
+                url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8" },
+            { name: "Nexus TV", icon: "🔗",
+            url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Global TV", icon: "🌍",
+                url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8" },
+            { name: "Channel 1", icon: "1️⃣",
+                url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8" },
+            { name: "Ayna TV", icon: "🪞",
+                url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8" },
+            { name: "Star News", icon: "📰",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/1710-audio_113402_eng=113200-video=1181200.m3u8" },
+            { name: "Jago News", icon: "⏰",
+                url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8" },
+            { name: "Jamuna TV", icon: "🏞️",
+            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
+            { name: "DBC News", icon: "📋", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
+            { name: "Ekhon TV", icon: "🕐",
+            url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "News 24", icon: "🔤",
+            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8" },
+            { name: "Somoy TV", icon: "⌚",
+            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8" },
+            { name: "Channel 24", icon: "🔢",
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8" },
+            { name: "Independent TV", icon: "🆓",
+                url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8" },
+            { name: "ATN News", icon: "📡",
+            url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Tom & Jerry", icon: "🐱",
+                url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Doraemon", icon: "🤖",
+                url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Mr Bean", icon: "🧸",
+                url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8" },
+            { name: "Cartoon Network", icon: "🎨",
+                url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8" },
+            { name: "Gopal Bhar", icon: "👳",
+                url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8" },
+            { name: "CNN Now", icon: "🌐",
+                url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8" },
+            { name: "Star Jalsha", icon: "🌟",
+            url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" }
         ];
 
+        // DOM elements
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
-        const currentChannelName = document.getElementById("currentChannelName");
-        const liveBadge = document.getElementById("liveBadge");
+        const currentChannelTitle = document.getElementById("currentChannelTitle");
+        const liveTag = document.getElementById("liveTag");
         const loadingOverlay = document.getElementById("loadingOverlay");
         const errorOverlay = document.getElementById("errorOverlay");
         const searchBox = document.getElementById("searchBox");
 
         let hls = null;
-        let currentActiveCard = null;
+        let activeCard = null;
 
-        // Load channel cards
-        function loadChannels(filter = "") {
+        // Build channel grid
+        function renderChannels(filter = "") {
             channelGrid.innerHTML = "";
+            const term = filter.toLowerCase().trim();
 
-            const filtered = channels.filter(ch =>
-                ch.name.toLowerCase().includes(filter.toLowerCase())
-            );
+            const filtered = channels.filter(ch => ch.name.toLowerCase().includes(term));
 
             if (filtered.length === 0) {
-                channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>';
+                channelGrid.innerHTML =
+                    '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#666;">No channels found</div>';
                 return;
             }
 
-            filtered.forEach((ch) => {
+            filtered.forEach(ch => {
                 const card = document.createElement("div");
                 card.className = "channel-card";
-                card.innerHTML = `<span class="card-icon">${ch.icon}</span> ${ch.name}`;
-                card.onclick = () => playChannel(ch.url, ch.name, card);
+                card.innerHTML = `<span class="channel-icon">${ch.icon}</span><span>${ch.name}</span>`;
+                card.addEventListener("click", () => playChannel(ch.url, ch.name, card));
                 channelGrid.appendChild(card);
             });
         }
 
         // Search
-        searchBox.addEventListener("input", () => {
-            loadChannels(searchBox.value);
-        });
+        searchBox.addEventListener("input", () => renderChannels(searchBox.value));
 
-        // Play function
+        // Play function with proper cleanup
         function playChannel(url, name, card) {
-            // Active card
-            if (currentActiveCard) currentActiveCard.classList.remove("active");
+            // Active state
+            if (activeCard) activeCard.classList.remove("active");
             card.classList.add("active");
-            currentActiveCard = card;
+            activeCard = card;
 
-            // UI updates
-            currentChannelName.textContent = "📡 " + name;
-            liveBadge.style.display = "inline-block";
-            errorOverlay.classList.remove("show");
-            loadingOverlay.classList.add("show");
+            // Update UI
+            currentChannelTitle.textContent = name;
+            liveTag.style.display = "inline-block";
+            errorOverlay.style.display = "none";
+            loadingOverlay.style.display = "block";
 
-            // Destroy old HLS
+            // Destroy old instance
             if (hls) {
                 hls.destroy();
                 hls = null;
@@ -499,19 +535,19 @@
             video.removeAttribute("src");
 
             if (Hls.isSupported()) {
-                hls = new Hls({ enableWorker: true, lowLatencyMode: false });
+                hls = new Hls({ enableWorker: true });
                 hls.loadSource(url);
                 hls.attachMedia(video);
 
                 hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    loadingOverlay.classList.remove("show");
+                    loadingOverlay.style.display = "none";
                     video.play().catch(() => {});
                 });
 
                 hls.on(Hls.Events.ERROR, (event, data) => {
                     if (data.fatal) {
-                        loadingOverlay.classList.remove("show");
-                        errorOverlay.classList.add("show");
+                        loadingOverlay.style.display = "none";
+                        errorOverlay.style.display = "block";
                         switch (data.type) {
                             case Hls.ErrorTypes.NETWORK_ERROR:
                                 hls.startLoad();
@@ -528,17 +564,17 @@
             } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                 video.src = url;
                 video.addEventListener("loadedmetadata", () => {
-                    loadingOverlay.classList.remove("show");
+                    loadingOverlay.style.display = "none";
                     video.play().catch(() => {});
                 });
             } else {
-                loadingOverlay.classList.remove("show");
-                errorOverlay.classList.add("show");
+                loadingOverlay.style.display = "none";
+                errorOverlay.style.display = "block";
             }
         }
 
-        // Init
-        loadChannels();
+        // Initial render
+        renderChannels();
     </script>
 </body>
 </html>
