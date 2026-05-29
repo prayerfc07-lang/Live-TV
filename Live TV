@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Online TV</title>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #111;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    background: #222;
+    padding: 10px;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+}
+
+.channels {
+    width: 35%;
+    height: 100vh;
+    overflow-y: auto;
+    background: #1c1c1c;
+}
+
+.channels button {
+    width: 100%;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+    text-align: left;
+}
+
+.channels button:hover {
+    background: #555;
+}
+
+.player {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+}
+
+video {
+    width: 95%;
+    max-height: 90vh;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📺 My Online TV</h1>
+
+<div class="container">
+
+<div class="channels" id="channelList"></div>
+
+<div class="player">
+    <video id="video" controls autoplay></video>
+</div>
+
+</div>
+
+<script>
+const channels = [
+{ name:"1. FIFA Plus", url:"https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8" },
+
+{ name:"2. Willow TV", url:"https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"3. T Sports HD", url:"https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"4. Goal TV HD", url:"https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8" },
+
+{ name:"5. ASports HD", url:"https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"6. Sports Grid", url:"https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"7. Star Sports 1 HD", url:"https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"8. BTV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8" },
+
+{ name:"9. RTV Live", url:"https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"10. Channel I HD", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8" },
+
+{ name:"11. Deepto TV", url:"https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8" },
+
+{ name:"12. NTV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8" },
+
+{ name:"13. Channel 9", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8" },
+
+{ name:"14. Bangla Vision", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8" },
+
+{ name:"15. Ekattor TV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8" },
+
+{ name:"16. Ekushe TV", url:"https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"17. Maasranga TV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8" },
+
+{ name:"18. Channel S TV", url:"https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8" },
+
+{ name:"19. Boishakhi TV", url:"https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8" },
+
+{ name:"20. GTV", url:"https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8" },
+
+{ name:"21. Mohona TV", url:"https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8" },
+
+{ name:"22. Desh TV", url:"https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"23. Bijoy TV", url:"https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8" },
+
+{ name:"25. Nexus TV", url:"https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"26. Global TV", url:"https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8" },
+
+{ name:"27. Channel 1 TV", url:"https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8" },
+
+{ name:"28. Ayna TV", url:"https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8" },
+
+{ name:"29. Star News", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/1710-audio_113402_eng=113200-video=1181200.m3u8" },
+
+{ name:"30. Jago News", url:"https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8" },
+
+{ name:"31. Jamuna TV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
+
+{ name:"32. DBC News", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
+
+{ name:"33. Ekhon TV", url:"https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"34. News 24", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8" },
+
+{ name:"35. Somoy TV", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8" },
+
+{ name:"36. Channel 24", url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8" },
+
+{ name:"37. Independent TV", url:"https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"38. ATN News", url:"https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"39. Tom & Jerry TV", url:"https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"40. Doraemon TV", url:"https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"41. Mr Bean", url:"https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8" },
+
+{ name:"42. Cartoon Network", url:"https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"43. Gopal Bhar", url:"https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8" },
+
+{ name:"44. CNN Now", url:"https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8" },
+
+{ name:"45. Star Jalsha", url:"https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" }
+];
+
+const list = document.getElementById("channelList");
+const video = document.getElementById("video");
+
+function loadChannels(){
+    channels.forEach((ch)=>{
+        let btn = document.createElement("button");
+        btn.innerText = ch.name;
+        btn.onclick = ()=>play(ch.url);
+        list.appendChild(btn);
+    });
+}
+
+function play(url){
+    if(Hls.isSupported()){
+        let hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, ()=> video.play());
+    } else {
+        video.src = url;
+        video.play();
+    }
+}
+
+loadChannels();
+</script>
+
+</body>
+</html>
