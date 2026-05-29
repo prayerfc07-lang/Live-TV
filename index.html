@@ -7,16 +7,16 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         :root {
-            --bg: #0a0a0f;
-            --panel-bg: #12121a;
-            --card-bg: #1a1a28;
-            --card-hover: #252540;
-            --accent: #e63946;
-            --accent-glow: rgba(230, 57, 70, 0.6);
-            --text: #ddd;
-            --text-light: #aaa;
+            --bg: #0e0e16;
+            --sidebar-bg: #161622;
+            --btn-bg: #1e1e30;
+            --btn-hover: #2a2a44;
+            --accent: #e74c3c;
+            --accent-light: #ff6b5b;
+            --text: #eee;
+            --text-light: #bbb;
             --border: #2a2a3a;
-            --header-bg: #0d0d14;
+            --header-bg: #12121e;
         }
 
         * {
@@ -28,7 +28,7 @@
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', 'Noto Sans Bengali', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans Bengali', Tahoma, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -38,101 +38,77 @@
         /* HEADER */
         .header {
             background: var(--header-bg);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 24px;
+            padding: 14px 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 15px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-            z-index: 10;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+            z-index: 5;
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: 1px;
             color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            letter-spacing: 0.5px;
         }
 
-        .logo .tv-icon {
-            font-size: 28px;
+        .logo span {
             color: var(--accent);
-            filter: drop-shadow(0 0 10px var(--accent-glow));
         }
 
-        .search-bar {
+        .header-right {
             display: flex;
             align-items: center;
-            background: var(--card-bg);
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            padding: 10px 20px;
             border-radius: 30px;
-            padding: 6px 18px;
             border: 1px solid var(--border);
-            flex: 1;
-            max-width: 350px;
+            background: var(--btn-bg);
+            color: white;
+            font-size: 15px;
+            outline: none;
+            width: 220px;
             transition: 0.3s;
         }
 
-        .search-bar:focus-within {
+        .search-box:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .search-bar input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            font-size: 14px;
-            width: 100%;
-            padding: 6px;
-        }
-
-        .search-bar .search-icon {
-            color: var(--text-light);
-            margin-right: 8px;
-        }
-
-        .social-btns {
-            display: flex;
-            gap: 10px;
+            box-shadow: 0 0 12px rgba(231, 76, 60, 0.4);
         }
 
         .social-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 16px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            color: white;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-            cursor: pointer;
         }
 
-        .telegram-btn {
+        .tg-btn {
             background: #0088cc;
-            border-color: #0088cc;
         }
-        .telegram-btn:hover {
-            background: #0077b5;
-            box-shadow: 0 0 15px rgba(0, 136, 204, 0.6);
+        .tg-btn:hover {
+            background: #006da3;
         }
 
-        .messenger-btn {
+        .msg-btn {
             background: #006aff;
-            border-color: #006aff;
         }
-        .messenger-btn:hover {
-            background: #0055cc;
-            box-shadow: 0 0 15px rgba(0, 106, 255, 0.6);
+        .msg-btn:hover {
+            background: #004ecc;
         }
 
         /* MAIN LAYOUT */
@@ -142,157 +118,136 @@
             overflow: hidden;
         }
 
-        /* CHANNEL PANEL (LEFT SIDEBAR / GRID) */
-        .channel-panel {
-            width: 40%;
-            background: var(--panel-bg);
+        /* CHANNEL SIDEBAR */
+        .channel-sidebar {
+            width: 42%;
+            background: var(--sidebar-bg);
             display: flex;
             flex-direction: column;
             border-right: 1px solid var(--border);
         }
 
-        .panel-header {
-            padding: 12px 18px;
-            font-weight: 600;
-            font-size: 14px;
+        .sidebar-header {
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 16px;
             letter-spacing: 1px;
-            color: var(--accent);
+            color: var(--accent-light);
             text-transform: uppercase;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
             background: rgba(0, 0, 0, 0.3);
         }
 
-        .channel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-            padding: 15px;
-            overflow-y: auto;
+        .channel-list {
             flex: 1;
-            align-content: start;
-        }
-
-        .channel-grid::-webkit-scrollbar {
-            width: 5px;
-        }
-        .channel-grid::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
-
-        .channel-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px 5px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.25s;
+            overflow-y: auto;
+            padding: 10px;
             display: flex;
             flex-direction: column;
+            gap: 6px;
+        }
+
+        .channel-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .channel-list::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 8px;
+        }
+
+        .channel-btn {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-            font-size: 13px;
-            font-weight: 500;
+            gap: 15px;
+            padding: 14px 18px;
+            background: var(--btn-bg);
+            border: none;
+            border-radius: 14px;
             color: var(--text-light);
-            position: relative;
-            overflow: hidden;
-            user-select: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            border: 2px solid transparent;
+            width: 100%;
         }
 
-        .channel-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .channel-card:hover {
+        .channel-btn:hover {
+            background: var(--btn-hover);
             border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             color: white;
-            background: var(--card-hover);
+            transform: translateX(6px);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
         }
 
-        .channel-card:hover::before {
-            opacity: 0.4;
-        }
-
-        .channel-card.active {
+        .channel-btn.active {
             background: var(--accent);
             border-color: var(--accent);
             color: white;
-            font-weight: bold;
-            box-shadow: 0 0 25px var(--accent-glow);
+            font-weight: 700;
+            box-shadow: 0 0 22px rgba(231, 76, 60, 0.5);
             transform: scale(1.02);
-        }
-        .channel-card.active::before {
-            display: none;
         }
 
         .channel-icon {
             font-size: 28px;
-            margin-bottom: 4px;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+            width: 40px;
+            text-align: center;
         }
 
-        /* PLAYER PANEL (RIGHT) */
-        .player-panel {
-            width: 60%;
+        .channel-name {
+            flex: 1;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* VIDEO PLAYER SIDE */
+        .player-side {
+            width: 58%;
             display: flex;
             flex-direction: column;
             background: #000;
-            position: relative;
         }
 
-        .player-header {
+        .player-top-bar {
             padding: 10px 20px;
-            background: var(--panel-bg);
+            background: var(--sidebar-bg);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .channel-title {
+        .now-playing {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 17px;
             flex: 1;
         }
 
-        .live-tag {
+        .live-badge {
             background: var(--accent);
-            padding: 4px 12px;
+            padding: 5px 15px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
             letter-spacing: 1px;
-            animation: pulse 2s infinite;
+            animation: pulse 1.8s infinite;
         }
 
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        .video-container {
+        .video-wrapper {
             flex: 1;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             background: black;
         }
 
@@ -302,44 +257,40 @@
             object-fit: contain;
         }
 
-        .overlay {
+        .status-msg {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 12px 24px;
+            background: rgba(0,0,0,0.8);
+            padding: 12px 25px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 16px;
             pointer-events: none;
-            transition: opacity 0.3s;
+            transition: 0.3s;
         }
 
-        .loading-overlay {
-            color: var(--accent);
+        .loading-msg {
+            color: var(--accent-light);
+            display: none;
+        }
+        .error-msg {
+            color: #ff7070;
             display: none;
         }
 
-        .error-overlay {
-            color: #ff6b6b;
-            display: none;
-        }
-
-        /* RESPONSIVE */
+        /* MOBILE */
         @media (max-width: 800px) {
             .main-container {
                 flex-direction: column;
             }
-            .channel-panel,
-            .player-panel {
+            .channel-sidebar, .player-side {
                 width: 100%;
                 height: 50%;
             }
-            .channel-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            .header {
-                padding: 10px 15px;
+            .channel-btn {
+                padding: 12px;
+                font-size: 14px;
             }
             .logo {
                 font-size: 18px;
@@ -351,63 +302,57 @@
 
     <!-- HEADER -->
     <header class="header">
-        <div class="logo">
-            <span class="tv-icon">📺</span> Live TV <span style="color:var(--accent);">by F. M. Prayer</span>
-        </div>
-        <div class="search-bar">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchBox" placeholder="Search channels...">
-        </div>
-        <div class="social-btns">
-            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn telegram-btn">✈️ Telegram</a>
-            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn messenger-btn">💬 Messenger</a>
+        <div class="logo">📺 Live TV <span>by F. M. Prayer</span></div>
+        <div class="header-right">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍  Search channels...">
+            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
+            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a>
         </div>
     </header>
 
     <!-- MAIN -->
     <div class="main-container">
-        <!-- CHANNEL GRID -->
-        <div class="channel-panel">
-            <div class="panel-header">📋 Channel List</div>
-            <div class="channel-grid" id="channelGrid"></div>
+        <!-- CHANNEL LIST -->
+        <div class="channel-sidebar">
+            <div class="sidebar-header">📋 All Channels</div>
+            <div class="channel-list" id="channelList"></div>
         </div>
 
-        <!-- VIDEO PLAYER -->
-        <div class="player-panel">
-            <div class="player-header">
-                <span class="channel-title" id="currentChannelTitle">Select a channel</span>
-                <span class="live-tag" id="liveTag" style="display:none;">LIVE</span>
+        <!-- PLAYER -->
+        <div class="player-side">
+            <div class="player-top-bar">
+                <span class="now-playing" id="nowPlaying">Select a channel</span>
+                <span class="live-badge" id="liveBadge" style="display:none;">● LIVE</span>
             </div>
-            <div class="video-container">
+            <div class="video-wrapper">
                 <video id="video" controls autoplay playsinline></video>
-                <div class="overlay loading-overlay" id="loadingOverlay">⏳ Loading stream...</div>
-                <div class="overlay error-overlay" id="errorOverlay">❌ Channel unavailable</div>
+                <div class="status-msg loading-msg" id="loadingMsg">⏳ Loading stream...</div>
+                <div class="status-msg error-msg" id="errorMsg">❌ Stream unavailable</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Full channel list with icons
         const channels = [
             { name: "FIFA Plus", icon: "⚽",
                 url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8" },
             { name: "Willow TV", icon: "🏏", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8" },
             { name: "T Sports HD", icon: "🏆",
-            url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8" },
             { name: "Goal TV HD", icon: "🥅",
                 url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8" },
             { name: "ASports HD", icon: "🏅",
-            url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8" },
             { name: "Sports Grid", icon: "📊",
                 url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8" },
             { name: "Star Sports 1", icon: "⭐",
-            url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8" },
             { name: "BTV", icon: "📺", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8" },
             { name: "RTV Live", icon: "🔴", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8" },
             { name: "Channel I HD", icon: "🅸",
                 url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8" },
             { name: "Deepto TV", icon: "💡",
-            url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8" },
+                url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8" },
             { name: "NTV", icon: "🅽",
                 url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8" },
             { name: "Channel 9", icon: "9️⃣",
@@ -415,11 +360,11 @@
             { name: "Bangla Vision", icon: "👁️",
                 url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8" },
             { name: "Ekattor TV", icon: "❼",
-            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8" },
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8" },
             { name: "Ekushe TV", icon: "📡",
-            url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8" },
             { name: "Maasranga TV", icon: "🌈",
-            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8" },
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8" },
             { name: "Channel S", icon: "🅢",
                 url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8" },
             { name: "Boishakhi TV", icon: "🌸",
@@ -429,11 +374,11 @@
             { name: "Mohona TV", icon: "🌊",
                 url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8" },
             { name: "Desh TV", icon: "🇧🇩",
-            url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8" },
             { name: "Bijoy TV", icon: "✌️",
                 url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8" },
             { name: "Nexus TV", icon: "🔗",
-            url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8" },
             { name: "Global TV", icon: "🌍",
                 url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8" },
             { name: "Channel 1", icon: "1️⃣",
@@ -445,20 +390,20 @@
             { name: "Jago News", icon: "⏰",
                 url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8" },
             { name: "Jamuna TV", icon: "🏞️",
-            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
             { name: "DBC News", icon: "📋", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8" },
             { name: "Ekhon TV", icon: "🕐",
-            url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8" },
             { name: "News 24", icon: "🔤",
-            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8" },
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8" },
             { name: "Somoy TV", icon: "⌚",
-            url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8" },
+                url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8" },
             { name: "Channel 24", icon: "🔢",
                 url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8" },
             { name: "Independent TV", icon: "🆓",
                 url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8" },
             { name: "ATN News", icon: "📡",
-            url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8" },
+                url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8" },
             { name: "Tom & Jerry", icon: "🐱",
                 url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8" },
             { name: "Doraemon", icon: "🤖",
@@ -472,65 +417,52 @@
             { name: "CNN Now", icon: "🌐",
                 url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8" },
             { name: "Star Jalsha", icon: "🌟",
-            url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" }
+                url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8" }
         ];
 
-        // DOM elements
-        const channelGrid = document.getElementById("channelGrid");
+        const channelList = document.getElementById("channelList");
         const video = document.getElementById("video");
-        const currentChannelTitle = document.getElementById("currentChannelTitle");
-        const liveTag = document.getElementById("liveTag");
-        const loadingOverlay = document.getElementById("loadingOverlay");
-        const errorOverlay = document.getElementById("errorOverlay");
+        const nowPlaying = document.getElementById("nowPlaying");
+        const liveBadge = document.getElementById("liveBadge");
+        const loadingMsg = document.getElementById("loadingMsg");
+        const errorMsg = document.getElementById("errorMsg");
         const searchBox = document.getElementById("searchBox");
 
         let hls = null;
-        let activeCard = null;
+        let activeBtn = null;
 
-        // Build channel grid
         function renderChannels(filter = "") {
-            channelGrid.innerHTML = "";
+            channelList.innerHTML = "";
             const term = filter.toLowerCase().trim();
-
             const filtered = channels.filter(ch => ch.name.toLowerCase().includes(term));
 
             if (filtered.length === 0) {
-                channelGrid.innerHTML =
-                    '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#666;">No channels found</div>';
+                channelList.innerHTML = '<div style="text-align:center;padding:30px;color:#666;">No channels found</div>';
                 return;
             }
 
             filtered.forEach(ch => {
-                const card = document.createElement("div");
-                card.className = "channel-card";
-                card.innerHTML = `<span class="channel-icon">${ch.icon}</span><span>${ch.name}</span>`;
-                card.addEventListener("click", () => playChannel(ch.url, ch.name, card));
-                channelGrid.appendChild(card);
+                const btn = document.createElement("button");
+                btn.className = "channel-btn";
+                btn.innerHTML = `<span class="channel-icon">${ch.icon}</span><span class="channel-name">${ch.name}</span>`;
+                btn.addEventListener("click", () => playChannel(ch.url, ch.name, btn));
+                channelList.appendChild(btn);
             });
         }
 
-        // Search
         searchBox.addEventListener("input", () => renderChannels(searchBox.value));
 
-        // Play function with proper cleanup
-        function playChannel(url, name, card) {
-            // Active state
-            if (activeCard) activeCard.classList.remove("active");
-            card.classList.add("active");
-            activeCard = card;
+        function playChannel(url, name, btn) {
+            if (activeBtn) activeBtn.classList.remove("active");
+            btn.classList.add("active");
+            activeBtn = btn;
 
-            // Update UI
-            currentChannelTitle.textContent = name;
-            liveTag.style.display = "inline-block";
-            errorOverlay.style.display = "none";
-            loadingOverlay.style.display = "block";
+            nowPlaying.textContent = "📡 " + name;
+            liveBadge.style.display = "inline-block";
+            loadingMsg.style.display = "block";
+            errorMsg.style.display = "none";
 
-            // Destroy old instance
-            if (hls) {
-                hls.destroy();
-                hls = null;
-            }
-
+            if (hls) { hls.destroy(); hls = null; }
             video.pause();
             video.removeAttribute("src");
 
@@ -538,42 +470,33 @@
                 hls = new Hls({ enableWorker: true });
                 hls.loadSource(url);
                 hls.attachMedia(video);
-
                 hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    loadingOverlay.style.display = "none";
+                    loadingMsg.style.display = "none";
                     video.play().catch(() => {});
                 });
-
                 hls.on(Hls.Events.ERROR, (event, data) => {
                     if (data.fatal) {
-                        loadingOverlay.style.display = "none";
-                        errorOverlay.style.display = "block";
+                        loadingMsg.style.display = "none";
+                        errorMsg.style.display = "block";
                         switch (data.type) {
-                            case Hls.ErrorTypes.NETWORK_ERROR:
-                                hls.startLoad();
-                                break;
-                            case Hls.ErrorTypes.MEDIA_ERROR:
-                                hls.recoverMediaError();
-                                break;
-                            default:
-                                hls.destroy();
-                                break;
+                            case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break;
+                            case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break;
+                            default: hls.destroy(); break;
                         }
                     }
                 });
             } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                 video.src = url;
                 video.addEventListener("loadedmetadata", () => {
-                    loadingOverlay.style.display = "none";
+                    loadingMsg.style.display = "none";
                     video.play().catch(() => {});
                 });
             } else {
-                loadingOverlay.style.display = "none";
-                errorOverlay.style.display = "block";
+                loadingMsg.style.display = "none";
+                errorMsg.style.display = "block";
             }
         }
 
-        // Initial render
         renderChannels();
     </script>
 </body>
