@@ -503,13 +503,13 @@
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // Load M3U playlist (using CORS proxy)
+        // Load M3U playlist (using reliable CORS proxy api.codetabs.com)
         async function loadM3U() {
-            const proxyUrl = "https://api.allorigins.win/raw?url=";
+            const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
             const m3uUrl = "https://go.skym3u.top/69di.m3u";
             try {
                 const response = await fetch(proxyUrl + encodeURIComponent(m3uUrl));
-                if (!response.ok) throw new Error("Network error");
+                if (!response.ok) throw new Error("Network response was not ok");
                 const text = await response.text();
                 const lines = text.split("\n");
                 const items = [];
@@ -546,7 +546,7 @@
                     playlistItems.appendChild(div);
                 });
             } catch (error) {
-                playlistItems.innerHTML = "<p style='text-align:center;padding:20px;color:#ff6b6b;'>Failed to load playlist. CORS issue? Try a different proxy.</p>";
+                playlistItems.innerHTML = "<p style='text-align:center;padding:20px;color:#ff6b6b;'>Failed to load playlist. Try again later or use the built-in list.</p>";
             }
         }
 
