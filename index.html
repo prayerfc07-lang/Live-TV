@@ -23,6 +23,8 @@
             background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
             height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
         }
+
+        /* Popup */
         .popup-overlay {
             position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:100;
             display:flex;align-items:center;justify-content:center;animation:fadeIn .3s
@@ -41,6 +43,7 @@
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
 
+        /* Notification */
         .notification-bar{
             background:#222;color:#f1c40f;padding:8px 10px;text-align:center;cursor:pointer;
             z-index:11;border-bottom:1px solid var(--border);font-weight:500;font-size:14px
@@ -67,8 +70,10 @@
         .msg-btn{background:#006aff}.msg-btn:hover{background:#0055cc}
         .theme-btn,.refresh-btn{background:none;border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;padding:5px 10px;border-radius:50%}
         .theme-btn:hover,.refresh-btn:hover{background:var(--card-hover)}
-        .game-btn{background:#f39c12;border:none;color:white;padding:8px 16px;border-radius:25px;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:0.3s}
+        .game-btn,.score-btn{background:#f39c12;border:none;color:white;padding:8px 16px;border-radius:25px;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:0.3s}
         .game-btn:hover{background:#e67e22}
+        .score-btn{background:#27ae60}
+        .score-btn:hover{background:#219a52}
 
         .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--overlay-bg);z-index:20;display:none}
         .sidebar-overlay.open{display:block}
@@ -95,22 +100,33 @@
         .gaming-header{padding:15px;background:var(--tab-bg);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
         .gaming-header h3{font-size:18px;color:var(--accent)}
         .gaming-body{flex:1;overflow-y:auto;padding:15px}
-        .game-container{
-            background:var(--card-bg);border-radius:12px;padding:10px;margin-bottom:15px;
-            border:1px solid var(--border);text-align:center
+
+        .game-menu{display:flex;flex-direction:column;gap:10px}
+        .game-menu-item{background:var(--card-bg);border-radius:12px;padding:15px;cursor:pointer;transition:0.2s;border:2px solid transparent;text-align:center}
+        .game-menu-item:hover{border-color:var(--accent);background:var(--card-hover)}
+        .game-canvas{display:none;width:100%;max-width:300px;margin:0 auto;background:#000;border-radius:8px}
+        .game-canvas.active{display:block}
+        .dpad{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:10px}
+        .dpad-row{display:flex;gap:5px}
+        .dpad-btn{width:50px;height:50px;background:var(--card-bg);border:2px solid var(--border);border-radius:10px;color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.2s}
+        .dpad-btn:active{background:var(--accent)}
+        .game-status{text-align:center;margin-top:10px;font-weight:bold;color:var(--accent)}
+        .btn-small{background:var(--accent);color:white;border:none;padding:6px 14px;border-radius:15px;font-size:12px;cursor:pointer;margin:4px}
+
+        /* Live Score Panel */
+        .score-panel{
+            position:fixed;top:0;right:-300px;width:300px;height:100%;background:var(--sidebar-bg);
+            z-index:36;transition:right .3s;display:flex;flex-direction:column;
+            box-shadow:-2px 0 20px rgba(0,0,0,0.8);color:var(--text)
         }
-        canvas{background:#000;border-radius:8px;display:block;margin:0 auto;width:100%;height:auto}
-        .game-title{font-weight:bold;margin-bottom:8px;color:var(--accent)}
-        .game-info{font-size:12px;color:var(--text-light);margin-top:5px}
-        .game-btn-small{
-            background:var(--accent);color:white;border:none;padding:6px 14px;border-radius:15px;
-            font-size:12px;cursor:pointer;margin:4px
-        }
+        .score-panel.open{right:0}
+        .score-header{padding:15px;background:var(--tab-bg);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+        .score-header h3{font-size:18px;color:var(--accent)}
+        .score-body{flex:1;overflow-y:auto;padding:10px}
+        .score-item{background:var(--card-bg);padding:10px;border-radius:8px;margin-bottom:8px;font-size:14px}
 
         .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
-        .video-section{
-            height:55vh;background:black;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0
-        }
+        .video-section{height:55vh;background:black;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         video{width:100%;height:100%;object-fit:contain;background:black}
         .video-overlay{position:absolute;top:15px;left:15px;background:rgba(0,0,0,0.7);padding:6px 15px;border-radius:20px;font-weight:bold;font-size:14px;display:flex;align-items:center;gap:8px;color:white}
         .live-dot{background:#e63946;padding:3px 10px;border-radius:15px;font-size:11px;animation:pulse 1.5s infinite}
@@ -125,10 +141,7 @@
         .tab-btn:hover{color:var(--text)}
         .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-        .channel-grid{
-            display:grid;grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
-            gap:10px;padding:15px;overflow-y:auto;flex:1;align-content:start
-        }
+        .channel-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));gap:10px;padding:15px;overflow-y:auto;flex:1;align-content:start}
         .channel-card{background:var(--card-bg);border-radius:12px;padding:15px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:0.2s;border:2px solid transparent;text-align:center;font-size:14px;font-weight:500;color:var(--text-light);position:relative}
         .channel-card:hover{background:var(--card-hover);border-color:var(--accent);color:var(--text);transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,0.5)}
         .channel-card.active{background:var(--accent);border-color:var(--accent);color:white;font-weight:bold;box-shadow:0 0 20px rgba(230,57,70,0.5)}
@@ -140,7 +153,7 @@
         @media (max-width:800px){
             .video-section{height:40vh}
             .channel-grid{grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px;padding:10px}
-            .gaming-panel{width:100%;right:-100%}
+            .gaming-panel,.score-panel{width:100%;right:-100%}
         }
         @media (max-width:500px){
             .header{padding:8px 10px}
@@ -176,21 +189,39 @@
 
     <!-- Gaming Panel -->
     <div class="gaming-panel" id="gamingPanel">
-        <div class="gaming-header"><h3>🎮 Retro Games</h3><button class="close-sidebar" id="closeGamePanel">&times;</button></div>
-        <div class="gaming-body">
-            <div class="game-container">
-                <div class="game-title">🐍 Snake</div>
-                <canvas id="snakeCanvas" width="280" height="280" style="background:#111; border-radius:8px;"></canvas>
-                <div class="game-info">Use arrow keys (Desktop) or swipe (Mobile)</div>
-                <button class="game-btn-small" id="resetSnake">Restart</button>
+        <div class="gaming-header"><h3>🎮 Games</h3><button class="close-sidebar" id="closeGamePanel">&times;</button></div>
+        <div class="gaming-body" id="gameContent">
+            <div id="gameMenu" class="game-menu">
+                <div class="game-menu-item" data-game="snake">🐍 Snake</div>
+                <div class="game-menu-item" data-game="cricket">🏏 Tap Cricket</div>
             </div>
-            <div class="game-container">
-                <div class="game-title">🏏 Tap Cricket</div>
-                <canvas id="cricketCanvas" width="280" height="150" style="background:#111; border-radius:8px;"></canvas>
-                <div class="game-info">Tap/Click to hit the ball. Score runs!</div>
-                <button class="game-btn-small" id="resetCricket">Restart</button>
+            <div id="snakeGame" style="display:none;">
+                <canvas id="snakeCanvas" width="280" height="280" class="game-canvas active"></canvas>
+                <div class="dpad">
+                    <div class="dpad-row"><button class="dpad-btn" data-dir="UP">▲</button></div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" data-dir="LEFT">◀</button>
+                        <button class="dpad-btn" data-dir="DOWN">▼</button>
+                        <button class="dpad-btn" data-dir="RIGHT">▶</button>
+                    </div>
+                </div>
+                <div class="game-status" id="snakeStatus">Score: 0</div>
+                <button class="btn-small" id="resetSnake">Restart</button>
+                <button class="btn-small" id="backSnake">Back to Menu</button>
+            </div>
+            <div id="cricketGame" style="display:none;">
+                <canvas id="cricketCanvas" width="280" height="150" class="game-canvas active"></canvas>
+                <div class="game-status" id="cricketStatus">Runs: 0 / Wickets: 0</div>
+                <button class="btn-small" id="resetCricket">Restart</button>
+                <button class="btn-small" id="backCricket">Back to Menu</button>
             </div>
         </div>
+    </div>
+
+    <!-- Live Score Panel -->
+    <div class="score-panel" id="scorePanel">
+        <div class="score-header"><h3>🏏 Live Scores</h3><button class="close-sidebar" id="closeScorePanel">&times;</button></div>
+        <div class="score-body" id="scoreBody"><p style="text-align:center;padding:20px;">Loading...</p></div>
     </div>
 
     <div class="header">
@@ -198,6 +229,7 @@
         <div class="header-actions">
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search...">
             <button class="game-btn" id="toggleGameBtn">🎮 Games</button>
+            <button class="score-btn" id="toggleScoreBtn">🏏 Live Scores</button>
             <button class="refresh-btn" id="refreshBtn">🔄</button>
             <button class="theme-btn" id="themeToggle">🌙</button>
             <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
@@ -232,9 +264,8 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // ========== CHANNEL LIST (unchanged) ==========
+        // ========== CHANNEL LIST (same as before) ==========
         const channels = [
-            // ... same as before (I'm keeping it identical for brevity, but in the actual response I'd include the full list)
             // SPORTS (19)
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
@@ -255,7 +286,7 @@
             { name: "Bein Sports", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8", category: "sports" },
             { name: "Sony Max", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
             { name: "Discovery", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
-            // NEWS, BANGLA, KIDS same as before...
+            // NEWS (12)
             { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
             { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -268,6 +299,7 @@
             { name: "DBC News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Srktv", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
+            // BANGLA (22)
             { name: "Islamic TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
             { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
@@ -290,6 +322,7 @@
             { name: "ATN News", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
+            // KIDS (5)
             { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -297,7 +330,6 @@
             { name: "Gopal Bhar", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
-        // Color/avatar helper
         function getColorFromName(name) {
             const colors = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#8e44ad","#c0392b","#2980b9","#27ae60","#d35400","#16a085","#7f8c8d","#f1c40f"];
             let hash = 0;
@@ -306,7 +338,7 @@
         }
         function getInitial(name) { return name ? name.trim().charAt(0).toUpperCase() : "?"; }
 
-        // DOM elements
+        // DOM refs
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
         const playingTitle = document.getElementById("playingTitle");
@@ -325,10 +357,30 @@
         const toggleGameBtn = document.getElementById("toggleGameBtn");
         const gamingPanel = document.getElementById("gamingPanel");
         const closeGamePanel = document.getElementById("closeGamePanel");
+        const gameContent = document.getElementById("gameContent");
+        const gameMenuDiv = document.getElementById("gameMenu");
+        const snakeDiv = document.getElementById("snakeGame");
+        const cricketDiv = document.getElementById("cricketGame");
+        const snakeCanvas = document.getElementById("snakeCanvas");
+        const snakeStatus = document.getElementById("snakeStatus");
+        const resetSnakeBtn = document.getElementById("resetSnake");
+        const backSnakeBtn = document.getElementById("backSnake");
+        const cricketCanvas = document.getElementById("cricketCanvas");
+        const cricketStatus = document.getElementById("cricketStatus");
+        const resetCricketBtn = document.getElementById("resetCricket");
+        const backCricketBtn = document.getElementById("backCricket");
+        const toggleScoreBtn = document.getElementById("toggleScoreBtn");
+        const scorePanel = document.getElementById("scorePanel");
+        const closeScorePanel = document.getElementById("closeScorePanel");
+        const scoreBody = document.getElementById("scoreBody");
 
         let hls = null, activeCard = null, currentCategory = "all";
+        let snakeInterval = null, snakeActive = false;
+        let snake = [], food = {}, direction = "RIGHT", score = 0;
+        let cricketAnimId = null, cricketActive = false;
+        let ballX = 140, ballY = 20, ballSpeed = 2, batX = 120, runs = 0, wickets = 0, gameOver = false;
 
-        // Favorites
+        // Favorites, Theme, PiP (removed), Refresh, Sidebar (same as before)...
         function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
         function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
         function toggleFavorite(channelName) {
@@ -337,8 +389,6 @@
             saveFavorites(favs); renderChannels(searchBox.value);
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
-
-        // Theme
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
             themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
@@ -348,20 +398,220 @@
         themeToggle.addEventListener("click", toggleTheme);
         refreshBtn.addEventListener("click", () => location.reload());
 
-        // Sidebar
+        // Sidebar (More Live TV)
         function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
         function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
         moreBtn.addEventListener("click", openSidebar);
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // Gaming panel toggle
+        // Gaming Panel toggle
         toggleGameBtn.addEventListener("click", () => {
             gamingPanel.classList.toggle("open");
+            if (!gamingPanel.classList.contains("open")) {
+                stopSnake();
+                stopCricket();
+                showGameMenu();
+            }
         });
-        closeGamePanel.addEventListener("click", () => gamingPanel.classList.remove("open"));
+        closeGamePanel.addEventListener("click", () => {
+            gamingPanel.classList.remove("open");
+            stopSnake();
+            stopCricket();
+        });
 
-        // Playlists (all using proxy)
+        // Score Panel toggle
+        toggleScoreBtn.addEventListener("click", () => {
+            scorePanel.classList.toggle("open");
+            if (scorePanel.classList.contains("open")) fetchLiveScores();
+        });
+        closeScorePanel.addEventListener("click", () => scorePanel.classList.remove("open"));
+
+        // Game menu selection
+        document.querySelectorAll(".game-menu-item").forEach(item => {
+            item.addEventListener("click", () => {
+                const game = item.dataset.game;
+                showGame(game);
+            });
+        });
+
+        function showGame(game) {
+            stopSnake();
+            stopCricket();
+            if (game === "snake") {
+                snakeDiv.style.display = "block";
+                cricketDiv.style.display = "none";
+                gameMenuDiv.style.display = "none";
+                initSnake();
+            } else if (game === "cricket") {
+                cricketDiv.style.display = "block";
+                snakeDiv.style.display = "none";
+                gameMenuDiv.style.display = "none";
+                initCricket();
+            }
+        }
+
+        function showGameMenu() {
+            snakeDiv.style.display = "none";
+            cricketDiv.style.display = "none";
+            gameMenuDiv.style.display = "flex";
+        }
+
+        backSnakeBtn.addEventListener("click", () => { stopSnake(); showGameMenu(); });
+        backCricketBtn.addEventListener("click", () => { stopCricket(); showGameMenu(); });
+
+        // ========== SNAKE ==========
+        function initSnake() {
+            snake = [{x:10,y:10}];
+            direction = "RIGHT";
+            score = 0;
+            snakeStatus.textContent = "Score: 0";
+            generateFood();
+            snakeActive = true;
+            clearInterval(snakeInterval);
+            snakeInterval = setInterval(snakeLoop, 100);
+            drawSnake();
+        }
+        function stopSnake() {
+            snakeActive = false;
+            clearInterval(snakeInterval);
+        }
+        function generateFood() {
+            food = {
+                x: Math.floor(Math.random() * (snakeCanvas.width/10)),
+                y: Math.floor(Math.random() * (snakeCanvas.height/10))
+            };
+        }
+        function snakeLoop() {
+            if (!snakeActive) return;
+            let head = { ...snake[0] };
+            if (direction === "RIGHT") head.x++;
+            else if (direction === "LEFT") head.x--;
+            else if (direction === "UP") head.y--;
+            else if (direction === "DOWN") head.y++;
+            if (head.x < 0 || head.x >= snakeCanvas.width/10 || head.y < 0 || head.y >= snakeCanvas.height/10 || snake.some(s => s.x === head.x && s.y === head.y)) {
+                stopSnake();
+                snakeStatus.textContent = "Game Over! Score: " + score;
+                return;
+            }
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) { score++; generateFood(); }
+            else { snake.pop(); }
+            snakeStatus.textContent = "Score: " + score;
+            drawSnake();
+        }
+        function drawSnake() {
+            const ctx = snakeCanvas.getContext("2d");
+            ctx.fillStyle = "#111";
+            ctx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
+            ctx.fillStyle = "#2ecc71";
+            snake.forEach(s => ctx.fillRect(s.x*10, s.y*10, 8, 8));
+            ctx.fillStyle = "#e74c3c";
+            ctx.fillRect(food.x*10, food.y*10, 8, 8);
+        }
+        // Keyboard and dpad
+        window.addEventListener("keydown", e => {
+            if (!snakeActive) return;
+            if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+            else if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+            else if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+            else if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+        });
+        document.querySelectorAll(".dpad-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (!snakeActive) return;
+                const dir = btn.dataset.dir;
+                if (dir === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
+                else if (dir === "LEFT" && direction !== "RIGHT") direction = "LEFT";
+                else if (dir === "UP" && direction !== "DOWN") direction = "UP";
+                else if (dir === "DOWN" && direction !== "UP") direction = "DOWN";
+            });
+        });
+        resetSnakeBtn.addEventListener("click", () => { stopSnake(); initSnake(); });
+
+        // ========== CRICKET ==========
+        function initCricket() {
+            ballX = 140; ballY = 20; ballSpeed = 2; batX = 120; runs = 0; wickets = 0; gameOver = false;
+            cricketStatus.textContent = "Runs: 0 / Wickets: 0";
+            cricketActive = true;
+            cancelAnimationFrame(cricketAnimId);
+            cricketLoop();
+        }
+        function stopCricket() { cricketActive = false; cancelAnimationFrame(cricketAnimId); }
+        function cricketLoop() {
+            if (!cricketActive || gameOver) return;
+            const ctx = cricketCanvas.getContext("2d");
+            ctx.fillStyle = "#111";
+            ctx.fillRect(0,0,cricketCanvas.width,cricketCanvas.height);
+            // bat
+            ctx.fillStyle = "#f1c40f";
+            ctx.fillRect(batX, cricketCanvas.height-30, 40, 15);
+            // ball
+            ctx.fillStyle = "#e74c3c";
+            ctx.beginPath(); ctx.arc(ballX, ballY, 6, 0, Math.PI*2); ctx.fill();
+            ballY += ballSpeed;
+            if (ballY > cricketCanvas.height - 25) {
+                if (ballX > batX && ballX < batX+40) {
+                    // hit
+                    ballSpeed = 2 + Math.floor(Math.random()*4);
+                    runs += Math.floor(Math.random()*6)+1;
+                    ballY = 20;
+                    ballX = 50 + Math.random()*180;
+                } else {
+                    wickets++;
+                    if (wickets >= 3) {
+                        gameOver = true;
+                        cricketStatus.textContent = "All Out! Runs: " + runs;
+                        cricketActive = false;
+                        return;
+                    }
+                    ballY = 20;
+                    ballX = 50 + Math.random()*180;
+                }
+            }
+            cricketStatus.textContent = `Runs: ${runs} / Wickets: ${wickets}`;
+            cricketAnimId = requestAnimationFrame(cricketLoop);
+        }
+        cricketCanvas.addEventListener("click", (e) => {
+            if (!cricketActive) return;
+            const rect = cricketCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            batX = x - 20;
+            if (batX < 0) batX = 0;
+            if (batX > cricketCanvas.width - 40) batX = cricketCanvas.width - 40;
+        });
+        resetCricketBtn.addEventListener("click", () => { stopCricket(); initCricket(); });
+
+        // ========== LIVE SCORES ==========
+        async function fetchLiveScores() {
+            scoreBody.innerHTML = "<p style='text-align:center;padding:20px;'>Loading scores...</p>";
+            try {
+                const proxy = "https://api.codetabs.com/v1/proxy?quest=";
+                const apiUrl = "https://cricket-api.vercel.app/matches";
+                const response = await fetch(proxy + encodeURIComponent(apiUrl));
+                if (!response.ok) throw new Error("Failed to fetch");
+                const data = await response.json();
+                if (!data || !data.length) {
+                    scoreBody.innerHTML = "<p style='text-align:center;padding:20px;'>No live matches right now.</p>";
+                    return;
+                }
+                scoreBody.innerHTML = "";
+                data.forEach(match => {
+                    const div = document.createElement("div");
+                    div.className = "score-item";
+                    div.innerHTML = `
+                        <strong>${match.team1} vs ${match.team2}</strong><br>
+                        ${match.status || "Upcoming"}<br>
+                        <span style="color:#f1c40f">${match.score || ""}</span>
+                    `;
+                    scoreBody.appendChild(div);
+                });
+            } catch (e) {
+                scoreBody.innerHTML = "<p style='text-align:center;padding:20px;color:#ff6b6b;'>Could not load live scores.</p>";
+            }
+        }
+
+        // Playlists (same as before)
         const playlists = [
             { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
             { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: true },
@@ -447,107 +697,9 @@
             else { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; }
         }
 
+        // Start with game menu visible
+        showGameMenu();
         renderChannels();
-
-        // ========== GAMES ==========
-        // Snake
-        const snakeCanvas = document.getElementById("snakeCanvas");
-        const snakeCtx = snakeCanvas.getContext("2d");
-        let snake = [{x:10,y:10}], food = {}, direction = "RIGHT", snakeInterval, score = 0;
-        function resetSnake() {
-            snake = [{x:10,y:10}]; direction = "RIGHT"; score = 0;
-            clearInterval(snakeInterval);
-            generateFood();
-            snakeInterval = setInterval(snakeLoop, 100);
-        }
-        function generateFood() {
-            food = {
-                x: Math.floor(Math.random() * (snakeCanvas.width/10)),
-                y: Math.floor(Math.random() * (snakeCanvas.height/10))
-            };
-        }
-        function snakeLoop() {
-            let head = { ...snake[0] };
-            if (direction === "RIGHT") head.x++;
-            else if (direction === "LEFT") head.x--;
-            else if (direction === "UP") head.y--;
-            else if (direction === "DOWN") head.y++;
-            if (head.x < 0 || head.x >= snakeCanvas.width/10 || head.y < 0 || head.y >= snakeCanvas.height/10 || snake.some(s => s.x === head.x && s.y === head.y)) {
-                clearInterval(snakeInterval);
-                alert("Game Over! Score: " + score);
-                resetSnake();
-                return;
-            }
-            snake.unshift(head);
-            if (head.x === food.x && head.y === food.y) { score++; generateFood(); }
-            else { snake.pop(); }
-            drawSnake();
-        }
-        function drawSnake() {
-            snakeCtx.fillStyle = "#111";
-            snakeCtx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
-            snakeCtx.fillStyle = "#2ecc71";
-            snake.forEach(s => snakeCtx.fillRect(s.x*10, s.y*10, 8, 8));
-            snakeCtx.fillStyle = "#e74c3c";
-            snakeCtx.fillRect(food.x*10, food.y*10, 8, 8);
-        }
-        window.addEventListener("keydown", e => {
-            if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-            else if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-            else if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-            else if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
-        });
-        document.getElementById("resetSnake").addEventListener("click", resetSnake);
-        generateFood();
-        snakeInterval = setInterval(snakeLoop, 100);
-
-        // Cricket
-        const cricketCanvas = document.getElementById("cricketCanvas");
-        const cricketCtx = cricketCanvas.getContext("2d");
-        let ballX = 140, ballY = 20, ballSpeed = 2, batX = 120, runs = 0, wickets = 0, gameOver = false;
-        function resetCricket() {
-            ballY = 20; ballSpeed = 2; batX = 120; runs = 0; wickets = 0; gameOver = false;
-            cricketLoop();
-        }
-        function cricketLoop() {
-            if (gameOver) return;
-            cricketCtx.fillStyle = "#111";
-            cricketCtx.fillRect(0,0,cricketCanvas.width,cricketCanvas.height);
-            // bat
-            cricketCtx.fillStyle = "#f1c40f";
-            cricketCtx.fillRect(batX, cricketCanvas.height-30, 40, 15);
-            // ball
-            cricketCtx.fillStyle = "#e74c3c";
-            cricketCtx.beginPath(); cricketCtx.arc(ballX, ballY, 6, 0, Math.PI*2); cricketCtx.fill();
-            ballY += ballSpeed;
-            if (ballY > cricketCanvas.height - 25) {
-                if (ballX > batX && ballX < batX+40) {
-                    // hit
-                    ballSpeed = 2 + Math.floor(Math.random()*3);
-                    runs += Math.floor(Math.random()*6)+1;
-                    ballY = 20;
-                    ballX = 50 + Math.random()*180;
-                } else {
-                    wickets++;
-                    if (wickets >= 3) { gameOver = true; alert("All out! Runs: " + runs); resetCricket(); return; }
-                    ballY = 20;
-                    ballX = 50 + Math.random()*180;
-                }
-            }
-            cricketCtx.fillStyle = "white";
-            cricketCtx.font = "14px Arial";
-            cricketCtx.fillText("Runs: " + runs + " Wickets: " + wickets, 10, 20);
-            requestAnimationFrame(cricketLoop);
-        }
-        cricketCanvas.addEventListener("click", (e) => {
-            const rect = cricketCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            batX = x - 20;
-            if (batX < 0) batX = 0;
-            if (batX > cricketCanvas.width - 40) batX = cricketCanvas.width - 40;
-        });
-        document.getElementById("resetCricket").addEventListener("click", resetCricket);
-        cricketLoop();
     </script>
 </body>
 </html>
