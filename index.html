@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Live TV by F. M. Prayer</title>
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Live%20TV%22%2C%22short_name%22%3A%22LiveTV%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0a10%22%2C%22theme_color%22%3A%22%23e63946%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%253Crect%20width%3D'100'%20height%3D'100'%20rx%3D'20'%20fill%3D'%23e63946'%2F%3E%253Ctext%20x%3D'50'%20y%3D'65'%20text-anchor%3D'middle'%20font-size%3D'50'%3E%F0%9F%93%BA%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22100x100%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
     <meta name="theme-color" content="#e63946">
@@ -21,8 +21,9 @@
         }
         body{
             background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
-            height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
+            height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
         }
+
         /* Popup */
         .popup-overlay {
             position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:100;
@@ -41,12 +42,14 @@
         .popup-box .msg-btn-popup:hover{background:#0055cc}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+
         /* Notification */
         .notification-bar{
             background:#222;color:#f1c40f;padding:8px 10px;text-align:center;cursor:pointer;
             z-index:11;border-bottom:1px solid var(--border);font-weight:500;font-size:14px
         }
         .notification-bar a{color:#f1c40f;text-decoration:none}
+
         .header{
             background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;
             justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--accent);
@@ -81,40 +84,53 @@
         .playlist-item .fav-star-m3u.fav{color:#f1c40f}
         .back-btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:20px;font-weight:600;cursor:pointer;margin-bottom:10px;display:inline-flex;align-items:center;gap:5px}
         .back-btn:hover{background:#c0392b}
+
         .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
-        .video-section{flex:0 0 60%;background:black;position:relative;display:flex;align-items:center;justify-content:center}
+
+        .video-section{
+            height:55vh;background:black;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0
+        }
         video{width:100%;height:100%;object-fit:contain;background:black}
-        .video-overlay{position:absolute;top:20px;left:20px;background:rgba(0,0,0,0.7);padding:8px 18px;border-radius:20px;font-weight:bold;font-size:16px;display:flex;align-items:center;gap:10px;color:white}
-        .live-dot{background:#e63946;padding:3px 10px;border-radius:15px;font-size:12px;animation:pulse 1.5s infinite}
+        .video-overlay{position:absolute;top:15px;left:15px;background:rgba(0,0,0,0.7);padding:6px 15px;border-radius:20px;font-weight:bold;font-size:14px;display:flex;align-items:center;gap:8px;color:white}
+        .live-dot{background:#e63946;padding:3px 10px;border-radius:15px;font-size:11px;animation:pulse 1.5s infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-        .pip-btn{position:absolute;bottom:20px;right:20px;background:rgba(0,0,0,0.7);border:none;color:white;font-size:20px;padding:8px 12px;border-radius:10px;cursor:pointer;z-index:5}
+        .pip-btn{position:absolute;bottom:15px;right:15px;background:rgba(0,0,0,0.7);border:none;color:white;font-size:20px;padding:8px 12px;border-radius:10px;cursor:pointer;z-index:5}
         .pip-btn:hover{background:var(--accent)}
-        .status-indicator{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);padding:8px 20px;border-radius:20px;font-size:15px;display:none;color:white}
+        .status-indicator{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);padding:6px 18px;border-radius:20px;font-size:14px;display:none;color:white}
         .status-indicator.loading{color:#e63946;display:block}
         .status-indicator.error{color:#ff6b6b;display:block}
+
         .channel-section{flex:1;background:var(--section-bg);display:flex;flex-direction:column;overflow:hidden;border-top:1px solid var(--border)}
-        .tabs{display:flex;background:var(--tab-bg);border-bottom:1px solid var(--border);padding:0 15px;gap:5px;overflow-x:auto}
-        .tab-btn{padding:10px 18px;background:transparent;border:none;color:var(--text-light);font-weight:600;font-size:14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+        .tabs{display:flex;background:var(--tab-bg);border-bottom:1px solid var(--border);padding:0 10px;gap:3px;overflow-x:auto;flex-shrink:0}
+        .tab-btn{padding:10px 15px;background:transparent;border:none;color:var(--text-light);font-weight:600;font-size:13px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
         .tab-btn:hover{color:var(--text)}
         .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
-        .channel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px;overflow-y:auto;flex:1;align-content:start}
+
+        .channel-grid{
+            display:grid;grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+            gap:10px;padding:15px;overflow-y:auto;flex:1;align-content:start
+        }
         .channel-card{background:var(--card-bg);border-radius:12px;padding:15px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:0.2s;border:2px solid transparent;text-align:center;font-size:14px;font-weight:500;color:var(--text-light);position:relative}
         .channel-card:hover{background:var(--card-hover);border-color:var(--accent);color:var(--text);transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,0.5)}
         .channel-card.active{background:var(--accent);border-color:var(--accent);color:white;font-weight:bold;box-shadow:0 0 20px rgba(230,57,70,0.5)}
 
-        /* নতুন লোগো স্টাইল */
-        .channel-avatar {
-            width: 48px; height: 48px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; font-weight: 700; color: white;
-            text-transform: uppercase; flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-        }
+        .channel-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;text-transform:uppercase;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.3)}
         .channel-name{font-size:13px;word-break:break-word;max-width:100%}
         .favorite-star{position:absolute;top:5px;right:8px;font-size:18px;cursor:pointer;z-index:2;color:#888;background:none;border:none}
         .favorite-star.fav{color:#f1c40f;text-shadow:0 0 8px rgba(241,196,15,0.8)}
-        @media (max-width:900px){.video-section{flex:0 0 45%}.channel-grid{grid-template-columns:repeat(3,1fr)}}
-        @media (max-width:600px){.video-section{flex:0 0 40%}.channel-grid{grid-template-columns:repeat(2,1fr)}.header{flex-direction:column;align-items:stretch}.search-box{width:100%}.header-actions{justify-content:center}}
+
+        @media (max-width:800px){
+            .video-section{height:40vh}
+            .channel-grid{grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px;padding:10px}
+        }
+        @media (max-width:500px){
+            .header{padding:8px 10px}
+            .logo{font-size:18px}
+            .more-btn{padding:8px 14px;font-size:12px}
+            .search-box{width:140px;font-size:12px}
+            .social-btn{padding:6px 12px;font-size:11px}
+            .tab-btn{padding:8px 10px;font-size:12px}
+        }
     </style>
 </head>
 <body>
@@ -141,7 +157,7 @@
 
     <div class="header">
         <div style="display:flex;align-items:center;"><button class="more-btn" id="moreBtn">📺 More Live TV</button><div class="logo">Live TV <span>by F. M. Prayer</span></div></div>
-        <div class="header-actions"><input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels..."><button class="refresh-btn" id="refreshBtn">🔄</button><button class="theme-btn" id="themeToggle">🌙</button><a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a><a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a></div>
+        <div class="header-actions"><input type="text" class="search-box" id="searchBox" placeholder="🔍 Search..."><button class="refresh-btn" id="refreshBtn">🔄</button><button class="theme-btn" id="themeToggle">🌙</button><a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a><a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a></div>
     </div>
 
     <div class="main-content">
@@ -171,9 +187,7 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // চ্যানেল লিস্ট (লোগো ছাড়াই)
         const channels = [
-            // Sports (19)
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "TSN 3", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
@@ -193,7 +207,6 @@
             { name: "Bein Sports", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8", category: "sports" },
             { name: "Sony Max", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
             { name: "Discovery", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
-            // News (12)
             { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
             { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -206,7 +219,6 @@
             { name: "DBC News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Srktv", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
-            // Bangla (22)
             { name: "Islamic TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
             { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
@@ -229,7 +241,6 @@
             { name: "ATN News", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
-            // Kids (5)
             { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -237,25 +248,13 @@
             { name: "Gopal Bhar", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
-        // রঙ জেনারেটর (নামের উপর ভিত্তি করে)
         function getColorFromName(name) {
-            const colors = [
-                "#e74c3c", "#3498db", "#2ecc71", "#9b59b6", "#f39c12",
-                "#1abc9c", "#e67e22", "#8e44ad", "#c0392b", "#2980b9",
-                "#27ae60", "#d35400", "#16a085", "#7f8c8d", "#f1c40f"
-            ];
+            const colors = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#8e44ad","#c0392b","#2980b9","#27ae60","#d35400","#16a085","#7f8c8d","#f1c40f"];
             let hash = 0;
-            for (let i = 0; i < name.length; i++) {
-                hash = name.charCodeAt(i) + ((hash << 5) - hash);
-            }
+            for (let i = 0; i < name.length; i++) { hash = name.charCodeAt(i) + ((hash << 5) - hash); }
             return colors[Math.abs(hash) % colors.length];
         }
-
-        // প্রথম অক্ষর বের করা (ইংরেজি/বাংলা/সংখ্যা)
-        function getInitial(name) {
-            if (!name) return "?";
-            return name.trim().charAt(0).toUpperCase();
-        }
+        function getInitial(name) { return name ? name.trim().charAt(0).toUpperCase() : "?"; }
 
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
@@ -274,9 +273,7 @@
         const closeSidebar = document.getElementById("closeSidebar");
         const playlistItems = document.getElementById("playlistItems");
 
-        let hls = null;
-        let activeCard = null;
-        let currentCategory = "all";
+        let hls = null, activeCard = null, currentCategory = "all";
 
         function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
         function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
@@ -365,20 +362,13 @@
             if (!filtered.length) { channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>'; return; }
             filtered.forEach(ch => {
                 const card = document.createElement("div"); card.className = "channel-card";
-
-                // অক্ষর-ভিত্তিক লোগো
-                const avatar = document.createElement("div");
-                avatar.className = "channel-avatar";
+                const avatar = document.createElement("div"); avatar.className = "channel-avatar";
                 avatar.style.backgroundColor = getColorFromName(ch.name);
                 avatar.textContent = getInitial(ch.name);
-
                 const nameDiv = document.createElement("div"); nameDiv.className = "channel-name"; nameDiv.textContent = ch.name;
                 const star = document.createElement("button"); star.className = "favorite-star" + (isFavorite(ch.name)?" fav":""); star.textContent = "★";
                 star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(ch.name); });
-
-                card.appendChild(avatar);
-                card.appendChild(nameDiv);
-                card.appendChild(star);
+                card.appendChild(avatar); card.appendChild(nameDiv); card.appendChild(star);
                 card.addEventListener("click", e => { if (e.target === star) return; playChannel(ch.url, ch.name, card); });
                 channelGrid.appendChild(card);
             });
