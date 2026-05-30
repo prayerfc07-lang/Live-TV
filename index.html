@@ -394,8 +394,27 @@
             font-weight: bold;
             box-shadow: 0 0 20px rgba(230,57,70,0.5);
         }
-        .channel-icon { font-size: 32px; line-height: 1; }
-        .channel-name { font-size: 13px; word-break: break-word; max-width: 100%; }
+        
+        /* Logo image styling */
+        .channel-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            padding: 4px;
+            transition: 0.2s;
+        }
+        .channel-logo.fallback {
+            font-size: 32px;
+            line-height: 48px;
+            background: none;
+        }
+        .channel-name { 
+            font-size: 13px; 
+            word-break: break-word; 
+            max-width: 100%; 
+        }
 
         .favorite-star {
             position: absolute;
@@ -489,79 +508,79 @@
     </div>
 
     <script>
-        // ========== CHANNEL LIST ==========
+        // ========== CHANNEL LIST WITH OFFICIAL LOGOS ==========
         const channels = [
             // ---- SPORTS ----
-            { name: "TSN 1", icon: "📡", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
-            { name: "TSN 2", icon: "📡", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-2/index.m3u8?token=2da400f73e6900b9e8b920c15e900f65acc33bbd-3e88ff2732ab01592b3fc131a54f904d-1780069011-1780058211", category: "sports" },
-            { name: "TSN 3", icon: "📡", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-3/index.m3u8?token=c718a544e8fc3efd84dfd0db7c480f3c3448edb1-853faa01ec76230c413d097d01500cb3-1780068969-1780058169", category: "sports" },
-            { name: "Ten Cricket", icon: "🏏", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
-            { name: "ESPN", icon: "🏈", url: "https://edge2.roarzone.net:8447/roarzone/edge5/espn/index.m3u8?token=c7b68e908ad52a200ce4b977accb43b7b419e181-585d1d16cffdbd9c27c779ed967dc4f0-1780067986-1780057186", category: "sports" },
-            { name: "Sony Ten 1", icon: "🔟", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
-            { name: "Sony Ten 2", icon: "🔟", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
-            { name: "Sony Ten 5", icon: "🔟", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
-            { name: "Euro Sports", icon: "🇪🇺", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "NFL Network", icon: "🏈", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Golf Channel", icon: "⛳", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Gold Cricket", icon: "🥇", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "T Sports", icon: "🏆", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "K Sports", icon: "🇰", url: "https://edge2.roarzone.net:8447/roarzone/edge5/ktv-sport-plus/index.m3u8?token=2c69d72ca35fe352f899b066896a6d24541285ba-413b7a1283f9532cee9f21ccf44676c4-1780068459-1780057659", category: "sports" },
-            { name: "Extreme Sports", icon: "🔥", url: "https://edge2.roarzone.net:8447/roarzone/edge5/xtrem-sports/index.m3u8?token=9daf82b6356eb5ca1f193298be270e92466fc4e2-b9ae295344d4281a8b9887743357229d-1780068527-1780057727", category: "sports" },
-            { name: "SF TV", icon: "📺", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports Talk", icon: "💬", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Fox Sports 2", icon: "🦊", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports E", icon: "📊", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "More Then Sports TV", icon: "➕", url: "https://edge2.roarzone.net:8447/roarzone/edge5/more-then-sports-tv/index.m3u8?token=eff335a70ebaa1234552ee70aeb926e8aa0ffac8-ae9751ed05b4246cef3d082a91c8609b-1780068772-1780057972", category: "sports" },
-            { name: "FIFA Plus", icon: "⚽", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
-            { name: "Willow TV", icon: "🏏", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "T Sports HD", icon: "🏆", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Goal TV HD", icon: "🥅", url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8", category: "sports" },
-            { name: "ASports HD", icon: "🏅", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Sports Grid", icon: "📊", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Star Sports 1", icon: "⭐", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "TSN 1", icon: "📡", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
+            { name: "TSN 2", icon: "📡", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-2/index.m3u8?token=2da400f73e6900b9e8b920c15e900f65acc33bbd-3e88ff2732ab01592b3fc131a54f904d-1780069011-1780058211", category: "sports" },
+            { name: "TSN 3", icon: "📡", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-3/index.m3u8?token=c718a544e8fc3efd84dfd0db7c480f3c3448edb1-853faa01ec76230c413d097d01500cb3-1780068969-1780058169", category: "sports" },
+            { name: "Ten Cricket", icon: "🏏", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Ten_Cricket_logo.svg/1200px-Ten_Cricket_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
+            { name: "ESPN", icon: "🏈", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/espn/index.m3u8?token=c7b68e908ad52a200ce4b977accb43b7b419e181-585d1d16cffdbd9c27c779ed967dc4f0-1780067986-1780057186", category: "sports" },
+            { name: "Sony Ten 1", icon: "🔟", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
+            { name: "Sony Ten 2", icon: "🔟", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
+            { name: "Sony Ten 5", icon: "🔟", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
+            { name: "Euro Sports", icon: "🇪🇺", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Eurosport_Logo.svg/1200px-Eurosport_Logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
+            { name: "NFL Network", icon: "🏈", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/NFL_Network_logo.svg/1200px-NFL_Network_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
+            { name: "Golf Channel", icon: "⛳", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Golf_Channel_logo.svg/1200px-Golf_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
+            { name: "Gold Cricket", icon: "🥇", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
+            { name: "T Sports", icon: "🏆", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
+            { name: "K Sports", icon: "🇰", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/ktv-sport-plus/index.m3u8?token=2c69d72ca35fe352f899b066896a6d24541285ba-413b7a1283f9532cee9f21ccf44676c4-1780068459-1780057659", category: "sports" },
+            { name: "Extreme Sports", icon: "🔥", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Extreme_Sports_Channel_logo.svg/1200px-Extreme_Sports_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/xtrem-sports/index.m3u8?token=9daf82b6356eb5ca1f193298be270e92466fc4e2-b9ae295344d4281a8b9887743357229d-1780068527-1780057727", category: "sports" },
+            { name: "SF TV", icon: "📺", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
+            { name: "Sports Talk", icon: "💬", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
+            { name: "Fox Sports 2", icon: "🦊", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/FOX_Sports_2_logo.svg/1200px-FOX_Sports_2_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
+            { name: "Sports E", icon: "📊", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
+            { name: "More Then Sports TV", icon: "➕", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/more-then-sports-tv/index.m3u8?token=eff335a70ebaa1234552ee70aeb926e8aa0ffac8-ae9751ed05b4246cef3d082a91c8609b-1780068772-1780057972", category: "sports" },
+            { name: "FIFA Plus", icon: "⚽", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/FIFA%2B_logo.svg/1200px-FIFA%2B_logo.svg.png", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
+            { name: "Willow TV", icon: "🏏", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "T Sports HD", icon: "🏆", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Goal TV HD", icon: "🥅", logo: "", url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8", category: "sports" },
+            { name: "ASports HD", icon: "🏅", logo: "", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Sports Grid", icon: "📊", logo: "", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Star Sports 1", icon: "⭐", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
 
             // ---- NEWS ----
-            { name: "Channel 9", icon: "9️⃣", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
-            { name: "Desh TV", icon: "🇧🇩", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-            { name: "Nexus TV", icon: "🔗", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-            { name: "Global TV", icon: "🌍", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Channel 1", icon: "1️⃣", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Ayna TV", icon: "🪞", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Star News", icon: "📰", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/1710-audio_113402_eng=113200-video=1181200.m3u8", category: "news" },
-            { name: "Jago News", icon: "⏰", url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8", category: "news" },
-            { name: "Jamuna TV", icon: "🏞️", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
-            { name: "DBC News", icon: "📋", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
-            { name: "Ekhon TV", icon: "🕐", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Channel 9", icon: "9️⃣", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
+            { name: "Desh TV", icon: "🇧🇩", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Desh_TV_logo.svg/1200px-Desh_TV_logo.svg.png", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Nexus TV", icon: "🔗", logo: "", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Global TV", icon: "🌍", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Channel 1", icon: "1️⃣", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Ayna TV", icon: "🪞", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Star News", icon: "📰", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/1710-audio_113402_eng=113200-video=1181200.m3u8", category: "news" },
+            { name: "Jago News", icon: "⏰", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jago_News_24_logo.svg/1200px-Jago_News_24_logo.svg.png", url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8", category: "news" },
+            { name: "Jamuna TV", icon: "🏞️", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Jamuna_TV_logo.svg/1200px-Jamuna_TV_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
+            { name: "DBC News", icon: "📋", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/DBC_News_logo.svg/1200px-DBC_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
+            { name: "Ekhon TV", icon: "🕐", logo: "", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
 
             // ---- BANGLA ----
-            { name: "BTV", icon: "📺", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
-            { name: "RTV Live", icon: "🔴", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "Channel I HD", icon: "🅸", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
-            { name: "Deepto TV", icon: "💡", url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8", category: "bangla" },
-            { name: "NTV", icon: "🅽", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8", category: "bangla" },
-            { name: "Bangla Vision", icon: "👁️", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8", category: "bangla" },
-            { name: "Ekattor TV", icon: "❼", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8", category: "bangla" },
-            { name: "Ekushe TV", icon: "📡", url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "Maasranga TV", icon: "🌈", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8", category: "bangla" },
-            { name: "Channel S", icon: "🅢", url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8", category: "bangla" },
-            { name: "Boishakhi TV", icon: "🌸", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8", category: "bangla" },
-            { name: "GTV", icon: "🅶", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
-            { name: "Mohona TV", icon: "🌊", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
-            { name: "Bijoy TV", icon: "✌️", url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8", category: "bangla" },
-            { name: "News 24", icon: "🔤", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8", category: "bangla" },
-            { name: "Somoy TV", icon: "⌚", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", category: "bangla" },
-            { name: "Channel 24", icon: "🔢", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8", category: "bangla" },
-            { name: "Independent TV", icon: "🆓", url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "ATN News", icon: "📡", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "CNN Now", icon: "🌐", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
-            { name: "Star Jalsha", icon: "🌟", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
+            { name: "BTV", icon: "📺", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bangladesh_Television_logo.svg/1200px-Bangladesh_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
+            { name: "RTV Live", icon: "🔴", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/RTV_Bangla_logo.svg/1200px-RTV_Bangla_logo.svg.png", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "Channel I HD", icon: "🅸", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Channel_i_logo.svg/1200px-Channel_i_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
+            { name: "Deepto TV", icon: "💡", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Deepto_TV_logo.svg/1200px-Deepto_TV_logo.svg.png", url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8", category: "bangla" },
+            { name: "NTV", icon: "🅽", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/71/NTV_Bangla_logo.svg/1200px-NTV_Bangla_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8", category: "bangla" },
+            { name: "Bangla Vision", icon: "👁️", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Bangla_Vision_logo.svg/1200px-Bangla_Vision_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8", category: "bangla" },
+            { name: "Ekattor TV", icon: "❼", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Ekattor_TV_logo.svg/1200px-Ekattor_TV_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8", category: "bangla" },
+            { name: "Ekushe TV", icon: "📡", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Ekushe_Television_logo.svg/1200px-Ekushe_Television_logo.svg.png", url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "Maasranga TV", icon: "🌈", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a5/Maasranga_Television_logo.svg/1200px-Maasranga_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8", category: "bangla" },
+            { name: "Channel S", icon: "🅢", logo: "", url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8", category: "bangla" },
+            { name: "Boishakhi TV", icon: "🌸", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boishakhi_TV_logo.svg/1200px-Boishakhi_TV_logo.svg.png", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8", category: "bangla" },
+            { name: "GTV", icon: "🅶", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d6/Gazi_Television_logo.svg/1200px-Gazi_Television_logo.svg.png", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
+            { name: "Mohona TV", icon: "🌊", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
+            { name: "Bijoy TV", icon: "✌️", logo: "", url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8", category: "bangla" },
+            { name: "News 24", icon: "🔤", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/21/News_24_%28Bangladesh%29_logo.svg/1200px-News_24_%28Bangladesh%29_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8", category: "bangla" },
+            { name: "Somoy TV", icon: "⌚", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Somoy_News_logo.svg/1200px-Somoy_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", category: "bangla" },
+            { name: "Channel 24", icon: "🔢", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8", category: "bangla" },
+            { name: "Independent TV", icon: "🆓", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/25/Independent_Television_logo.svg/1200px-Independent_Television_logo.svg.png", url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "ATN News", icon: "📡", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/ATN_News_logo.svg/1200px-ATN_News_logo.svg.png", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "CNN Now", icon: "🌐", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/1200px-CNN.svg.png", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
+            { name: "Star Jalsha", icon: "🌟", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Star_Jalsha_logo.svg/1200px-Star_Jalsha_logo.svg.png", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
 
             // ---- KIDS ----
-            { name: "Tom & Jerry", icon: "🐱", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Doraemon", icon: "🤖", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Mr Bean", icon: "🧸", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
-            { name: "Cartoon Network", icon: "🎨", url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Gopal Bhar", icon: "👳", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
+            { name: "Tom & Jerry", icon: "🐱", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tom_and_Jerry_logo.svg/1200px-Tom_and_Jerry_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Doraemon", icon: "🤖", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Doraemon_logo.svg/1200px-Doraemon_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Mr Bean", icon: "🧸", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Mr._Bean_logo.svg/1200px-Mr._Bean_logo.svg.png", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
+            { name: "Cartoon Network", icon: "🎨", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/1200px-Cartoon_Network_2010_logo.svg.png", url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Gopal Bhar", icon: "👳", logo: "", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
         // DOM elements
@@ -744,8 +763,18 @@
                 const card = document.createElement("div");
                 card.className = "channel-card";
                 const favClass = isFavorite(ch.name) ? "fav" : "";
+                
+                // Image or emoji logo
+                let logoHtml = '';
+                if (ch.logo && ch.logo.trim() !== '') {
+                    logoHtml = `<img class="channel-logo" src="${ch.logo}" alt="${ch.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">`;
+                    logoHtml += `<span class="channel-logo fallback" style="display:none;">${ch.icon}</span>`;
+                } else {
+                    logoHtml = `<span class="channel-logo fallback">${ch.icon}</span>`;
+                }
+                
                 card.innerHTML = `
-                    <div class="channel-icon">${ch.icon}</div>
+                    ${logoHtml}
                     <div class="channel-name">${ch.name}</div>
                     <button class="favorite-star ${favClass}" data-name="${ch.name}">★</button>
                 `;
