@@ -4,340 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live TV by F. M. Prayer</title>
-    
-    <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Live%20TV%22%2C%22short_name%22%3A%22LiveTV%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0a10%22%2C%22theme_color%22%3A%22%23e63946%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%253Crect%20width%3D'100'%20height%3D'100'%20rx%3D'20'%20fill%3D'%23e63946'%2F%3E%253Ctext%20x%3D'50'%20y%3D'65'%20text-anchor%3D'middle'%20font-size%3D'50'%3E%F0%9F%93%BA%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22100x100%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
     <meta name="theme-color" content="#e63946">
-    
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg: #0a0a10;
-            --header-bg: #111122;
-            --card-bg: #1e1e30;
-            --card-hover: #2a2a40;
-            --text: white;
-            --text-light: #ccc;
-            --border: #2a2a3a;
-            --accent: #e63946;
-            --sidebar-bg: #1a1a2e;
-            --section-bg: #111118;
-            --tab-bg: #0d0d14;
-            --overlay-bg: rgba(0,0,0,0.7);
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#0a0a10;--header-bg:#111122;--card-bg:#1e1e30;--card-hover:#2a2a40;
+            --text:white;--text-light:#ccc;--border:#2a2a3a;--accent:#e63946;
+            --sidebar-bg:#1a1a2e;--section-bg:#111118;--tab-bg:#0d0d14;--overlay-bg:rgba(0,0,0,0.7)
         }
-
-        .light-mode {
-            --bg: #f0f0f5;
-            --header-bg: #ffffff;
-            --card-bg: #ffffff;
-            --card-hover: #f5f5f5;
-            --text: #111;
-            --text-light: #444;
-            --border: #ddd;
-            --sidebar-bg: #ffffff;
-            --section-bg: #f8f8f8;
-            --tab-bg: #eee;
-            --overlay-bg: rgba(0,0,0,0.4);
+        .light-mode{
+            --bg:#f0f0f5;--header-bg:#fff;--card-bg:#fff;--card-hover:#f5f5f5;
+            --text:#111;--text-light:#444;--border:#ddd;--sidebar-bg:#fff;
+            --section-bg:#f8f8f8;--tab-bg:#eee;--overlay-bg:rgba(0,0,0,0.4)
         }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', 'Noto Sans Bengali', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            transition: background 0.3s, color 0.3s;
+        body{
+            background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
+            height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;transition:background .3s,color .3s
         }
-
-        /* HEADER */
-        .header {
-            background: var(--header-bg);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 2px solid var(--accent);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 10;
-            transition: background 0.3s;
+        /* নোটিফিকেশন বার */
+        .notification-bar{
+            background:#222;color:#f1c40f;padding:6px 0;overflow:hidden;white-space:nowrap;
+            cursor:pointer;position:relative;z-index:11;border-bottom:1px solid var(--border)
         }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            cursor: pointer;
-            padding: 5px;
-            background: none;
-            border: none;
-            outline: none;
-            margin-right: 10px;
+        .notification-bar a{
+            display:inline-block;padding-left:100%;animation:marquee 20s linear infinite;color:#f1c40f;text-decoration:none;font-weight:500
         }
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: var(--text);
-            border-radius: 3px;
-            transition: 0.3s;
+        .notification-bar a:hover{text-decoration:underline}
+        @keyframes marquee{
+            0%{transform:translateX(100%)}100%{transform:translateX(-100%)}
         }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text);
+        .header{
+            background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;
+            justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--accent);
+            flex-shrink:0;z-index:10;transition:background .3s
         }
-        .logo span { color: var(--accent); }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+        .more-btn{
+            background:var(--accent);border:none;color:white;padding:10px 18px;border-radius:25px;
+            font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px;
+            transition:0.2s;margin-right:12px
         }
-        .search-box {
-            padding: 8px 18px;
-            border-radius: 25px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            color: var(--text);
-            font-size: 14px;
-            outline: none;
-            width: 200px;
-            transition: 0.3s;
+        .more-btn:hover{background:#c0392b}
+        .logo{font-size:22px;font-weight:bold;white-space:nowrap;display:flex;align-items:center;gap:5px;color:var(--text)}
+        .logo span{color:var(--accent)}
+        .header-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .search-box{
+            padding:8px 18px;border-radius:25px;border:1px solid var(--border);background:var(--card-bg);
+            color:var(--text);font-size:14px;outline:none;width:200px;transition:0.3s
         }
-        .search-box:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(230,57,70,0.4);
+        .search-box:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(230,57,70,0.4)}
+        .social-btn{
+            padding:8px 16px;border-radius:25px;text-decoration:none;color:white;font-weight:600;
+            font-size:13px;display:flex;align-items:center;gap:5px;transition:0.3s
         }
-        .social-btn {
-            padding: 8px 16px;
-            border-radius: 25px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: 0.3s;
+        .tg-btn{background:#0088cc}.tg-btn:hover{background:#0077b5}
+        .msg-btn{background:#006aff}.msg-btn:hover{background:#0055cc}
+        .theme-btn,.refresh-btn{
+            background:none;border:1px solid var(--border);color:var(--text);font-size:20px;
+            cursor:pointer;padding:5px 10px;border-radius:50%;transition:0.3s;display:flex;align-items:center;justify-content:center
         }
-        .tg-btn { background: #0088cc; }
-        .tg-btn:hover { background: #0077b5; }
-        .msg-btn { background: #006aff; }
-        .msg-btn:hover { background: #0055cc; }
-
-        .theme-btn {
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 50%;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .theme-btn:hover,.refresh-btn:hover{background:var(--card-hover)}
+        .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--overlay-bg);z-index:20;display:none}
+        .sidebar-overlay.open{display:block}
+        .playlist-sidebar{
+            position:fixed;top:0;left:-320px;width:320px;height:100%;background:var(--sidebar-bg);
+            z-index:30;transition:left .3s;display:flex;flex-direction:column;box-shadow:2px 0 20px rgba(0,0,0,0.8);color:var(--text)
         }
-        .theme-btn:hover {
-            background: var(--card-hover);
+        .playlist-sidebar.open{left:0}
+        .sidebar-header{
+            padding:15px;background:var(--tab-bg);display:flex;align-items:center;
+            justify-content:space-between;border-bottom:1px solid var(--border)
         }
-
-        /* SIDEBAR */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--overlay-bg);
-            z-index: 20;
-            display: none;
+        .sidebar-header h3{font-size:18px;color:var(--accent)}
+        .close-sidebar{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
+        .sidebar-body{flex:1;overflow-y:auto;padding:10px}
+        .sidebar-body::-webkit-scrollbar{width:5px}
+        .sidebar-body::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px}
+        .playlist-item{
+            padding:12px 15px;margin-bottom:5px;background:var(--card-bg);border-radius:8px;
+            cursor:pointer;transition:0.2s;display:flex;align-items:center;gap:10px;
+            border:1px solid transparent;color:var(--text);justify-content:space-between
         }
-        .sidebar-overlay.open { display: block; }
-
-        .playlist-sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100%;
-            background: var(--sidebar-bg);
-            z-index: 30;
-            transition: left 0.3s;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.8);
-            color: var(--text);
+        .playlist-item:hover{background:var(--card-hover);border-color:var(--accent)}
+        .playlist-item .fav-star-m3u{font-size:18px;cursor:pointer;color:#888}
+        .playlist-item .fav-star-m3u.fav{color:#f1c40f}
+        .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
+        .video-section{flex:0 0 60%;background:black;position:relative;display:flex;align-items:center;justify-content:center}
+        video{width:100%;height:100%;object-fit:contain;background:black}
+        .video-overlay{
+            position:absolute;top:20px;left:20px;background:rgba(0,0,0,0.7);padding:8px 18px;
+            border-radius:20px;font-weight:bold;font-size:16px;display:flex;align-items:center;gap:10px;color:white
         }
-        .playlist-sidebar.open { left: 0; }
-
-        .sidebar-header {
-            padding: 15px;
-            background: var(--tab-bg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
+        .live-dot{background:#e63946;padding:3px 10px;border-radius:15px;font-size:12px;animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+        .pip-btn{position:absolute;bottom:20px;right:20px;background:rgba(0,0,0,0.7);border:none;color:white;font-size:20px;padding:8px 12px;border-radius:10px;cursor:pointer;z-index:5}
+        .pip-btn:hover{background:var(--accent)}
+        .status-indicator{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);padding:8px 20px;border-radius:20px;font-size:15px;display:none;color:white}
+        .status-indicator.loading{color:#e63946;display:block}
+        .status-indicator.error{color:#ff6b6b;display:block}
+        .channel-section{flex:1;background:var(--section-bg);display:flex;flex-direction:column;overflow:hidden;border-top:1px solid var(--border)}
+        .tabs{display:flex;background:var(--tab-bg);border-bottom:1px solid var(--border);padding:0 15px;gap:5px;overflow-x:auto}
+        .tab-btn{
+            padding:10px 18px;background:transparent;border:none;color:var(--text-light);
+            font-weight:600;font-size:14px;cursor:pointer;border-bottom:3px solid transparent;transition:0.2s;white-space:nowrap
         }
-        .sidebar-header h3 { font-size: 18px; color: var(--accent); }
-        .close-sidebar { background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
-        .sidebar-body { flex: 1; overflow-y: auto; padding: 10px; }
-        .sidebar-body::-webkit-scrollbar { width: 5px; }
-        .sidebar-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-        .playlist-item {
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid transparent;
-            color: var(--text);
+        .tab-btn:hover{color:var(--text)}
+        .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+        .channel-grid{
+            display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px;
+            overflow-y:auto;flex:1;align-content:start
         }
-        .playlist-item:hover { background: var(--card-hover); border-color: var(--accent); }
-
-        /* MAIN CONTENT */
-        .main-content { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
-
-        .video-section {
-            flex: 0 0 60%;
-            background: black;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .channel-grid::-webkit-scrollbar{width:5px}
+        .channel-grid::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px}
+        .channel-card{
+            background:var(--card-bg);border-radius:12px;padding:15px 8px;display:flex;
+            flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:0.2s;
+            border:2px solid transparent;text-align:center;font-size:14px;font-weight:500;
+            color:var(--text-light);position:relative
         }
-        video { width: 100%; height: 100%; object-fit: contain; background: black; }
-
-        .video-overlay {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
+        .channel-card:hover{
+            background:var(--card-hover);border-color:var(--accent);color:var(--text);
+            transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,0.5)
         }
-        .live-dot { background: #e63946; padding: 3px 10px; border-radius: 15px; font-size: 12px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-
-        .pip-btn {
-            position: absolute; bottom: 20px; right: 20px;
-            background: rgba(0,0,0,0.7); border: none; color: white;
-            font-size: 20px; padding: 8px 12px; border-radius: 10px; cursor: pointer; z-index: 5;
+        .channel-card.active{
+            background:var(--accent);border-color:var(--accent);color:white;font-weight:bold;
+            box-shadow:0 0 20px rgba(230,57,70,0.5)
         }
-        .pip-btn:hover { background: var(--accent); }
-
-        .status-indicator {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.8); padding: 8px 20px; border-radius: 20px;
-            font-size: 15px; display: none; color: white;
+        .logo-container{width:48px;height:48px;position:relative}
+        .channel-logo{width:48px;height:48px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,0.1);padding:4px;transition:0.2s}
+        .fallback-tv-icon{font-size:32px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.1);border-radius:50%}
+        .channel-name{font-size:13px;word-break:break-word;max-width:100%}
+        .favorite-star{
+            position:absolute;top:5px;right:8px;font-size:18px;cursor:pointer;z-index:2;
+            color:#888;transition:0.2s;background:none;border:none;outline:none
         }
-        .status-indicator.loading { color: #e63946; display: block; }
-        .status-indicator.error { color: #ff6b6b; display: block; }
-
-        .channel-section {
-            flex: 1; background: var(--section-bg);
-            display: flex; flex-direction: column; overflow: hidden;
-            border-top: 1px solid var(--border);
+        .favorite-star.fav{color:#f1c40f;text-shadow:0 0 8px rgba(241,196,15,0.8)}
+        @media (max-width:900px){
+            .video-section{flex:0 0 45%}
+            .channel-grid{grid-template-columns:repeat(3,1fr)}
         }
-
-        .tabs {
-            display: flex; background: var(--tab-bg);
-            border-bottom: 1px solid var(--border); padding: 0 15px; gap: 5px; overflow-x: auto;
-        }
-        .tab-btn {
-            padding: 10px 18px; background: transparent; border: none;
-            color: var(--text-light); font-weight: 600; font-size: 14px; cursor: pointer;
-            border-bottom: 3px solid transparent; transition: 0.2s; white-space: nowrap;
-        }
-        .tab-btn:hover { color: var(--text); }
-        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-        .channel-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 10px; padding: 15px; overflow-y: auto; flex: 1; align-content: start;
-        }
-        .channel-grid::-webkit-scrollbar { width: 5px; }
-        .channel-grid::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-        .channel-card {
-            background: var(--card-bg); border-radius: 12px; padding: 15px 8px;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
-            cursor: pointer; transition: 0.2s; border: 2px solid transparent;
-            text-align: center; font-size: 14px; font-weight: 500; color: var(--text-light); position: relative;
-        }
-        .channel-card:hover {
-            background: var(--card-hover); border-color: var(--accent); color: var(--text);
-            transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-        }
-        .channel-card.active {
-            background: var(--accent); border-color: var(--accent); color: white;
-            font-weight: bold; box-shadow: 0 0 20px rgba(230,57,70,0.5);
-        }
-
-        .channel-logo {
-            width: 48px; height: 48px; border-radius: 50%;
-            object-fit: contain; background: rgba(255,255,255,0.1); padding: 4px;
-            transition: 0.2s;
-        }
-        .fallback-tv-icon {
-            font-size: 32px; width: 48px; height: 48px; display: flex;
-            align-items: center; justify-content: center; background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        .channel-name { font-size: 13px; word-break: break-word; max-width: 100%; }
-
-        .favorite-star {
-            position: absolute; top: 5px; right: 8px;
-            font-size: 18px; cursor: pointer; z-index: 2; color: #888;
-            transition: 0.2s; background: none; border: none; outline: none;
-        }
-        .favorite-star.fav { color: #f1c40f; text-shadow: 0 0 8px rgba(241,196,15,0.8); }
-
-        @media (max-width: 900px) {
-            .video-section { flex: 0 0 45%; }
-            .channel-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .video-section { flex: 0 0 40%; }
-            .channel-grid { grid-template-columns: repeat(2, 1fr); }
-            .header { flex-direction: column; align-items: stretch; }
-            .search-box { width: 100%; }
-            .header-actions { justify-content: center; }
+        @media (max-width:600px){
+            .video-section{flex:0 0 40%}
+            .channel-grid{grid-template-columns:repeat(2,1fr)}
+            .header{flex-direction:column;align-items:stretch}
+            .search-box{width:100%}
+            .header-actions{justify-content:center}
         }
     </style>
 </head>
 <body>
 
+    <!-- NOTIFICATION BAR -->
+    <div class="notification-bar" id="notificationBar">
+        <a href="https://m.me/mohammed.8805" target="_blank">
+            ⚡ যেকোনো গেমের বা অ্যাপসে কিছু নিতে চাইলে সবচেয়ে কম দামে এখানে ক্লিক করেন ⚡
+        </a>
+    </div>
+
     <!-- SIDEBAR OVERLAY -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="playlist-sidebar" id="playlistSidebar">
         <div class="sidebar-header">
-            <h3>📂 M3U Playlist</h3>
+            <h3>📂 More Live TV</h3>
             <button class="close-sidebar" id="closeSidebar">&times;</button>
         </div>
         <div class="sidebar-body" id="playlistItems">
@@ -348,15 +177,12 @@
     <!-- HEADER -->
     <div class="header">
         <div style="display:flex; align-items:center;">
-            <button class="hamburger" id="hamburgerBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="logo">📺 Live TV <span>by F. M. Prayer</span></div>
+            <button class="more-btn" id="moreBtn">📺 More Live TV</button>
+            <div class="logo">Live TV <span>by F. M. Prayer</span></div>
         </div>
         <div class="header-actions">
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels...">
+            <button class="refresh-btn" id="refreshBtn" title="Refresh page">🔄</button>
             <button class="theme-btn" id="themeToggle" title="Toggle dark/light mode">🌙</button>
             <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
             <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a>
@@ -390,7 +216,7 @@
     </div>
 
     <script>
-        // ========== CHANNEL LIST – ONLY OFFICIAL LOGOS (no emojis) ==========
+        // CHANNEL LIST WITH OFFICIAL LOGOS (no emoji)
         const channels = [
             // SPORTS
             { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
@@ -465,7 +291,6 @@
             { name: "Gopal Bhar", logo: "", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
-        // DOM elements
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
         const playingTitle = document.getElementById("playingTitle");
@@ -476,9 +301,8 @@
         const tabBtns = document.querySelectorAll(".tab-btn");
         const themeToggle = document.getElementById("themeToggle");
         const pipButton = document.getElementById("pipButton");
-
-        // Sidebar
-        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const refreshBtn = document.getElementById("refreshBtn");
+        const moreBtn = document.getElementById("moreBtn");
         const sidebarOverlay = document.getElementById("sidebarOverlay");
         const playlistSidebar = document.getElementById("playlistSidebar");
         const closeSidebar = document.getElementById("closeSidebar");
@@ -500,21 +324,21 @@
             else favs.push(channelName);
             saveFavorites(favs);
             renderChannels(searchBox.value);
+            loadM3U(); // refresh playlist stars
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
-        // Theme toggle
+        // Theme
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
-            const isLight = document.body.classList.contains("light-mode");
-            themeToggle.innerHTML = isLight ? "☀️" : "🌙";
-            localStorage.setItem("theme", isLight ? "light" : "dark");
+            themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+            localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
         }
-        if (localStorage.getItem("theme") === "light") {
-            document.body.classList.add("light-mode");
-            themeToggle.innerHTML = "☀️";
-        }
+        if (localStorage.getItem("theme") === "light") { document.body.classList.add("light-mode"); themeToggle.innerHTML = "☀️"; }
         themeToggle.addEventListener("click", toggleTheme);
+
+        // Refresh
+        refreshBtn.addEventListener("click", () => location.reload());
 
         // PiP
         pipButton.addEventListener("click", async () => {
@@ -524,14 +348,14 @@
             } catch(e) {}
         });
 
-        // Sidebar toggle
+        // Sidebar (More Live TV)
         function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
         function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
-        hamburgerBtn.addEventListener("click", openSidebar);
+        moreBtn.addEventListener("click", openSidebar);
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // Load M3U playlist
+        // Load M3U with favorite stars
         async function loadM3U() {
             const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
             const m3uUrl = "https://go.skym3u.top/69di.m3u";
@@ -559,8 +383,14 @@
                 items.forEach(item => {
                     const div = document.createElement("div");
                     div.className = "playlist-item";
-                    div.innerHTML = `▶️ ${item.name}`;
-                    div.addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
+                    const isFav = isFavorite(item.name);
+                    div.innerHTML = `<span style="cursor:pointer;flex:1" class="play-link">▶️ ${item.name}</span><span class="fav-star-m3u ${isFav?'fav':''}" data-name="${item.name}">★</span>`;
+                    div.querySelector(".play-link").addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
+                    const star = div.querySelector(".fav-star-m3u");
+                    star.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        toggleFavorite(item.name);
+                    });
                     playlistItems.appendChild(div);
                 });
             } catch(e) {
@@ -569,7 +399,7 @@
         }
         loadM3U();
 
-        // Tab handling
+        // Tabs
         tabBtns.forEach(btn => {
             btn.addEventListener("click", () => {
                 tabBtns.forEach(b => b.classList.remove("active"));
@@ -591,10 +421,7 @@
             } else if (currentCategory !== "all") {
                 filtered = filtered.filter(ch => ch.category === currentCategory);
             }
-
-            if (term) {
-                filtered = filtered.filter(ch => ch.name.toLowerCase().includes(term));
-            }
+            if (term) filtered = filtered.filter(ch => ch.name.toLowerCase().includes(term));
 
             if (!filtered.length) {
                 channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>';
@@ -605,60 +432,35 @@
                 const card = document.createElement("div");
                 card.className = "channel-card";
 
-                // Logo container
                 const logoContainer = document.createElement("div");
-                logoContainer.style.width = "48px";
-                logoContainer.style.height = "48px";
-                logoContainer.style.position = "relative";
+                logoContainer.className = "logo-container";
+                const fallback = document.createElement("div");
+                fallback.className = "fallback-tv-icon";
+                fallback.textContent = "📺";
+                fallback.style.display = "block";
+                logoContainer.appendChild(fallback);
 
-                // Default TV icon fallback
-                const fallbackIcon = document.createElement("div");
-                fallbackIcon.className = "fallback-tv-icon";
-                fallbackIcon.textContent = "📺";  // Only a tiny TV icon if no logo
-                fallbackIcon.style.display = "block";
-                logoContainer.appendChild(fallbackIcon);
-
-                // If logo URL exists, create image and load
                 if (ch.logo && ch.logo.trim() !== "") {
                     const img = document.createElement("img");
                     img.className = "channel-logo";
                     img.src = ch.logo;
                     img.alt = ch.name;
-                    img.style.position = "absolute";
-                    img.style.top = "0";
-                    img.style.left = "0";
-                    img.style.display = "none"; // hidden until loaded
-
-                    const showLogo = () => {
-                        img.style.display = "block";
-                        fallbackIcon.style.display = "none";
-                    };
-
+                    img.style.position = "absolute"; img.style.top = "0"; img.style.left = "0"; img.style.display = "none";
+                    const showLogo = () => { img.style.display = "block"; fallback.style.display = "none"; };
                     img.onload = showLogo;
-                    img.onerror = () => {
-                        img.remove(); // keep fallback
-                    };
-
-                    // Handle cached images
-                    if (img.complete) {
-                        showLogo();
-                    }
-
+                    img.onerror = () => img.remove();
+                    if (img.complete) showLogo();
                     logoContainer.appendChild(img);
                 }
 
-                // Star
                 const star = document.createElement("button");
                 star.className = "favorite-star" + (isFavorite(ch.name) ? " fav" : "");
                 star.textContent = "★";
                 star.addEventListener("click", (e) => {
                     e.stopPropagation();
                     toggleFavorite(ch.name);
-                    if (currentCategory === "favorites") renderChannels(searchBox.value);
-                    else star.classList.toggle("fav", isFavorite(ch.name));
                 });
 
-                // Channel name
                 const nameDiv = document.createElement("div");
                 nameDiv.className = "channel-name";
                 nameDiv.textContent = ch.name;
@@ -666,12 +468,10 @@
                 card.appendChild(logoContainer);
                 card.appendChild(nameDiv);
                 card.appendChild(star);
-
                 card.addEventListener("click", (e) => {
                     if (e.target === star) return;
                     playChannel(ch.url, ch.name, card);
                 });
-
                 channelGrid.appendChild(card);
             });
         }
@@ -687,28 +487,22 @@
                 if (activeCard) activeCard.classList.remove("active");
                 activeCard = null;
             }
-
             playingTitle.textContent = name;
             liveBadge.style.display = "inline-block";
             loadingMsg.style.display = "block";
             errorMsg.style.display = "none";
 
             if (hls) { hls.destroy(); hls = null; }
-            video.pause();
-            video.removeAttribute("src");
+            video.pause(); video.removeAttribute("src");
 
             if (Hls.isSupported()) {
                 hls = new Hls({ enableWorker: true });
                 hls.loadSource(url);
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    loadingMsg.style.display = "none";
-                    video.play().catch(() => {});
-                });
+                hls.on(Hls.Events.MANIFEST_PARSED, () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); });
                 hls.on(Hls.Events.ERROR, (e, data) => {
                     if (data.fatal) {
-                        loadingMsg.style.display = "none";
-                        errorMsg.style.display = "block";
+                        loadingMsg.style.display = "none"; errorMsg.style.display = "block";
                         switch(data.type) {
                             case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break;
                             case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break;
@@ -718,17 +512,12 @@
                 });
             } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
                 video.src = url;
-                video.addEventListener("loadedmetadata", () => {
-                    loadingMsg.style.display = "none";
-                    video.play().catch(() => {});
-                });
+                video.addEventListener("loadedmetadata", () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); });
             } else {
-                loadingMsg.style.display = "none";
-                errorMsg.style.display = "block";
+                loadingMsg.style.display = "none"; errorMsg.style.display = "block";
             }
         }
 
-        // PWA service worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register("data:application/javascript," + encodeURIComponent(
@@ -739,7 +528,6 @@
             });
         }
 
-        // Initial render
         renderChannels();
     </script>
 </body>
