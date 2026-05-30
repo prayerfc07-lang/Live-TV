@@ -23,7 +23,6 @@
             background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
             height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
         }
-        /* Notification */
         .notification-bar{
             background:#222;color:#f1c40f;padding:6px 0;overflow:hidden;white-space:nowrap;
             cursor:pointer;z-index:11;border-bottom:1px solid var(--border)
@@ -32,7 +31,6 @@
             display:inline-block;padding-left:100%;animation:marquee 18s linear infinite;color:#f1c40f;text-decoration:none;font-weight:500
         }
         @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-        /* Header */
         .header{
             background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;
             justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--accent);
@@ -63,7 +61,6 @@
             cursor:pointer;padding:5px 10px;border-radius:50%
         }
         .theme-btn:hover,.refresh-btn:hover{background:var(--card-hover)}
-        /* Sidebar */
         .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--overlay-bg);z-index:20;display:none}
         .sidebar-overlay.open{display:block}
         .playlist-sidebar{
@@ -79,7 +76,6 @@
         .playlist-item:hover{background:var(--card-hover);border-color:var(--accent)}
         .fav-star-m3u{font-size:18px;cursor:pointer;color:#888}
         .fav-star-m3u.fav{color:#f1c40f}
-        /* Main content */
         .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
         .video-section{flex:0 0 60%;background:black;position:relative;display:flex;align-items:center;justify-content:center}
         video{width:100%;height:100%;object-fit:contain;background:black}
@@ -91,7 +87,6 @@
         .status-indicator{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);padding:8px 20px;border-radius:20px;font-size:15px;display:none;color:white}
         .status-indicator.loading{color:#e63946;display:block}
         .status-indicator.error{color:#ff6b6b;display:block}
-        /* Channel section */
         .channel-section{flex:1;background:var(--section-bg);display:flex;flex-direction:column;overflow:hidden;border-top:1px solid var(--border)}
         .tabs{display:flex;background:var(--tab-bg);border-bottom:1px solid var(--border);padding:0 15px;gap:5px;overflow-x:auto}
         .tab-btn{padding:10px 18px;background:transparent;border:none;color:var(--text-light);font-weight:600;font-size:14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
@@ -112,19 +107,16 @@
     </style>
 </head>
 <body>
-    <!-- Notification -->
     <div class="notification-bar">
         <a href="https://m.me/mohammed.8805" target="_blank">⚡ যেকোনো গেমের বা অ্যাপসে কিছু নিতে চাইলে সবচেয়ে কম দামে এখানে ক্লিক করেন ⚡</a>
     </div>
 
-    <!-- Sidebar -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="playlist-sidebar" id="playlistSidebar">
         <div class="sidebar-header"><h3>📂 More Live TV</h3><button class="close-sidebar" id="closeSidebar">&times;</button></div>
         <div class="sidebar-body" id="playlistItems"><p style="text-align:center;padding:20px;">Loading playlist...</p></div>
     </div>
 
-    <!-- Header -->
     <div class="header">
         <div style="display:flex;align-items:center;">
             <button class="more-btn" id="moreBtn">📺 More Live TV</button>
@@ -140,7 +132,6 @@
         </div>
     </div>
 
-    <!-- Main -->
     <div class="main-content">
         <div class="video-section">
             <video id="video" controls autoplay playsinline></video>
@@ -164,29 +155,33 @@
     </div>
 
     <script>
-        // ========== CHANNEL LIST ==========
+        // ========== UPDATED CHANNEL LIST ==========
         const channels = [
-            // SPORTS
+            // ---- SPORTS (new list with removed channels) ----
+            { name: "Star Sports 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://cdn9.zohanayaan.com:1686/hls/star1in.m3u8?md5=fqofixRfm3jx25Q6XjrYvg&expires=1780148414", category: "sports" },
+            { name: "Star Sports 1 Hindi", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://cdn3.zohanayaan.com:1686/hls/starhindi.m3u8?md5=u20YD1sCvPhUTEoeLNLT5Q&expires=1780148414", category: "sports" },
+            { name: "PTV Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/PTV_Sports_logo.svg/1200px-PTV_Sports_logo.svg.png", url: "https://cdn8.zohanayaan.com:1686/hls/ptvpk.m3u8?md5=oETeXwz1ZIZjvXSUnSrKZA&expires=1780148414", category: "sports" },
+            { name: "Willow HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://cdn7.zohanayaan.com:1686/hls/willowusa.m3u8?md5=NueLdmGzGEU5GL1UqCZomg&expires=1780148415", category: "sports" },
+            { name: "Willow HD 2", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://cdn6.zohanayaan.com:1686/hls/willowextra.m3u8?md5=cR3TLWhASniVdwfbYlDGbQ&expires=1780148415", category: "sports" },
+            { name: "Ten Sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Ten_Sports_logo.svg/1200px-Ten_Sports_logo.svg.png", url: "https://cdn6.zohanayaan.com:1686/hls/tenspk.m3u8?md5=q4RgL5m2_HJMfYaDiZ2X0g&expires=1780148415", category: "sports" },
+            { name: "A Sports HD", logo: "", url: "https://cdn2.zohanayaan.com:1686/hls/asportshd.m3u8?md5=OzzEP2bhDy_VSbDdjDilrw&expires=1780148415", category: "sports" },
+            { name: "Sky Sports Cricket", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Sky_Sports_Cricket_logo.svg/1200px-Sky_Sports_Cricket_logo.svg.png", url: "https://cdn5.zohanayaan.com:1686/hls/skyscric.m3u8?md5=77q_5rG8-Izv_jSTA2SqCw&expires=1780148415", category: "sports" },
+            { name: "Sky Sports Main Event", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Sky_Sports_Main_Event_logo.svg/1200px-Sky_Sports_Main_Event_logo.svg.png", url: "https://cdn4.zohanayaan.com:1686/hls/skysme.m3u8?md5=W8a9lqXlqpRJz0EJjHziMw&expires=1780148415", category: "sports" },
+            { name: "TNT 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/TNT_Sports_logo.svg/1200px-TNT_Sports_logo.svg.png", url: "https://cdn9.zohanayaan.com:1686/hls/bbtsp1.m3u8?md5=WHvuwCOtgD1o-KaNVMyriQ&expires=1780148416", category: "sports" },
+            { name: "TNT 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/TNT_Sports_logo.svg/1200px-TNT_Sports_logo.svg.png", url: "https://cdn2.zohanayaan.com:1686/hls/bbtsp2.m3u8?md5=s6j8Is2KXhVcek6Xq2JsdQ&expires=1780148416", category: "sports" },
+            { name: "TNT 3", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/TNT_Sports_logo.svg/1200px-TNT_Sports_logo.svg.png", url: "https://cdn10.zohanayaan.com:1686/hls/bbtsp3.m3u8?md5=Fomsz71-E0Mm5whzHKxljQ&expires=1780148416", category: "sports" },
+            { name: "TNT 4", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/TNT_Sports_logo.svg/1200px-TNT_Sports_logo.svg.png", url: "https://cdn2.zohanayaan.com:1686/hls/bbtespn.m3u8?md5=LUBHMYYQ42ozfzTtTkp6bA&expires=1780148416", category: "sports" },
+            { name: "Sony Sports 3", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://cdn8.zohanayaan.com:1686/hls/ten1hd.m3u8?md5=OQx-xqlY3QWWh7BJrfSh_w&expires=1780148421", category: "sports" },
+            { name: "Fox Cricket 501 HD", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/FOX_Sports_2_logo.svg/1200px-FOX_Sports_2_logo.svg.png", url: "https://cdn3.zohanayaan.com:1686/hls/fox501.m3u8?md5=KpKQQd2fNPYKzLh_NbwmuA&expires=1780148420", category: "sports" },
+            { name: "ESPN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://cdn3.zohanayaan.com:1686/hls/espnusa.m3u8?md5=nXS-zFMi3YOCMiUBo_ZDUQ&expires=1780148420", category: "sports" },
+            { name: "ESPN 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://cdn4.zohanayaan.com:1686/hls/espn2.m3u8?md5=i1E9nQuwtLGiy0pzomgqMQ&expires=1780148420", category: "sports" },
+            // Existing sports channels that are kept
             { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
-            { name: "TSN 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-2/index.m3u8?token=2da400f73e6900b9e8b920c15e900f65acc33bbd-3e88ff2732ab01592b3fc131a54f904d-1780069011-1780058211", category: "sports" },
-            { name: "TSN 3", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-3/index.m3u8?token=c718a544e8fc3efd84dfd0db7c480f3c3448edb1-853faa01ec76230c413d097d01500cb3-1780068969-1780058169", category: "sports" },
             { name: "Ten Cricket", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Ten_Cricket_logo.svg/1200px-Ten_Cricket_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
-            { name: "ESPN", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/espn/index.m3u8?token=c7b68e908ad52a200ce4b977accb43b7b419e181-585d1d16cffdbd9c27c779ed967dc4f0-1780067986-1780057186", category: "sports" },
             { name: "Sony Ten 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
             { name: "Sony Ten 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
             { name: "Sony Ten 5", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
             { name: "Euro Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Eurosport_Logo.svg/1200px-Eurosport_Logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "NFL Network", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/NFL_Network_logo.svg/1200px-NFL_Network_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Golf Channel", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Golf_Channel_logo.svg/1200px-Golf_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Gold Cricket", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "T Sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "K Sports", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/ktv-sport-plus/index.m3u8?token=2c69d72ca35fe352f899b066896a6d24541285ba-413b7a1283f9532cee9f21ccf44676c4-1780068459-1780057659", category: "sports" },
-            { name: "Extreme Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Extreme_Sports_Channel_logo.svg/1200px-Extreme_Sports_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/xtrem-sports/index.m3u8?token=9daf82b6356eb5ca1f193298be270e92466fc4e2-b9ae295344d4281a8b9887743357229d-1780068527-1780057727", category: "sports" },
-            { name: "SF TV", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports Talk", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Fox Sports 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/FOX_Sports_2_logo.svg/1200px-FOX_Sports_2_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports E", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "More Then Sports TV", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/more-then-sports-tv/index.m3u8?token=eff335a70ebaa1234552ee70aeb926e8aa0ffac8-ae9751ed05b4246cef3d082a91c8609b-1780068772-1780057972", category: "sports" },
             { name: "FIFA Plus", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/FIFA%2B_logo.svg/1200px-FIFA%2B_logo.svg.png", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
             { name: "Willow TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "T Sports HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
@@ -195,7 +190,7 @@
             { name: "Sports Grid", logo: "", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "Star Sports 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
 
-            // NEWS
+            // ---- NEWS ----
             { name: "Channel 9", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Desh_TV_logo.svg/1200px-Desh_TV_logo.svg.png", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Nexus TV", logo: "", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -208,7 +203,7 @@
             { name: "DBC News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/DBC_News_logo.svg/1200px-DBC_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", logo: "", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
 
-            // BANGLA
+            // ---- BANGLA ----
             { name: "BTV", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bangladesh_Television_logo.svg/1200px-Bangladesh_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/RTV_Bangla_logo.svg/1200px-RTV_Bangla_logo.svg.png", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "Channel I HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Channel_i_logo.svg/1200px-Channel_i_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
@@ -231,7 +226,7 @@
             { name: "CNN Now", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/1200px-CNN.svg.png", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Star_Jalsha_logo.svg/1200px-Star_Jalsha_logo.svg.png", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
 
-            // KIDS
+            // ---- KIDS ----
             { name: "Tom & Jerry", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tom_and_Jerry_logo.svg/1200px-Tom_and_Jerry_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Doraemon_logo.svg/1200px-Doraemon_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Mr._Bean_logo.svg/1200px-Mr._Bean_logo.svg.png", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -308,7 +303,7 @@
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // YouTube No Ads button - opens Invidious
+        // YouTube No Ads
         openYtBtn.addEventListener("click", () => {
             window.open("https://inv.nadeko.net", "_blank");
         });
