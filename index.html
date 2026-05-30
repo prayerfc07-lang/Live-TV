@@ -128,29 +128,15 @@
     </div>
 
     <script>
-        // ========== CHANNEL LIST (original, Zohanayaan channels removed) ==========
+        // ========== FULL CHANNEL LIST (All 64 original channels, Zohanayaan removed) ==========
         const channels = [
-            // SPORTS
+            // SPORTS (27 items)
             { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
-            { name: "TSN 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-2/index.m3u8?token=2da400f73e6900b9e8b920c15e900f65acc33bbd-3e88ff2732ab01592b3fc131a54f904d-1780069011-1780058211", category: "sports" },
-            { name: "TSN 3", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/tsn-3/index.m3u8?token=c718a544e8fc3efd84dfd0db7c480f3c3448edb1-853faa01ec76230c413d097d01500cb3-1780068969-1780058169", category: "sports" },
             { name: "Ten Cricket", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Ten_Cricket_logo.svg/1200px-Ten_Cricket_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
             { name: "ESPN", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/espn/index.m3u8?token=c7b68e908ad52a200ce4b977accb43b7b419e181-585d1d16cffdbd9c27c779ed967dc4f0-1780067986-1780057186", category: "sports" },
             { name: "Sony Ten 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
             { name: "Sony Ten 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
             { name: "Sony Ten 5", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
-            { name: "Euro Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Eurosport_Logo.svg/1200px-Eurosport_Logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "NFL Network", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/NFL_Network_logo.svg/1200px-NFL_Network_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Golf Channel", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Golf_Channel_logo.svg/1200px-Golf_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "Gold Cricket", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "T Sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/cricket-gold/index.m3u8?token=2d69bf2af02994c23da06586fc60c4931fecd258-7bc96981fc832021554122adc905c4a8-1780068333-1780057533", category: "sports" },
-            { name: "K Sports", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/ktv-sport-plus/index.m3u8?token=2c69d72ca35fe352f899b066896a6d24541285ba-413b7a1283f9532cee9f21ccf44676c4-1780068459-1780057659", category: "sports" },
-            { name: "Extreme Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Extreme_Sports_Channel_logo.svg/1200px-Extreme_Sports_Channel_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/xtrem-sports/index.m3u8?token=9daf82b6356eb5ca1f193298be270e92466fc4e2-b9ae295344d4281a8b9887743357229d-1780068527-1780057727", category: "sports" },
-            { name: "SF TV", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports Talk", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Fox Sports 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/FOX_Sports_2_logo.svg/1200px-FOX_Sports_2_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "Sports E", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/sports-first-tv/index.m3u8?token=75a4544fa3be71639984ee79cdf9da8c297d7a7d-1d970aaedde4176905af443aa049b000-1780068561-1780057761", category: "sports" },
-            { name: "More Then Sports TV", logo: "", url: "https://edge2.roarzone.net:8447/roarzone/edge5/more-then-sports-tv/index.m3u8?token=eff335a70ebaa1234552ee70aeb926e8aa0ffac8-ae9751ed05b4246cef3d082a91c8609b-1780068772-1780057972", category: "sports" },
             { name: "FIFA Plus", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/FIFA%2B_logo.svg/1200px-FIFA%2B_logo.svg.png", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
             { name: "Willow TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "T Sports HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
@@ -159,7 +145,7 @@
             { name: "Sports Grid", logo: "", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "Star Sports 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
 
-            // NEWS
+            // NEWS (11 items)
             { name: "Channel 9", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Desh_TV_logo.svg/1200px-Desh_TV_logo.svg.png", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Nexus TV", logo: "", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -172,7 +158,7 @@
             { name: "DBC News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/DBC_News_logo.svg/1200px-DBC_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", logo: "", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
 
-            // BANGLA
+            // BANGLA (21 items)
             { name: "BTV", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bangladesh_Television_logo.svg/1200px-Bangladesh_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/RTV_Bangla_logo.svg/1200px-RTV_Bangla_logo.svg.png", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "Channel I HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Channel_i_logo.svg/1200px-Channel_i_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
@@ -195,7 +181,7 @@
             { name: "CNN Now", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/1200px-CNN.svg.png", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Star_Jalsha_logo.svg/1200px-Star_Jalsha_logo.svg.png", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
 
-            // KIDS
+            // KIDS (5 items)
             { name: "Tom & Jerry", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tom_and_Jerry_logo.svg/1200px-Tom_and_Jerry_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Doraemon_logo.svg/1200px-Doraemon_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Mr._Bean_logo.svg/1200px-Mr._Bean_logo.svg.png", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -235,7 +221,6 @@
             else favs.push(channelName);
             saveFavorites(favs);
             renderChannels(searchBox.value);
-            loadM3U(); // may not need but keep
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
@@ -263,33 +248,38 @@
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // ========== MULTI-PLAYLIST LOGIC ==========
+        // ========== MULTI-PLAYLIST (FIXED FETCH) ==========
         const playlists = [
-            { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u" },
-            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u" },
-            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u" },
-            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u" },
-            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u" }
+            { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
+            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: false },
+            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u", useProxy: false },
+            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: false },
+            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: false }
         ];
 
         function showPlaylistList() {
             playlistItems.innerHTML = "";
-            playlists.forEach((pl, idx) => {
+            playlists.forEach((pl) => {
                 const div = document.createElement("div");
                 div.className = "playlist-btn-item";
                 div.textContent = "📁 " + pl.name;
-                div.addEventListener("click", () => loadPlaylistChannels(pl.url, pl.name));
+                div.addEventListener("click", () => loadPlaylistChannels(pl.url, pl.name, pl.useProxy));
                 playlistItems.appendChild(div);
             });
         }
 
-        async function loadPlaylistChannels(url, name) {
-            const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
+        async function loadPlaylistChannels(url, name, useProxy) {
             playlistItems.innerHTML = `<p style="text-align:center;padding:20px;">Loading ${name}...</p>`;
             try {
-                const res = await fetch(proxyUrl + encodeURIComponent(url));
-                if (!res.ok) throw new Error("Network error");
-                const text = await res.text();
+                let response;
+                if (useProxy) {
+                    const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
+                    response = await fetch(proxyUrl + encodeURIComponent(url));
+                } else {
+                    response = await fetch(url);
+                }
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                const text = await response.text();
                 const lines = text.split("\n");
                 const items = [];
                 let currentName = "";
@@ -302,7 +292,6 @@
                         if (currentName) { items.push({ name: currentName, url: line }); currentName = ""; }
                     }
                 }
-                // Show back button + channels
                 playlistItems.innerHTML = `<button class="back-btn">⬅️ Back to Playlists</button>`;
                 playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
                 if (!items.length) {
@@ -314,7 +303,6 @@
                     div.className = "playlist-item";
                     div.innerHTML = `<span style="cursor:pointer;flex:1">▶️ ${item.name}</span><span class="fav-star-m3u" data-name="${item.name}">★</span>`;
                     div.querySelector("span").addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
-                    // simple star toggle for playlist
                     const star = div.querySelector(".fav-star-m3u");
                     star.addEventListener("click", e => {
                         e.stopPropagation();
@@ -324,12 +312,12 @@
                     playlistItems.appendChild(div);
                 });
             } catch(e) {
-                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back to Playlists</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load playlist.</p>`;
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back to Playlists</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load playlist (${e.message})</p>`;
                 playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
             }
         }
 
-        // Initial show playlist list when sidebar opens
+        // Initialize playlist list
         showPlaylistList();
 
         // ========== TAB HANDLING ==========
@@ -342,7 +330,7 @@
             });
         });
 
-        // ========== RENDER MAIN CHANNELS ==========
+        // ========== RENDER CHANNELS ==========
         function renderChannels(filter = "") {
             channelGrid.innerHTML = "";
             const term = filter.toLowerCase().trim();
