@@ -16,8 +16,10 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
+        /* HEADER */
         .header {
             background: #111122;
             padding: 10px 20px;
@@ -28,11 +30,38 @@
             gap: 10px;
             border-bottom: 2px solid #e63946;
             flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
+
+        /* Hamburger */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 5px;
+            background: none;
+            border: none;
+            outline: none;
+            margin-right: 10px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
         .logo {
             font-size: 22px;
             font-weight: bold;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .logo span { color: #e63946; }
 
@@ -74,6 +103,88 @@
         .msg-btn { background: #006aff; }
         .msg-btn:hover { background: #0055cc; }
 
+        /* SIDEBAR OVERLAY */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 20;
+            display: none;
+        }
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        /* SIDEBAR PANEL */
+        .playlist-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: #1a1a2e;
+            z-index: 30;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.8);
+        }
+        .playlist-sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            background: #0d0d14;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        .sidebar-header h3 {
+            font-size: 18px;
+            color: #e63946;
+        }
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .sidebar-body::-webkit-scrollbar { width: 5px; }
+        .sidebar-body::-webkit-scrollbar-thumb { background: #e63946; border-radius: 10px; }
+
+        .playlist-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            background: #1e1e30;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+        }
+        .playlist-item:hover {
+            background: #2a2a40;
+            border-color: #e63946;
+        }
+        .playlist-item .play-icon {
+            font-size: 18px;
+        }
+
+        /* MAIN CONTENT (unchanged) */
         .main-content {
             display: flex;
             flex-direction: column;
@@ -228,8 +339,30 @@
 </head>
 <body>
 
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- PLAYLIST SIDEBAR -->
+    <div class="playlist-sidebar" id="playlistSidebar">
+        <div class="sidebar-header">
+            <h3>📂 M3U Playlist</h3>
+            <button class="close-sidebar" id="closeSidebar">&times;</button>
+        </div>
+        <div class="sidebar-body" id="playlistItems">
+            <p style="text-align:center;padding:20px;">Loading playlist...</p>
+        </div>
+    </div>
+
+    <!-- HEADER -->
     <div class="header">
-        <div class="logo">📺 Live TV <span>by F. M. Prayer</span></div>
+        <div style="display:flex; align-items:center;">
+            <button class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">📺 Live TV <span>by F. M. Prayer</span></div>
+        </div>
         <div class="header-actions">
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels...">
             <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
@@ -237,6 +370,7 @@
         </div>
     </div>
 
+    <!-- MAIN CONTENT (same as before) -->
     <div class="main-content">
         <div class="video-section">
             <video id="video" controls autoplay playsinline></video>
@@ -261,7 +395,7 @@
     </div>
 
     <script>
-        // ========== CHANNEL LIST WITH CATEGORIES ==========
+        // ========== CHANNEL LIST (unchanged) ==========
         const channels = [
             // ---- SPORTS ----
             { name: "TSN 1", icon: "📡", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
@@ -292,7 +426,7 @@
             { name: "Sports Grid", icon: "📊", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "Star Sports 1", icon: "⭐", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
 
-            // ---- NEWS (only these 11) ----
+            // ---- NEWS ----
             { name: "Channel 9", icon: "9️⃣", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", icon: "🇧🇩", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Nexus TV", icon: "🔗", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -305,7 +439,7 @@
             { name: "DBC News", icon: "📋", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", icon: "🕐", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
 
-            // ---- BANGLA (entertainment/general) ----
+            // ---- BANGLA ----
             { name: "BTV", icon: "📺", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", icon: "🔴", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "Channel I HD", icon: "🅸", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
@@ -336,6 +470,7 @@
             { name: "Gopal Bhar", icon: "👳", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
+        // DOM elements
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
         const playingTitle = document.getElementById("playingTitle");
@@ -345,10 +480,82 @@
         const searchBox = document.getElementById("searchBox");
         const tabBtns = document.querySelectorAll(".tab-btn");
 
+        // Sidebar elements
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+        const playlistSidebar = document.getElementById("playlistSidebar");
+        const closeSidebar = document.getElementById("closeSidebar");
+        const playlistItems = document.getElementById("playlistItems");
+
         let hls = null;
         let activeCard = null;
         let currentCategory = "all";
 
+        // Toggle sidebar
+        function openSidebar() {
+            playlistSidebar.classList.add("open");
+            sidebarOverlay.classList.add("open");
+        }
+        function closeSidebarFn() {
+            playlistSidebar.classList.remove("open");
+            sidebarOverlay.classList.remove("open");
+        }
+        hamburgerBtn.addEventListener("click", openSidebar);
+        closeSidebar.addEventListener("click", closeSidebarFn);
+        sidebarOverlay.addEventListener("click", closeSidebarFn);
+
+        // Load M3U playlist
+        async function loadM3U() {
+            try {
+                const response = await fetch("https://go.skym3u.top/69di.m3u");
+                const text = await response.text();
+                const lines = text.split("\n");
+                const items = [];
+                let currentName = "";
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith("#EXTINF:")) {
+                        // extract name after comma
+                        const commaIndex = line.indexOf(",");
+                        if (commaIndex !== -1) {
+                            currentName = line.substring(commaIndex + 1).trim();
+                        } else {
+                            currentName = "Unknown";
+                        }
+                    } else if (line && !line.startsWith("#")) {
+                        // URL line
+                        if (currentName) {
+                            items.push({ name: currentName, url: line });
+                            currentName = "";
+                        }
+                    }
+                }
+                // Render items
+                playlistItems.innerHTML = "";
+                if (items.length === 0) {
+                    playlistItems.innerHTML = "<p style='text-align:center;padding:20px;'>No channels found in playlist.</p>";
+                    return;
+                }
+                items.forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "playlist-item";
+                    div.innerHTML = `<span class="play-icon">▶️</span> ${item.name}`;
+                    div.addEventListener("click", () => {
+                        // Play the channel (same function as before)
+                        playChannel(item.url, item.name, null);
+                        closeSidebarFn();
+                    });
+                    playlistItems.appendChild(div);
+                });
+            } catch (error) {
+                playlistItems.innerHTML = "<p style='text-align:center;padding:20px;color:#ff6b6b;'>Failed to load playlist.</p>";
+            }
+        }
+
+        // Load playlist when page ready
+        loadM3U();
+
+        // Tab functionality
         tabBtns.forEach(btn => {
             btn.addEventListener("click", () => {
                 tabBtns.forEach(b => b.classList.remove("active"));
@@ -386,9 +593,15 @@
         searchBox.addEventListener("input", () => renderChannels(searchBox.value));
 
         function playChannel(url, name, card) {
-            if (activeCard) activeCard.classList.remove("active");
-            card.classList.add("active");
-            activeCard = card;
+            // If card is null (from playlist), just play, no card highlight
+            if (card) {
+                if (activeCard) activeCard.classList.remove("active");
+                card.classList.add("active");
+                activeCard = card;
+            } else {
+                if (activeCard) activeCard.classList.remove("active");
+                activeCard = null; // no grid highlight
+            }
 
             playingTitle.textContent = name;
             liveBadge.style.display = "inline-block";
@@ -441,6 +654,7 @@
             }
         }
 
+        // Initial render of grid
         renderChannels();
     </script>
 </body>
