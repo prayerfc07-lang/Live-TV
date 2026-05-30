@@ -23,7 +23,6 @@
             background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
             height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative;transition:background .3s,color .3s
         }
-        /* নোটিফিকেশন বার */
         .notification-bar{
             background:#222;color:#f1c40f;padding:6px 0;overflow:hidden;white-space:nowrap;
             cursor:pointer;position:relative;z-index:11;border-bottom:1px solid var(--border)
@@ -31,10 +30,7 @@
         .notification-bar a{
             display:inline-block;padding-left:100%;animation:marquee 20s linear infinite;color:#f1c40f;text-decoration:none;font-weight:500
         }
-        .notification-bar a:hover{text-decoration:underline}
-        @keyframes marquee{
-            0%{transform:translateX(100%)}100%{transform:translateX(-100%)}
-        }
+        @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
         .header{
             background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;
             justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--accent);
@@ -54,17 +50,42 @@
             color:var(--text);font-size:14px;outline:none;width:200px;transition:0.3s
         }
         .search-box:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(230,57,70,0.4)}
-        .social-btn{
+        .social-btn,.yt-btn{
             padding:8px 16px;border-radius:25px;text-decoration:none;color:white;font-weight:600;
-            font-size:13px;display:flex;align-items:center;gap:5px;transition:0.3s
+            font-size:13px;display:flex;align-items:center;gap:5px;transition:0.3s;border:none;cursor:pointer
         }
         .tg-btn{background:#0088cc}.tg-btn:hover{background:#0077b5}
         .msg-btn{background:#006aff}.msg-btn:hover{background:#0055cc}
+        .yt-btn{background:#ff0000}.yt-btn:hover{background:#cc0000}
         .theme-btn,.refresh-btn{
             background:none;border:1px solid var(--border);color:var(--text);font-size:20px;
             cursor:pointer;padding:5px 10px;border-radius:50%;transition:0.3s;display:flex;align-items:center;justify-content:center
         }
         .theme-btn:hover,.refresh-btn:hover{background:var(--card-hover)}
+        /* Modal */
+        .modal-overlay{
+            position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:50;
+            display:none;align-items:center;justify-content:center
+        }
+        .modal-overlay.open{display:flex}
+        .modal{
+            background:var(--section-bg);border-radius:15px;padding:25px;width:90%;max-width:600px;
+            color:var(--text);position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5)
+        }
+        .modal h2{color:var(--accent);margin-bottom:15px}
+        .modal input{
+            width:100%;padding:12px;border-radius:25px;border:1px solid var(--border);background:var(--card-bg);
+            color:var(--text);font-size:16px;margin-bottom:15px;outline:none
+        }
+        .modal button{
+            background:var(--accent);color:white;border:none;padding:12px 25px;border-radius:25px;
+            font-weight:600;cursor:pointer;margin-right:10px;transition:0.2s
+        }
+        .modal button:hover{opacity:0.9}
+        .modal .close-modal{
+            position:absolute;top:10px;right:15px;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer
+        }
+        .modal video{width:100%;max-height:300px;background:black;border-radius:10px;margin-top:10px;display:none}
         .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--overlay-bg);z-index:20;display:none}
         .sidebar-overlay.open{display:block}
         .playlist-sidebar{
@@ -156,7 +177,7 @@
 <body>
 
     <!-- NOTIFICATION BAR -->
-    <div class="notification-bar" id="notificationBar">
+    <div class="notification-bar">
         <a href="https://m.me/mohammed.8805" target="_blank">
             ⚡ যেকোনো গেমের বা অ্যাপসে কিছু নিতে চাইলে সবচেয়ে কম দামে এখানে ক্লিক করেন ⚡
         </a>
@@ -174,6 +195,18 @@
         </div>
     </div>
 
+    <!-- YOUTUBE MODAL -->
+    <div class="modal-overlay" id="ytModalOverlay">
+        <div class="modal">
+            <button class="close-modal" id="closeYtModal">&times;</button>
+            <h2>🎥 YouTube No Ads</h2>
+            <input type="text" id="ytUrlInput" placeholder="Paste YouTube video URL here...">
+            <button id="ytPlayBtn">▶️ Play</button>
+            <video id="ytVideo" controls autoplay playsinline style="display:none;"></video>
+            <p style="margin-top:10px;font-size:13px;color:#aaa;">ভিডিও লোড হতে কয়েক সেকেন্ড সময় নিতে পারে।</p>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <div class="header">
         <div style="display:flex; align-items:center;">
@@ -182,6 +215,7 @@
         </div>
         <div class="header-actions">
             <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels...">
+            <button class="yt-btn" id="openYtModal">▶️ YouTube No Ads</button>
             <button class="refresh-btn" id="refreshBtn" title="Refresh page">🔄</button>
             <button class="theme-btn" id="themeToggle" title="Toggle dark/light mode">🌙</button>
             <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
@@ -216,7 +250,7 @@
     </div>
 
     <script>
-        // CHANNEL LIST WITH OFFICIAL LOGOS (no emoji)
+        // CHANNEL LIST (unchanged)
         const channels = [
             // SPORTS
             { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
@@ -291,6 +325,7 @@
             { name: "Gopal Bhar", logo: "", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
+        // DOM references
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
         const playingTitle = document.getElementById("playingTitle");
@@ -307,6 +342,12 @@
         const playlistSidebar = document.getElementById("playlistSidebar");
         const closeSidebar = document.getElementById("closeSidebar");
         const playlistItems = document.getElementById("playlistItems");
+        const openYtModal = document.getElementById("openYtModal");
+        const ytModalOverlay = document.getElementById("ytModalOverlay");
+        const closeYtModal = document.getElementById("closeYtModal");
+        const ytUrlInput = document.getElementById("ytUrlInput");
+        const ytPlayBtn = document.getElementById("ytPlayBtn");
+        const ytVideo = document.getElementById("ytVideo");
 
         let hls = null;
         let activeCard = null;
@@ -324,7 +365,7 @@
             else favs.push(channelName);
             saveFavorites(favs);
             renderChannels(searchBox.value);
-            loadM3U(); // refresh playlist stars
+            loadM3U();
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
@@ -348,14 +389,82 @@
             } catch(e) {}
         });
 
-        // Sidebar (More Live TV)
+        // Sidebar
         function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
         function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
         moreBtn.addEventListener("click", openSidebar);
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // Load M3U with favorite stars
+        // YouTube Modal
+        openYtModal.addEventListener("click", () => ytModalOverlay.classList.add("open"));
+        closeYtModal.addEventListener("click", () => ytModalOverlay.classList.remove("open"));
+        ytModalOverlay.addEventListener("click", (e) => { if (e.target === ytModalOverlay) ytModalOverlay.classList.remove("open"); });
+
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        ytPlayBtn.addEventListener("click", async () => {
+            const url = ytUrlInput.value.trim();
+            const videoId = extractYouTubeId(url);
+            if (!videoId) {
+                alert("Invalid YouTube URL");
+                return;
+            }
+            // Use Invidious API via CORS proxy
+            const invidiousApi = `https://inv.nadeko.net/api/v1/videos/${videoId}`;
+            const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(invidiousApi)}`;
+            try {
+                const res = await fetch(proxyUrl);
+                const data = await res.json();
+                // Find HLS stream (adaptiveFormats with type "application/x-mpegURL" or formatStreams)
+                let streamUrl = null;
+                if (data.formatStreams && data.formatStreams.length > 0) {
+                    // Prefer HLS
+                    for (const fmt of data.formatStreams) {
+                        if (fmt.url && fmt.type && fmt.type.startsWith("application/x-mpegURL")) {
+                            streamUrl = fmt.url;
+                            break;
+                        }
+                    }
+                    if (!streamUrl) streamUrl = data.formatStreams[0].url;
+                } else if (data.adaptiveFormats) {
+                    for (const fmt of data.adaptiveFormats) {
+                        if (fmt.type && fmt.type.startsWith("application/x-mpegURL")) {
+                            streamUrl = fmt.url;
+                            break;
+                        }
+                    }
+                }
+                if (!streamUrl) throw new Error("No stream found");
+                // Play in modal video element
+                if (Hls.isSupported()) {
+                    if (hls) { hls.destroy(); hls = null; }
+                    hls = new Hls();
+                    hls.loadSource(streamUrl);
+                    hls.attachMedia(ytVideo);
+                    hls.on(Hls.Events.MANIFEST_PARSED, () => { ytVideo.style.display = "block"; ytVideo.play(); });
+                } else if (ytVideo.canPlayType("application/vnd.apple.mpegurl")) {
+                    ytVideo.src = streamUrl;
+                    ytVideo.style.display = "block";
+                    ytVideo.play();
+                } else {
+                    // Fallback to first direct mp4
+                    if (data.formatStreams) {
+                        ytVideo.src = data.formatStreams[0].url;
+                        ytVideo.style.display = "block";
+                        ytVideo.play();
+                    }
+                }
+            } catch (err) {
+                alert("Failed to load video. Try another video or check the link.");
+            }
+        });
+
+        // Load M3U with fav stars
         async function loadM3U() {
             const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
             const m3uUrl = "https://go.skym3u.top/69di.m3u";
@@ -409,12 +518,10 @@
             });
         });
 
-        // Render channels
         function renderChannels(filter = "") {
             channelGrid.innerHTML = "";
             const term = filter.toLowerCase().trim();
             let filtered = channels;
-
             if (currentCategory === "favorites") {
                 const favNames = getFavorites();
                 filtered = filtered.filter(ch => favNames.includes(ch.name));
@@ -422,12 +529,10 @@
                 filtered = filtered.filter(ch => ch.category === currentCategory);
             }
             if (term) filtered = filtered.filter(ch => ch.name.toLowerCase().includes(term));
-
             if (!filtered.length) {
                 channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>';
                 return;
             }
-
             filtered.forEach(ch => {
                 const card = document.createElement("div");
                 card.className = "channel-card";
