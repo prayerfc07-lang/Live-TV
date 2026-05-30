@@ -24,7 +24,6 @@
             height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
         }
 
-        /* Popup */
         .popup-overlay {
             position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:100;
             display:flex;align-items:center;justify-content:center;animation:fadeIn .3s
@@ -43,7 +42,6 @@
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
 
-        /* Notification */
         .notification-bar{
             background:#222;color:#f1c40f;padding:8px 10px;text-align:center;cursor:pointer;
             z-index:11;border-bottom:1px solid var(--border);font-weight:500;font-size:14px
@@ -303,13 +301,15 @@
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
+        // ⚡ সব প্লেলিস্ট এখন নির্ভরযোগ্যভাবে লোড হবে (প্রক্সি সহ)
         const playlists = [
             { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
-            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: false },
-            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u", useProxy: false },
-            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: false },
-            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: false }
+            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: true },
+            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u", useProxy: true },
+            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: true },
+            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: true }
         ];
+
         function showPlaylistList() {
             playlistItems.innerHTML = "";
             playlists.forEach(pl => {
@@ -319,10 +319,13 @@
                 playlistItems.appendChild(div);
             });
         }
+
         async function loadPlaylistChannels(url, name, useProxy) {
             playlistItems.innerHTML = `<p style="text-align:center;padding:20px;">Loading ${name}...</p>`;
             try {
-                let response = useProxy ? await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url)) : await fetch(url);
+                let response = useProxy
+                    ? await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url))
+                    : await fetch(url);
                 if (!response.ok) throw new Error("HTTP " + response.status);
                 const text = await response.text(); const lines = text.split("\n"); const items = [];
                 let curName = "";
