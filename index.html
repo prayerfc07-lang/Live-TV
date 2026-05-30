@@ -101,7 +101,15 @@
         .channel-card{background:var(--card-bg);border-radius:12px;padding:15px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:0.2s;border:2px solid transparent;text-align:center;font-size:14px;font-weight:500;color:var(--text-light);position:relative}
         .channel-card:hover{background:var(--card-hover);border-color:var(--accent);color:var(--text);transform:translateY(-3px);box-shadow:0 6px 15px rgba(0,0,0,0.5)}
         .channel-card.active{background:var(--accent);border-color:var(--accent);color:white;font-weight:bold;box-shadow:0 0 20px rgba(230,57,70,0.5)}
-        .channel-logo{width:48px;height:48px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,0.1);padding:4px}
+
+        /* নতুন লোগো স্টাইল */
+        .channel-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: 700; color: white;
+            text-transform: uppercase; flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
         .channel-name{font-size:13px;word-break:break-word;max-width:100%}
         .favorite-star{position:absolute;top:5px;right:8px;font-size:18px;cursor:pointer;z-index:2;color:#888;background:none;border:none}
         .favorite-star.fav{color:#f1c40f;text-shadow:0 0 8px rgba(241,196,15,0.8)}
@@ -111,7 +119,6 @@
 </head>
 <body>
 
-    <!-- POPUP -->
     <div class="popup-overlay" id="welcomePopup">
         <div class="popup-box">
             <button class="popup-close" id="closePopup">&times;</button>
@@ -122,25 +129,21 @@
         </div>
     </div>
 
-    <!-- NOTIFICATION BAR -->
-    <div class="notification-bar" id="notificationBar">
+    <div class="notification-bar">
         <a href="https://m.me/mohammed.8805" target="_blank">🔥 আপনার সকল গেমিং ও ডিজিটাল সার্ভিসের বিশ্বস্ত ঠিকানা!</a>
     </div>
 
-    <!-- SIDEBAR -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="playlist-sidebar" id="playlistSidebar">
         <div class="sidebar-header"><h3>📂 Playlists</h3><button class="close-sidebar" id="closeSidebar">&times;</button></div>
         <div class="sidebar-body" id="playlistItems"><p style="text-align:center;padding:20px;">Loading playlists...</p></div>
     </div>
 
-    <!-- HEADER -->
     <div class="header">
         <div style="display:flex;align-items:center;"><button class="more-btn" id="moreBtn">📺 More Live TV</button><div class="logo">Live TV <span>by F. M. Prayer</span></div></div>
         <div class="header-actions"><input type="text" class="search-box" id="searchBox" placeholder="🔍 Search channels..."><button class="refresh-btn" id="refreshBtn">🔄</button><button class="theme-btn" id="themeToggle">🌙</button><a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a><a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a></div>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="video-section">
             <video id="video" controls autoplay playsinline></video>
@@ -164,79 +167,95 @@
     </div>
 
     <script>
-        // Popup
         const popup = document.getElementById("welcomePopup");
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // ========== UPDATED CHANNEL LIST (all logos reliable, missing ones have SVG fallback) ==========
+        // চ্যানেল লিস্ট (লোগো ছাড়াই)
         const channels = [
-            // SPORTS (19 items)
-            { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
-            { name: "TSN 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "TSN 3", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
-            { name: "ESPN", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png", url: "https://tvsen5.aynaott.com/espn/index.m3u8", category: "sports" },
-            { name: "Ten Cricket", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Ten_Cricket_logo.svg/1200px-Ten_Cricket_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
-            { name: "Sony Ten 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
-            { name: "Sony Ten 2", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
-            { name: "Sony Ten 5", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
-            { name: "Euro Sports", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Eurosport_Logo.svg/1200px-Eurosport_Logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
-            { name: "FIFA Plus", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/FIFA%2B_logo.svg/1200px-FIFA%2B_logo.svg.png", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
-            { name: "Willow TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Willow_TV_logo.svg/1200px-Willow_TV_logo.svg.png", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "T Sports HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/T_Sports_logo.svg/1200px-T_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Goal TV HD", logo: "", url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8", category: "sports" },
-            { name: "ASports HD", logo: "", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Sports Grid", logo: "", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Star Sports 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-            { name: "Bein Sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/BeIN_Sports_logo.svg/1200px-BeIN_Sports_logo.svg.png", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8", category: "sports" },
-            { name: "Sony Max", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Sony_Max_logo.svg/1200px-Sony_Max_logo.svg.png", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
-            { name: "Discovery", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Discovery_Channel_logo.svg/1200px-Discovery_Channel_logo.svg.png", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
-
-            // NEWS (12 items)
-            { name: "Star News", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
-            { name: "Channel 9", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
-            { name: "Desh TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Desh_TV_logo.svg/1200px-Desh_TV_logo.svg.png", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-            { name: "Nexus TV", logo: "", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-            { name: "Global TV", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Channel 1", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Ayna TV", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8", category: "news" },
-            { name: "Jago News", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Jago_News_24_logo.svg/1200px-Jago_News_24_logo.svg.png", url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8", category: "news" },
-            { name: "Jamuna TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Jamuna_TV_logo.svg/1200px-Jamuna_TV_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
-            { name: "DBC News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/DBC_News_logo.svg/1200px-DBC_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
-            { name: "Ekhon TV", logo: "", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-            { name: "Srktv", logo: "", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
-
-            // BANGLA (22 items, including Islamic TV)
-            { name: "Islamic TV", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
-            { name: "BTV", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bangladesh_Television_logo.svg/1200px-Bangladesh_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
-            { name: "RTV Live", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/RTV_Bangla_logo.svg/1200px-RTV_Bangla_logo.svg.png", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "Channel I HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Channel_i_logo.svg/1200px-Channel_i_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
-            { name: "Deepto TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Deepto_TV_logo.svg/1200px-Deepto_TV_logo.svg.png", url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8", category: "bangla" },
-            { name: "NTV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/71/NTV_Bangla_logo.svg/1200px-NTV_Bangla_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8", category: "bangla" },
-            { name: "Bangla Vision", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Bangla_Vision_logo.svg/1200px-Bangla_Vision_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8", category: "bangla" },
-            { name: "Ekattor TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Ekattor_TV_logo.svg/1200px-Ekattor_TV_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8", category: "bangla" },
-            { name: "Ekushe TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Ekushe_Television_logo.svg/1200px-Ekushe_Television_logo.svg.png", url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "Maasranga TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a5/Maasranga_Television_logo.svg/1200px-Maasranga_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8", category: "bangla" },
-            { name: "Channel S", logo: "", url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8", category: "bangla" },
-            { name: "Boishakhi TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boishakhi_TV_logo.svg/1200px-Boishakhi_TV_logo.svg.png", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8", category: "bangla" },
-            { name: "GTV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d6/Gazi_Television_logo.svg/1200px-Gazi_Television_logo.svg.png", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
-            { name: "Mohona TV", logo: "", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
-            { name: "Bijoy TV", logo: "", url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8", category: "bangla" },
-            { name: "News 24", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/21/News_24_%28Bangladesh%29_logo.svg/1200px-News_24_%28Bangladesh%29_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8", category: "bangla" },
-            { name: "Somoy TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Somoy_News_logo.svg/1200px-Somoy_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", category: "bangla" },
-            { name: "Channel 24", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8", category: "bangla" },
-            { name: "Independent TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/25/Independent_Television_logo.svg/1200px-Independent_Television_logo.svg.png", url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "ATN News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/ATN_News_logo.svg/1200px-ATN_News_logo.svg.png", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
-            { name: "CNN Now", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/1200px-CNN.svg.png", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
-            { name: "Star Jalsha", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Star_Jalsha_logo.svg/1200px-Star_Jalsha_logo.svg.png", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
-
-            // KIDS (5 items)
-            { name: "Tom & Jerry", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tom_and_Jerry_logo.svg/1200px-Tom_and_Jerry_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Doraemon", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Doraemon_logo.svg/1200px-Doraemon_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Mr Bean", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Mr._Bean_logo.svg/1200px-Mr._Bean_logo.svg.png", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
-            { name: "Cartoon Network", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/1200px-Cartoon_Network_2010_logo.svg.png", url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8", category: "kids" },
-            { name: "Gopal Bhar", logo: "", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
+            // Sports (19)
+            { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
+            { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "TSN 3", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
+            { name: "ESPN", url: "https://tvsen5.aynaott.com/espn/index.m3u8", category: "sports" },
+            { name: "Ten Cricket", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
+            { name: "Sony Ten 1", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
+            { name: "Sony Ten 2", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_2_hd/index.m3u8?token=71686c6a8259f57254c8594fd20f48f0068508bf-0ca16535dec66ceaf6b613ef46bd9121-1780068090-1780057290", category: "sports" },
+            { name: "Sony Ten 5", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_5_hd/index.m3u8?token=8c9cad0a067b9e23787aae07f36c39c0e8569a25-7dabac20965bcdbb9e35b2c9c49ae0f1-1780068128-1780057328", category: "sports" },
+            { name: "Euro Sports", url: "https://edge2.roarzone.net:8447/roarzone/edge3/euro_sports_hd/index.m3u8?token=5b680d08227dc4767b6ae30648dedc2169fba4b6-5db69043526deed61475a1d28dd9e63f-1780068221-1780057421", category: "sports" },
+            { name: "FIFA Plus", url: "https://37b4c228.wurl.com/manifest/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/6f5437c5-e015-4754-8476-c8c6d27d3a55/1.m3u8", category: "sports" },
+            { name: "Willow TV", url: "https://tvsen5.aynaott.com/willowhd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "T Sports HD", url: "https://tvsen7.aynaott.com/tsports-hd/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Goal TV HD", url: "https://streams2.sofast.tv/sofast/goaltv/goaltv_3500k.m3u8", category: "sports" },
+            { name: "ASports HD", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Sports Grid", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Star Sports 1", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
+            { name: "Bein Sports", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8", category: "sports" },
+            { name: "Sony Max", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
+            { name: "Discovery", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
+            // News (12)
+            { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
+            { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
+            { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Nexus TV", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Global TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/Global-tv.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Channel 1", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/channel1bd.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Ayna TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ayna.stream/tracks-v1a1/mono.m3u8", category: "news" },
+            { name: "Jago News", url: "https://app.ncare.live/live-orgin/jagonews24.stream/live-orgin/jagonews24.stream/chunks.m3u8", category: "news" },
+            { name: "Jamuna TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
+            { name: "DBC News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
+            { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
+            { name: "Srktv", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
+            // Bangla (22)
+            { name: "Islamic TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
+            { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
+            { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "Channel I HD", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
+            { name: "Deepto TV", url: "https://byphdgllyk.gpcdn.net/hls/deeptotv/0_1/index.m3u8", category: "bangla" },
+            { name: "NTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/1716-audio_113462_eng=113200-video=1181200.m3u8", category: "bangla" },
+            { name: "Bangla Vision", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1715/output/1715-audio_113452_eng=113200-video=1181200.m3u8", category: "bangla" },
+            { name: "Ekattor TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1705/output/1705.m3u8", category: "bangla" },
+            { name: "Ekushe TV", url: "https://tvsen6.aynaott.com/etv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "Maasranga TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1722/output/1722.m3u8", category: "bangla" },
+            { name: "Channel S", url: "https://app.ncare.live/live-orgin/channels.stream/live-orgin/channels.stream/chunks.m3u8", category: "bangla" },
+            { name: "Boishakhi TV", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8", category: "bangla" },
+            { name: "GTV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/gazibdz.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
+            { name: "Mohona TV", url: "https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/mohonatv.stream/tracks-v1a1/mono.m3u8", category: "bangla" },
+            { name: "Bijoy TV", url: "https://stream.ottplus.live/live/bijoy_tv_abr/live/bijoy_tv_480/chunks.m3u8", category: "bangla" },
+            { name: "News 24", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1708/output/index.m3u8", category: "bangla" },
+            { name: "Somoy TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", category: "bangla" },
+            { name: "Channel 24", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1703/output/1703-audio_113332_eng=113200-video=2202800.m3u8", category: "bangla" },
+            { name: "Independent TV", url: "https://tvsen6.aynaott.com/independenttv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "ATN News", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
+            { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
+            { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
+            // Kids (5)
+            { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
+            { name: "Cartoon Network", url: "https://tvsen5.aynaott.com/cartoonnetwork/tracks-v1a1/mono.ts.m3u8", category: "kids" },
+            { name: "Gopal Bhar", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
+
+        // রঙ জেনারেটর (নামের উপর ভিত্তি করে)
+        function getColorFromName(name) {
+            const colors = [
+                "#e74c3c", "#3498db", "#2ecc71", "#9b59b6", "#f39c12",
+                "#1abc9c", "#e67e22", "#8e44ad", "#c0392b", "#2980b9",
+                "#27ae60", "#d35400", "#16a085", "#7f8c8d", "#f1c40f"
+            ];
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        // প্রথম অক্ষর বের করা (ইংরেজি/বাংলা/সংখ্যা)
+        function getInitial(name) {
+            if (!name) return "?";
+            return name.trim().charAt(0).toUpperCase();
+        }
 
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
@@ -259,7 +278,6 @@
         let activeCard = null;
         let currentCategory = "all";
 
-        // Favorites
         function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
         function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
         function toggleFavorite(channelName) {
@@ -269,7 +287,6 @@
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
-        // Theme
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
             themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
@@ -283,14 +300,12 @@
             try { if (document.pictureInPictureElement) await document.exitPictureInPicture(); else if (document.pictureInPictureEnabled && video.videoWidth) await video.requestPictureInPicture(); } catch(e) {}
         });
 
-        // Sidebar
         function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
         function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
         moreBtn.addEventListener("click", openSidebar);
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // Playlists
         const playlists = [
             { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
             { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: false },
@@ -337,13 +352,11 @@
         }
         showPlaylistList();
 
-        // Tabs
         tabBtns.forEach(b => b.addEventListener("click", () => {
             tabBtns.forEach(x => x.classList.remove("active")); b.classList.add("active");
             currentCategory = b.dataset.category; renderChannels(searchBox.value);
         }));
 
-        // Render channels with logo fallback
         function renderChannels(filter = "") {
             channelGrid.innerHTML = ""; const term = filter.toLowerCase().trim(); let filtered = channels;
             if (currentCategory === "favorites") { const favs = getFavorites(); filtered = filtered.filter(c => favs.includes(c.name)); }
@@ -353,21 +366,17 @@
             filtered.forEach(ch => {
                 const card = document.createElement("div"); card.className = "channel-card";
 
-                const logoImg = document.createElement("img");
-                logoImg.className = "channel-logo";
-                logoImg.alt = ch.name;
-                // Use SVG fallback if no logo or on error
-                logoImg.src = ch.logo && ch.logo.trim() ? ch.logo : '';
-                logoImg.onerror = function() {
-                    this.onerror = null;
-                    this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" rx="20" fill="%23333"%3E%3C/rect%3E%3Ctext x="50" y="65" font-size="50" text-anchor="middle" fill="%23fff"%3E📺%3C/text%3E%3C/svg%3E';
-                };
+                // অক্ষর-ভিত্তিক লোগো
+                const avatar = document.createElement("div");
+                avatar.className = "channel-avatar";
+                avatar.style.backgroundColor = getColorFromName(ch.name);
+                avatar.textContent = getInitial(ch.name);
 
                 const nameDiv = document.createElement("div"); nameDiv.className = "channel-name"; nameDiv.textContent = ch.name;
                 const star = document.createElement("button"); star.className = "favorite-star" + (isFavorite(ch.name)?" fav":""); star.textContent = "★";
                 star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(ch.name); });
 
-                card.appendChild(logoImg);
+                card.appendChild(avatar);
                 card.appendChild(nameDiv);
                 card.appendChild(star);
                 card.addEventListener("click", e => { if (e.target === star) return; playChannel(ch.url, ch.name, card); });
