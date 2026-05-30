@@ -23,14 +23,48 @@
             background:var(--bg);color:var(--text);font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
             height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s
         }
+
+        /* ========== POPUP MODAL ========== */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .popup-box {
+            background: #1e1e30; color: white; border-radius: 20px;
+            padding: 30px 25px 25px; max-width: 450px; width: 90%;
+            text-align: center; position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--accent);
+            animation: popIn 0.3s ease;
+        }
+        .popup-close {
+            position: absolute; top: 12px; right: 18px;
+            background: none; border: none; color: #aaa; font-size: 28px;
+            cursor: pointer; line-height: 1; transition: 0.2s;
+        }
+        .popup-close:hover { color: white; }
+        .popup-box h3 { color: #f1c40f; margin-bottom: 15px; font-size: 20px; }
+        .popup-box p { margin: 8px 0; font-size: 15px; color: #ddd; }
+        .popup-box .msg-btn-popup {
+            display: inline-block; background: #006aff; color: white;
+            padding: 12px 30px; border-radius: 30px; text-decoration: none;
+            font-weight: bold; margin-top: 15px; transition: 0.3s;
+        }
+        .popup-box .msg-btn-popup:hover { background: #0055cc; transform: scale(1.03); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* ========== NOTIFICATION BAR (Static now) ========== */
         .notification-bar{
-            background:#222;color:#f1c40f;padding:6px 0;overflow:hidden;white-space:nowrap;
-            cursor:pointer;z-index:11;border-bottom:1px solid var(--border)
+            background:#222;color:#f1c40f;padding:8px 10px;text-align:center;
+            cursor:pointer;z-index:11;border-bottom:1px solid var(--border);
+            font-weight:500;font-size:14px;transition:background 0.2s
         }
-        .notification-bar a{
-            display:inline-block;padding-left:100%;animation:marquee 18s linear infinite;color:#f1c40f;text-decoration:none;font-weight:500
-        }
-        @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+        .notification-bar:hover { background: #2a2a2a; }
+        .notification-bar a { color:#f1c40f; text-decoration:none; }
+
         .header{
             background:var(--header-bg);padding:10px 20px;display:flex;align-items:center;
             justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:2px solid var(--accent);
@@ -96,7 +130,23 @@
     </style>
 </head>
 <body>
-    <div class="notification-bar"><a href="https://m.me/mohammed.8805" target="_blank">⚡ যেকোনো গেমের বা অ্যাপসে কিছু নিতে চাইলে সবচেয়ে কম দামে এখানে ক্লিক করেন ⚡</a></div>
+
+    <!-- POPUP MODAL -->
+    <div class="popup-overlay" id="welcomePopup">
+        <div class="popup-box">
+            <button class="popup-close" id="closePopup">&times;</button>
+            <h3>🎮 গেমিং ও ডিজিটাল সার্ভিস</h3>
+            <p>Free Fire, PUBG, COD, FC Mobile, eFootball, TikTok Coins, Facebook Stars — যা লাগবে সব এক জায়গায়!</p>
+            <p>🔥 দ্রুত ডেলিভারি<br>💰 সেরা দাম<br>✅ বিশ্বস্ত সার্ভিস</p>
+            <a href="https://m.me/mohammed.8805" target="_blank" class="msg-btn-popup">💬 এখনই মেসেজ করুন</a>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION BAR (STATIC) -->
+    <div class="notification-bar" id="notificationBar">
+        <a href="https://m.me/mohammed.8805" target="_blank">🔥 আপনার সকল গেমিং ও ডিজিটাল সার্ভিসের বিশ্বস্ত ঠিকানা!</a>
+    </div>
+
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="playlist-sidebar" id="playlistSidebar">
         <div class="sidebar-header"><h3>📂 Playlists</h3><button class="close-sidebar" id="closeSidebar">&times;</button></div>
@@ -128,9 +178,15 @@
     </div>
 
     <script>
-        // ========== UPDATED CHANNEL LIST (Problematic sports removed, others intact) ==========
+        // ========== POPUP CONTROL ==========
+        const popup = document.getElementById("welcomePopup");
+        const closeBtn = document.getElementById("closePopup");
+        closeBtn.addEventListener("click", () => popup.style.display = "none");
+        popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
+
+        // ========== CHANNEL LIST (SAME AS BEFORE - 50 channels) ==========
         const channels = [
-            // SPORTS (13 items - removed NFL, TSN3, ESPN, TSN2, T Sports, Gold Cricket, Golf, K Sports, Sports Talk, SF TV, Extreme Sports, Sports E, More Then Sports TV, Fox Sports 2)
+            // SPORTS (13)
             { name: "TSN 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/TSN_logo.svg/1200px-TSN_logo.svg.png", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "Ten Cricket", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Ten_Cricket_logo.svg/1200px-Ten_Cricket_logo.svg.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/ten_cricket/index.m3u8?token=df932fc2e60d4fb1d364a2a6b773cf4c980179ca-4574ce2fc341b8a9a8209f559bd81ec9-1780067324-1780056524", category: "sports" },
             { name: "Sony Ten 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Sony_TEN_1_HD_logo.png/1200px-Sony_TEN_1_HD_logo.png", url: "https://edge2.roarzone.net:8447/roarzone/edge3/sony_sports_1_hd/index.m3u8?token=ffe1f15ed32da26e52b337f70d435732dd1403d6-7cb878fbc6c2bce310d934cd194e1d4a-1780068028-1780057228", category: "sports" },
@@ -144,8 +200,7 @@
             { name: "ASports HD", logo: "", url: "https://tvsen6.aynaott.com/asports/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "Sports Grid", logo: "", url: "https://tvsen6.aynaott.com/SportsGrid/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "Star Sports 1", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Star_Sports_logo.svg/1200px-Star_Sports_logo.svg.png", url: "https://tvsen7.aynaott.com/sspts1/tracks-v1a1/mono.ts.m3u8", category: "sports" },
-
-            // NEWS (11 items, unchanged)
+            // NEWS (11)
             { name: "Channel 9", logo: "", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Desh_TV_logo.svg/1200px-Desh_TV_logo.svg.png", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Nexus TV", logo: "", url: "https://tvsen6.aynaott.com/nexustv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -157,8 +212,7 @@
             { name: "Jamuna TV", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Jamuna_TV_logo.svg/1200px-Jamuna_TV_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "DBC News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/DBC_News_logo.svg/1200px-DBC_News_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", logo: "", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
-
-            // BANGLA (21 items, unchanged)
+            // BANGLA (21)
             { name: "BTV", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bangladesh_Television_logo.svg/1200px-Bangladesh_Television_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/RTV_Bangla_logo.svg/1200px-RTV_Bangla_logo.svg.png", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "Channel I HD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Channel_i_logo.svg/1200px-Channel_i_logo.svg.png", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/1723-audio_113532_eng=113200-video=2202800.m3u8", category: "bangla" },
@@ -180,8 +234,7 @@
             { name: "ATN News", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/ATN_News_logo.svg/1200px-ATN_News_logo.svg.png", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "CNN Now", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/1200px-CNN.svg.png", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Star_Jalsha_logo.svg/1200px-Star_Jalsha_logo.svg.png", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
-
-            // KIDS (5 items, unchanged)
+            // KIDS (5)
             { name: "Tom & Jerry", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tom_and_Jerry_logo.svg/1200px-Tom_and_Jerry_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Doraemon_logo.svg/1200px-Doraemon_logo.svg.png", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Mr._Bean_logo.svg/1200px-Mr._Bean_logo.svg.png", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -189,7 +242,7 @@
             { name: "Gopal Bhar", logo: "", url: "https://live20.bozztv.com/giatvplayout7/giatv-209611/tracks-v1a1/mono.ts.m3u8", category: "kids" }
         ];
 
-        // DOM references
+        // DOM refs
         const channelGrid = document.getElementById("channelGrid");
         const video = document.getElementById("video");
         const playingTitle = document.getElementById("playingTitle");
@@ -211,20 +264,17 @@
         let activeCard = null;
         let currentCategory = "all";
 
-        // ========== FAVORITES ==========
+        // Favorites
         function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
         function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
         function toggleFavorite(channelName) {
-            const favs = getFavorites();
-            const idx = favs.indexOf(channelName);
-            if (idx > -1) favs.splice(idx, 1);
-            else favs.push(channelName);
-            saveFavorites(favs);
-            renderChannels(searchBox.value);
+            const favs = getFavorites(); const idx = favs.indexOf(channelName);
+            if (idx > -1) favs.splice(idx, 1); else favs.push(channelName);
+            saveFavorites(favs); renderChannels(searchBox.value);
         }
         function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
-        // ========== THEME ==========
+        // Theme
         function toggleTheme() {
             document.body.classList.toggle("light-mode");
             themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
@@ -232,23 +282,20 @@
         }
         if (localStorage.getItem("theme") === "light") { document.body.classList.add("light-mode"); themeToggle.innerHTML = "☀️"; }
         themeToggle.addEventListener("click", toggleTheme);
-
-        // ========== REFRESH ==========
         refreshBtn.addEventListener("click", () => location.reload());
 
-        // ========== PiP ==========
         pipButton.addEventListener("click", async () => {
             try { if (document.pictureInPictureElement) await document.exitPictureInPicture(); else if (document.pictureInPictureEnabled && video.videoWidth) await video.requestPictureInPicture(); } catch(e) {}
         });
 
-        // ========== SIDEBAR ==========
+        // Sidebar
         function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
         function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
         moreBtn.addEventListener("click", openSidebar);
         closeSidebar.addEventListener("click", closeSidebarFn);
         sidebarOverlay.addEventListener("click", closeSidebarFn);
 
-        // ========== MULTI-PLAYLIST (IMPROVED FETCH) ==========
+        // Multi-playlist
         const playlists = [
             { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
             { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: false },
@@ -256,157 +303,91 @@
             { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: false },
             { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: false }
         ];
-
         function showPlaylistList() {
             playlistItems.innerHTML = "";
-            playlists.forEach((pl) => {
-                const div = document.createElement("div");
-                div.className = "playlist-btn-item";
+            playlists.forEach(pl => {
+                const div = document.createElement("div"); div.className = "playlist-btn-item";
                 div.textContent = "📁 " + pl.name;
                 div.addEventListener("click", () => loadPlaylistChannels(pl.url, pl.name, pl.useProxy));
                 playlistItems.appendChild(div);
             });
         }
-
         async function loadPlaylistChannels(url, name, useProxy) {
             playlistItems.innerHTML = `<p style="text-align:center;padding:20px;">Loading ${name}...</p>`;
             try {
-                let response;
-                if (useProxy) {
-                    const proxyUrl = "https://api.codetabs.com/v1/proxy?quest=";
-                    response = await fetch(proxyUrl + encodeURIComponent(url));
-                } else {
-                    response = await fetch(url);
-                }
+                let response = useProxy ? await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url)) : await fetch(url);
                 if (!response.ok) throw new Error("HTTP " + response.status);
-                const text = await response.text();
-                const lines = text.split("\n");
-                const items = [];
-                let currentName = "";
+                const text = await response.text(); const lines = text.split("\n"); const items = [];
+                let curName = "";
                 for (let line of lines) {
                     line = line.trim();
-                    if (line.startsWith("#EXTINF:")) {
-                        const comma = line.indexOf(",");
-                        currentName = comma !== -1 ? line.substring(comma+1).trim() : "Unknown";
-                    } else if (line && !line.startsWith("#")) {
-                        if (currentName) { items.push({ name: currentName, url: line }); currentName = ""; }
-                    }
+                    if (line.startsWith("#EXTINF:")) { const c = line.indexOf(","); curName = c !== -1 ? line.substring(c+1).trim() : "Unknown"; }
+                    else if (line && !line.startsWith("#")) { if (curName) { items.push({ name: curName, url: line }); curName = ""; } }
                 }
-                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back to Playlists</button>`;
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button>`;
                 playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
-                if (!items.length) {
-                    playlistItems.innerHTML += "<p style='text-align:center;padding:20px;'>No channels found.</p>";
-                    return;
-                }
+                if (!items.length) { playlistItems.innerHTML += "<p style='text-align:center;padding:20px;'>No channels.</p>"; return; }
                 items.forEach(item => {
-                    const div = document.createElement("div");
-                    div.className = "playlist-item";
+                    const div = document.createElement("div"); div.className = "playlist-item";
                     div.innerHTML = `<span style="cursor:pointer;flex:1">▶️ ${item.name}</span><span class="fav-star-m3u" data-name="${item.name}">★</span>`;
                     div.querySelector("span").addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
                     const star = div.querySelector(".fav-star-m3u");
-                    star.addEventListener("click", e => {
-                        e.stopPropagation();
-                        toggleFavorite(item.name);
-                        star.classList.toggle("fav", isFavorite(item.name));
-                    });
+                    star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(item.name); star.classList.toggle("fav", isFavorite(item.name)); });
                     playlistItems.appendChild(div);
                 });
             } catch(e) {
-                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back to Playlists</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load playlist (${e.message})</p>`;
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load (${e.message})</p>`;
                 playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
             }
         }
-
-        // Initialize playlist list
         showPlaylistList();
 
-        // ========== TAB HANDLING ==========
-        tabBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                tabBtns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentCategory = btn.dataset.category;
-                renderChannels(searchBox.value);
-            });
-        });
+        // Tabs
+        tabBtns.forEach(b => b.addEventListener("click", () => {
+            tabBtns.forEach(x => x.classList.remove("active")); b.classList.add("active");
+            currentCategory = b.dataset.category; renderChannels(searchBox.value);
+        }));
 
-        // ========== RENDER CHANNELS ==========
         function renderChannels(filter = "") {
-            channelGrid.innerHTML = "";
-            const term = filter.toLowerCase().trim();
-            let filtered = channels;
-            if (currentCategory === "favorites") {
-                const favNames = getFavorites();
-                filtered = filtered.filter(ch => favNames.includes(ch.name));
-            } else if (currentCategory !== "all") {
-                filtered = filtered.filter(ch => ch.category === currentCategory);
-            }
-            if (term) filtered = filtered.filter(ch => ch.name.toLowerCase().includes(term));
-            if (!filtered.length) {
-                channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>';
-                return;
-            }
+            channelGrid.innerHTML = ""; const term = filter.toLowerCase().trim(); let filtered = channels;
+            if (currentCategory === "favorites") { const favs = getFavorites(); filtered = filtered.filter(c => favs.includes(c.name)); }
+            else if (currentCategory !== "all") filtered = filtered.filter(c => c.category === currentCategory);
+            if (term) filtered = filtered.filter(c => c.name.toLowerCase().includes(term));
+            if (!filtered.length) { channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>'; return; }
             filtered.forEach(ch => {
-                const card = document.createElement("div");
-                card.className = "channel-card";
-
-                const logoContainer = document.createElement("div");
-                logoContainer.className = "logo-container";
-                const fallback = document.createElement("div");
-                fallback.className = "fallback-tv-icon";
-                fallback.textContent = "📺";
-                fallback.style.display = "block";
-                logoContainer.appendChild(fallback);
-
-                if (ch.logo && ch.logo.trim() !== "") {
-                    const img = document.createElement("img");
-                    img.className = "channel-logo";
-                    img.src = ch.logo;
-                    img.alt = ch.name;
-                    img.style.position = "absolute"; img.style.top = "0"; img.style.left = "0"; img.style.display = "none";
-                    const showLogo = () => { img.style.display = "block"; fallback.style.display = "none"; };
-                    img.onload = showLogo;
-                    img.onerror = () => img.remove();
-                    if (img.complete) showLogo();
+                const card = document.createElement("div"); card.className = "channel-card";
+                const logoContainer = document.createElement("div"); logoContainer.className = "logo-container";
+                const fb = document.createElement("div"); fb.className = "fallback-tv-icon"; fb.textContent = "📺"; logoContainer.appendChild(fb);
+                if (ch.logo && ch.logo.trim()) {
+                    const img = document.createElement("img"); img.className = "channel-logo"; img.src = ch.logo; img.alt = ch.name;
+                    img.style.position="absolute"; img.style.top="0"; img.style.left="0"; img.style.display="none";
+                    const show = () => { img.style.display="block"; fb.style.display="none"; };
+                    img.onload = show; img.onerror = () => img.remove(); if (img.complete) show();
                     logoContainer.appendChild(img);
                 }
-
-                const star = document.createElement("button");
-                star.className = "favorite-star" + (isFavorite(ch.name) ? " fav" : "");
-                star.textContent = "★";
+                const star = document.createElement("button"); star.className = "favorite-star" + (isFavorite(ch.name)?" fav":""); star.textContent = "★";
                 star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(ch.name); });
-
-                const nameDiv = document.createElement("div");
-                nameDiv.className = "channel-name";
-                nameDiv.textContent = ch.name;
-
-                card.appendChild(logoContainer);
-                card.appendChild(nameDiv);
-                card.appendChild(star);
+                const nameDiv = document.createElement("div"); nameDiv.className = "channel-name"; nameDiv.textContent = ch.name;
+                card.appendChild(logoContainer); card.appendChild(nameDiv); card.appendChild(star);
                 card.addEventListener("click", e => { if (e.target === star) return; playChannel(ch.url, ch.name, card); });
                 channelGrid.appendChild(card);
             });
         }
-
         searchBox.addEventListener("input", () => renderChannels(searchBox.value));
 
-        // ========== PLAY CHANNEL (with improved error recovery) ==========
         function playChannel(url, name, card) {
             if (card) { if (activeCard) activeCard.classList.remove("active"); card.classList.add("active"); activeCard = card; }
             else { if (activeCard) activeCard.classList.remove("active"); activeCard = null; }
             playingTitle.textContent = name; liveBadge.style.display = "inline-block"; loadingMsg.style.display = "block"; errorMsg.style.display = "none";
             if (hls) { hls.destroy(); hls = null; } video.pause(); video.removeAttribute("src");
             if (Hls.isSupported()) {
-                hls = new Hls({ enableWorker: true });
-                hls.loadSource(url);
-                hls.attachMedia(video);
+                hls = new Hls({ enableWorker: true }); hls.loadSource(url); hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); });
-                hls.on(Hls.Events.ERROR, (e, data) => { if (data.fatal) { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; switch(data.type) { case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break; case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break; default: hls.destroy(); break; } } });
+                hls.on(Hls.Events.ERROR, (e,d) => { if (d.fatal) { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; switch(d.type) { case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break; case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break; default: hls.destroy(); } } });
             } else if (video.canPlayType("application/vnd.apple.mpegurl")) { video.src = url; video.addEventListener("loadedmetadata", () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); }); }
             else { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; }
         }
 
-        // Initial render
         renderChannels();
     </script>
 </body>
