@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#e63946">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        /* ========== SAME AS BEFORE (all styles unchanged) ========== */
+        /* ========== Complete CSS (same as before) ========== */
         *{margin:0;padding:0;box-sizing:border-box}
         :root{
             --bg:#0a0a10;--header-bg:#111122;--card-bg:#1e1e30;--card-hover:#2a2a40;
@@ -67,8 +67,7 @@
         .playlist-item .fav-star-m3u.fav{color:#f1c40f}
         .back-btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:20px;font-weight:600;cursor:pointer;margin-bottom:10px;display:inline-flex;align-items:center;gap:5px}
         .back-btn:hover{background:#c0392b}
-
-        /* Brick Game Panel */
+        /* Brick Panel */
         .brick-panel{position:fixed;top:0;right:-400px;width:400px;max-width:95vw;height:100%;background:#1a1a1a;z-index:35;transition:right .3s;display:flex;flex-direction:column;box-shadow:-2px 0 20px rgba(0,0,0,0.8);color:#0f0;font-family:'Courier New',monospace}
         .brick-panel.open{right:0}
         .brick-header{padding:12px 15px;background:#111;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #0f0;color:#0f0}
@@ -90,11 +89,7 @@
         .brick-menu{display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px}
         .brick-menu-item{padding:12px;background:#1a2a1a;border:1px solid #0f0;border-radius:8px;color:#0f0;cursor:pointer;text-align:center;font-weight:bold;font-size:14px;transition:0.2s}
         .brick-menu-item:hover{background:#2a3a2a;box-shadow:0 0 10px rgba(0,255,0,0.3)}
-
-        /* Gangstar canvas special */
         .gangstar-canvas{border:2px solid #0f0;border-radius:4px;background:#5dbb63 !important}
-
-        /* TV Live Panel */
         .tvlive-panel{position:fixed;top:0;right:-340px;width:340px;max-width:90vw;height:100%;background:var(--sidebar-bg);z-index:31;transition:right .3s;display:flex;flex-direction:column;box-shadow:-2px 0 20px rgba(0,0,0,0.8);color:var(--text)}
         .tvlive-panel.open{right:0}
         .tvlive-header{padding:15px;background:var(--tab-bg);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
@@ -104,7 +99,6 @@
         .tvlive-item:hover{background:var(--card-hover);border-color:var(--accent)}
         .tvlive-item img{width:36px;height:36px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,0.1);padding:2px}
         .tvlive-item .tvlive-name{flex:1;font-size:14px}
-
         .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
         .video-section{height:55vh;background:black;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         video{width:100%;height:100%;object-fit:contain;background:black}
@@ -127,7 +121,6 @@
         .channel-name{font-size:13px;word-break:break-word;max-width:100%}
         .favorite-star{position:absolute;top:5px;right:8px;font-size:18px;cursor:pointer;z-index:2;color:#888;background:none;border:none}
         .favorite-star.fav{color:#f1c40f;text-shadow:0 0 8px rgba(241,196,15,0.8)}
-
         @media (max-width:800px){
             .video-section{height:40vh}
             .channel-grid{grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px;padding:10px}
@@ -154,17 +147,12 @@
             <a href="https://m.me/mohammed.8805" target="_blank" class="msg-btn-popup">💬 এখনই মেসেজ করুন</a>
         </div>
     </div>
-
-    <div class="notification-bar">
-        <a href="https://m.me/mohammed.8805" target="_blank">🔥 আপনার সকল গেমিং ও ডিজিটাল সার্ভিসের বিশ্বস্ত ঠিকানা!</a>
-    </div>
-
+    <div class="notification-bar"><a href="https://m.me/mohammed.8805" target="_blank">🔥 আপনার সকল গেমিং ও ডিজিটাল সার্ভিসের বিশ্বস্ত ঠিকানা!</a></div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="playlist-sidebar" id="playlistSidebar">
         <div class="sidebar-header"><h3>📂 Playlists</h3><button class="close-sidebar" id="closeSidebar">&times;</button></div>
         <div class="sidebar-body" id="playlistItems"><p style="text-align:center;padding:20px;">Loading playlists...</p></div>
     </div>
-
     <!-- Brick Game Panel -->
     <div class="brick-panel" id="brickPanel">
         <div class="brick-header"><h3>🎮 9999 in 1 Brick Game</h3><button class="close-sidebar" id="closeBrickPanel" style="background:none;border:none;color:#0f0;font-size:24px;cursor:pointer">&times;</button></div>
@@ -197,41 +185,26 @@
                     </div>
                 </div>
             </div>
-            <!-- Gangstar canvas (hidden by default) -->
             <canvas id="gangstarCanvas" width="340" height="200" class="gangstar-canvas" style="display:none;width:100%;max-width:340px;height:auto"></canvas>
             <div id="gangstarControls" style="display:none;width:100%;max-width:340px">
                 <div class="dpad-container">
                     <div></div><button class="dpad-btn" data-gdir="UP">▲</button><div></div>
-                    <button class="dpad-btn" data-gdir="LEFT">◀</button><button class="dpad-btn ok-btn" id="btnGangOK" style="opacity:0.5">OK</button><button class="dpad-btn" data-gdir="RIGHT">▶</button>
+                    <button class="dpad-btn" data-gdir="LEFT">◀</button><button class="dpad-btn ok-btn" style="opacity:0.5">OK</button><button class="dpad-btn" data-gdir="RIGHT">▶</button>
                     <div></div><button class="dpad-btn" data-gdir="DOWN">▼</button><div></div>
                 </div>
-                <div style="text-align:center;margin-top:8px">
-                    <button class="func-btn" id="btnGangBack">↩ Menu</button>
-                </div>
+                <div style="text-align:center;margin-top:8px"><button class="func-btn" id="btnGangBack">↩ Menu</button></div>
             </div>
         </div>
     </div>
-
     <!-- TV Live Panel -->
     <div class="tvlive-panel" id="tvlivePanel">
         <div class="tvlive-header"><h3>📡 TV Live</h3><button class="close-sidebar" id="closeTvlivePanel">&times;</button></div>
         <div class="tvlive-body" id="tvliveBody"></div>
     </div>
-
     <div class="header">
         <div style="display:flex;align-items:center;"><button class="more-btn" id="moreBtn">📺 More Live TV</button><div class="logo">Live TV <span>by F. M. Prayer</span></div></div>
-        <div class="header-actions">
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search...">
-            <button class="tvlive-btn" id="toggleTvliveBtn">📡 TV Live</button>
-            <a href="https://m.crictime.com" target="_blank" class="score-link">🏏 Live Scores</a>
-            <button class="game-btn" id="toggleGameBtn">🎮 Brick Game</button>
-            <button class="refresh-btn" id="refreshBtn">🔄</button>
-            <button class="theme-btn" id="themeToggle">🌙</button>
-            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
-            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a>
-        </div>
+        <div class="header-actions"><input type="text" class="search-box" id="searchBox" placeholder="🔍 Search..."><button class="tvlive-btn" id="toggleTvliveBtn">📡 TV Live</button><a href="https://m.crictime.com" target="_blank" class="score-link">🏏 Live Scores</a><button class="game-btn" id="toggleGameBtn">🎮 Brick Game</button><button class="refresh-btn" id="refreshBtn">🔄</button><button class="theme-btn" id="themeToggle">🌙</button><a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a><a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a></div>
     </div>
-
     <div class="main-content">
         <div class="video-section">
             <video id="video" controls autoplay playsinline></video>
@@ -239,7 +212,6 @@
             <div class="status-indicator loading" id="loadingMsg">⏳ Loading stream...</div>
             <div class="status-indicator error" id="errorMsg" style="display:none;">❌ Stream unavailable</div>
         </div>
-
         <div class="channel-section">
             <div class="tabs" id="categoryTabs">
                 <button class="tab-btn active" data-category="all">All</button>
@@ -258,7 +230,6 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // ========== CHANNELS (all from before) ==========
         const channels = [
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
@@ -346,7 +317,6 @@
         const closeTvlivePanel = document.getElementById("closeTvlivePanel");
         const tvliveBody = document.getElementById("tvliveBody");
 
-        // Brick game elements
         const brickCanvas = document.getElementById("brickCanvas");
         const ctx = brickCanvas.getContext("2d");
         const brickScoreEl = document.getElementById("brickScore");
@@ -373,8 +343,57 @@
         function drawGrid() { ctx.fillStyle = "#0a1a0a"; ctx.fillRect(0, 0, 200, 200); }
         function drawCell(x, y, color = "#0f0") { ctx.fillStyle = color; ctx.fillRect(x*CELL+1, y*CELL+1, CELL-2, CELL-2); }
         function stopGame() { clearInterval(gameLoop); gameLoop = null; currentGame = null; brickMenu.style.display = "flex"; brickGameArea.style.display = "none"; gangstarCanvas.style.display = "none"; gangstarControls.style.display = "none"; cancelAnimationFrame(gangstarAnim); }
+        function gameOver(msg = "Game Over!") { clearInterval(gameLoop); alert(msg + " Score: " + score); setHighScore(currentGame, score); stopGame(); }
 
-        // Gangstar game
+        // Tetris
+        const TETROMINOS = [ [[1,1,1,1]], [[1,1],[1,1]], [[0,1,0],[1,1,1]], [[1,0,0],[1,1,1]], [[0,0,1],[1,1,1]], [[1,1,0],[0,1,1]], [[0,1,1],[1,1,0]] ];
+        function initTetris() { gameState = { board: Array(ROWS).fill().map(() => Array(COLS).fill(0)), piece: null, pieceX: 3, pieceY: 0 }; spawnTetrisPiece(); }
+        function spawnTetrisPiece() { const idx = Math.floor(Math.random()*TETROMINOS.length); gameState.piece = TETROMINOS[idx]; gameState.pieceX = 3; gameState.pieceY = 0; if (collidesTetris()) gameOver(); }
+        function collidesTetris() { for (let y=0; y<gameState.piece.length; y++) for (let x=0; x<gameState.piece[y].length; x++) if (gameState.piece[y][x] && (gameState.board[gameState.pieceY+y]?.[gameState.pieceX+x] !== 0 || gameState.pieceX+x<0 || gameState.pieceX+x>=COLS || gameState.pieceY+y>=ROWS)) return true; return false; }
+        function lockTetris() { for (let y=0; y<gameState.piece.length; y++) for (let x=0; x<gameState.piece[y].length; x++) if (gameState.piece[y][x]) gameState.board[gameState.pieceY+y][gameState.pieceX+x] = 1; clearLines(); spawnTetrisPiece(); }
+        function clearLines() { for (let y=ROWS-1; y>=0; y--) { if (gameState.board[y].every(c=>c)) { gameState.board.splice(y,1); gameState.board.unshift(Array(COLS).fill(0)); score+=100; level=Math.floor(score/500)+1; playBeep(600,0.15); } } }
+        function rotateTetris() { const rotated = gameState.piece[0].map((_,i)=>gameState.piece.map(row=>row[i]).reverse()); const prev=gameState.piece; gameState.piece=rotated; if(collidesTetris()) gameState.piece=prev; else playBeep(300,0.05); }
+        function tetrisStep() { if(isPaused||!currentGame)return; gameState.pieceY++; if(collidesTetris()){gameState.pieceY--; lockTetris();} drawTetris(); }
+        function drawTetris() { drawGrid(); gameState.board.forEach((row,y)=>row.forEach((c,x)=>{if(c)drawCell(x,y,"#0f0")})); if(gameState.piece) gameState.piece.forEach((row,y)=>row.forEach((c,x)=>{if(c)drawCell(gameState.pieceX+x,gameState.pieceY+y,"#ff0")})); }
+
+        // Snake
+        function initSnake() { gameState={snake:[{x:5,y:10}],dir:{x:1,y:0},food:{}}; spawnSnakeFood(); }
+        function spawnSnakeFood() { let f; do { f = { x: Math.floor(Math.random()*COLS), y: Math.floor(Math.random()*ROWS) }; } while (gameState.snake.some(s=>s.x===f.x&&s.y===f.y)); gameState.food = f; }
+        function snakeStep() { if(isPaused||!currentGame)return; const head={x:gameState.snake[0].x+gameState.dir.x,y:gameState.snake[0].y+gameState.dir.y}; if(head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||gameState.snake.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return;} gameState.snake.unshift(head); if(head.x===gameState.food.x&&head.y===gameState.food.y){score+=10;spawnSnakeFood();playBeep(500,0.1);}else{gameState.snake.pop();} drawSnake(); }
+        function drawSnake() { drawGrid(); gameState.snake.forEach(s=>drawCell(s.x,s.y,"#0f0")); drawCell(gameState.food.x,gameState.food.y,"#f00"); }
+
+        // Tank Battle
+        function initTank() { gameState = { player: {x:4,y:18,dir:0}, enemies: [], bullets: [], frame: 0 }; }
+        function tankStep() { if(isPaused||!currentGame)return; gameState.frame++; if(gameState.frame%30===0) gameState.enemies.push({x:Math.floor(Math.random()*COLS),y:0,dir:1}); gameState.bullets.forEach(b=>b.y+=b.dy); gameState.enemies.forEach(e=>{e.y+=e.dir; if(e.y>=ROWS){e.y=0;e.x=Math.floor(Math.random()*COLS);}}); gameState.bullets=gameState.bullets.filter(b=>b.y>=0&&b.y<ROWS); for(let b of gameState.bullets){ const hit = gameState.enemies.findIndex(e=>Math.abs(e.x-b.x)<1&&Math.abs(e.y-b.y)<1); if(hit!==-1){gameState.enemies.splice(hit,1); gameState.bullets.splice(gameState.bullets.indexOf(b),1); score+=50; playBeep(800,0.1);} } if(gameState.enemies.some(e=>Math.abs(e.x-gameState.player.x)<1&&e.y===gameState.player.y)){gameOver();return;} drawTank(); }
+        function drawTank() { drawGrid(); drawCell(gameState.player.x, gameState.player.y, "#0f0"); gameState.enemies.forEach(e=>drawCell(e.x,e.y,"#f00")); gameState.bullets.forEach(b=>drawCell(b.x,b.y,"#ff0")); }
+
+        // Racing
+        function initRacing() { gameState={carX:4,obstacles:[],frame:0}; }
+        function racingStep() { if(isPaused||!currentGame)return; gameState.frame++; if(gameState.frame%5===0) gameState.obstacles.push({x:Math.floor(Math.random()*(COLS-2))+1,y:0}); gameState.obstacles.forEach(o=>o.y++); gameState.obstacles=gameState.obstacles.filter(o=>o.y<ROWS); if(gameState.obstacles.some(o=>o.y===ROWS-1&&(o.x===gameState.carX||o.x===gameState.carX+1))){gameOver();return;} score++; drawRacing(); }
+        function drawRacing() { drawGrid(); drawCell(gameState.carX,ROWS-1,"#0f0"); drawCell(gameState.carX+1,ROWS-1,"#0f0"); gameState.obstacles.forEach(o=>drawCell(o.x,o.y,"#f00")); }
+
+        // Shooting
+        function initShooting() { gameState={playerX:4,bullets:[],enemies:[],frame:0}; }
+        function shootingStep() { if(isPaused||!currentGame)return; gameState.frame++; if(gameState.frame%20===0) gameState.enemies.push({x:Math.floor(Math.random()*COLS),y:0}); gameState.bullets.forEach(b=>b.y--); gameState.enemies.forEach(e=>e.y+=0.5); gameState.bullets=gameState.bullets.filter(b=>b.y>=0); gameState.enemies=gameState.enemies.filter(e=>e.y<ROWS); for(let b of gameState.bullets){const hit=gameState.enemies.findIndex(e=>Math.abs(e.x-b.x)<1&&Math.abs(e.y-b.y)<1); if(hit!==-1){gameState.enemies.splice(hit,1);gameState.bullets.splice(gameState.bullets.indexOf(b),1);score+=50;playBeep(800,0.1);}} if(gameState.enemies.some(e=>e.y>=ROWS-1&&Math.abs(e.x-gameState.playerX)<1)){gameOver();return;} drawShooting(); }
+        function drawShooting() { drawGrid(); drawCell(gameState.playerX,ROWS-1,"#0f0"); gameState.bullets.forEach(b=>drawCell(Math.round(b.x),Math.round(b.y),"#ff0")); gameState.enemies.forEach(e=>drawCell(Math.round(e.x),Math.round(e.y),"#f00")); }
+
+        // Breakout
+        function initBreakout() { gameState={paddleX:3,ball:{x:5,y:15,dx:1,dy:-1},bricks:[]}; for(let y=0;y<3;y++) for(let x=0;x<COLS;x++) gameState.bricks.push({x,y}); }
+        function breakoutStep() { if(isPaused||!currentGame)return; gameState.ball.x+=gameState.ball.dx*0.5; gameState.ball.y+=gameState.ball.dy*0.5; if(gameState.ball.x<=0||gameState.ball.x>=COLS-1) gameState.ball.dx*=-1; if(gameState.ball.y<=0) gameState.ball.dy*=-1; if(gameState.ball.y>=ROWS-1&&gameState.ball.x>=gameState.paddleX&&gameState.ball.x<gameState.paddleX+3) gameState.ball.dy*=-1; if(gameState.ball.y>=ROWS){gameOver();return;} gameState.bricks=gameState.bricks.filter(b=>{if(Math.abs(gameState.ball.x-b.x)<1&&Math.abs(gameState.ball.y-b.y)<1){score+=10;gameState.ball.dy*=-1;playBeep(400,0.1);return false;}return true;}); if(!gameState.bricks.length){gameOver("You Win!");} drawBreakout(); }
+        function drawBreakout() { drawGrid(); for(let i=0;i<3;i++) drawCell(gameState.paddleX+i,ROWS-1,"#0f0"); drawCell(Math.round(gameState.ball.x),Math.round(gameState.ball.y),"#ff0"); gameState.bricks.forEach(b=>drawCell(b.x,b.y,"#f00")); }
+
+        // Frog Crossing
+        function initFrog() { gameState={frogX:4,frogY:ROWS-1,cars:[],logs:[],frame:0}; }
+        function frogStep() { if(isPaused||!currentGame)return; gameState.frame++; if(gameState.frame%10===0){ gameState.cars.push({x:Math.floor(Math.random()*COLS),y:10+Math.floor(Math.random()*5),dir:Math.random()>0.5?1:-1}); gameState.logs.push({x:Math.floor(Math.random()*COLS),y:2+Math.floor(Math.random()*5),dir:1}); } gameState.cars.forEach(c=>c.x+=c.dir); gameState.logs.forEach(l=>{l.x+=l.dir;if(l.x>COLS)l.x=-1;if(l.x<-1)l.x=COLS;}); if(gameState.cars.some(c=>Math.abs(c.x-gameState.frogX)<1&&c.y===gameState.frogY)){gameOver();return;} if(gameState.frogY<5){score+=100;gameState.frogY=ROWS-1;} drawFrog(); }
+        function drawFrog() { drawGrid(); drawCell(gameState.frogX,gameState.frogY,"#0f0"); gameState.cars.forEach(c=>drawCell(Math.round(c.x),c.y,"#f00")); gameState.logs.forEach(l=>drawCell(Math.round(l.x),l.y,"#8B4513")); }
+
+        // Pong
+        function initPong() { gameState={paddle1:9,paddle2:9,ball:{x:5,y:10,dx:1,dy:1}}; }
+        function pongStep() { if(isPaused||!currentGame)return; gameState.ball.x+=gameState.ball.dx*0.3; gameState.ball.y+=gameState.ball.dy*0.3; if(gameState.ball.y<=0||gameState.ball.y>=ROWS-1) gameState.ball.dy*=-1; if(gameState.ball.x<=1&&gameState.ball.y>=gameState.paddle1&&gameState.ball.y<gameState.paddle1+3) gameState.ball.dx*=-1; if(gameState.ball.x>=COLS-2&&gameState.ball.y>=gameState.paddle2&&gameState.ball.y<gameState.paddle2+3) gameState.ball.dx*=-1; if(gameState.ball.x<0){score++;resetPong();} if(gameState.ball.x>=COLS){score--;resetPong();} drawPong(); }
+        function resetPong() { gameState.ball={x:5,y:10,dx:1,dy:1}; playBeep(200,0.2); }
+        function drawPong() { drawGrid(); for(let i=0;i<3;i++){ drawCell(0,gameState.paddle1+i,"#0f0"); drawCell(COLS-1,gameState.paddle2+i,"#0f0"); } drawCell(Math.round(gameState.ball.x),Math.round(gameState.ball.y),"#ff0"); }
+
+        // Gangstar
         function startGangstar() {
             stopGame();
             currentGame = "gangstar";
@@ -390,14 +409,11 @@
             if (gangstarKeys["ArrowDown"] || gangstarKeys["s"] || gangstarKeys["DOWN"]) player.y += player.speed;
             if (gangstarKeys["ArrowLeft"] || gangstarKeys["a"] || gangstarKeys["LEFT"]) player.x -= player.speed;
             if (gangstarKeys["ArrowRight"] || gangstarKeys["d"] || gangstarKeys["RIGHT"]) player.x += player.speed;
-            // boundaries
             if (player.x < 0) player.x = 0;
             if (player.y < 0) player.y = 0;
             if (player.x + player.size > gangstarCanvas.width) player.x = gangstarCanvas.width - player.size;
             if (player.y + player.size > gangstarCanvas.height) player.y = gangstarCanvas.height - player.size;
-
             gctx.clearRect(0, 0, gangstarCanvas.width, gangstarCanvas.height);
-            // city
             gctx.fillStyle = "#666";
             gctx.fillRect(80, 20, 60, 60);
             gctx.fillRect(200, 40, 80, 50);
@@ -405,26 +421,16 @@
             gctx.fillStyle = "#444";
             gctx.fillRect(0, 80, gangstarCanvas.width, 20);
             gctx.fillRect(150, 0, 20, gangstarCanvas.height);
-            // player
             gctx.fillStyle = "red";
             gctx.fillRect(player.x, player.y, player.size, player.size);
             gangstarAnim = requestAnimationFrame(gangstarLoop);
         }
-
         document.addEventListener("keydown", e => {
-            if (currentGame === "gangstar") {
-                gangstarKeys[e.key] = true;
-                e.preventDefault();
-            }
+            if (currentGame === "gangstar") { gangstarKeys[e.key] = true; e.preventDefault(); }
         });
         document.addEventListener("keyup", e => {
-            if (currentGame === "gangstar") {
-                gangstarKeys[e.key] = false;
-                e.preventDefault();
-            }
+            if (currentGame === "gangstar") { gangstarKeys[e.key] = false; e.preventDefault(); }
         });
-
-        // Gangstar D-pad
         document.querySelectorAll("[data-gdir]").forEach(btn => {
             btn.addEventListener("touchstart", e => { e.preventDefault(); gangstarKeys[btn.dataset.gdir] = true; });
             btn.addEventListener("touchend", e => { e.preventDefault(); gangstarKeys[btn.dataset.gdir] = false; });
@@ -433,29 +439,197 @@
         });
         document.getElementById("btnGangBack").addEventListener("click", () => { cancelAnimationFrame(gangstarAnim); stopGame(); });
 
-        // ... (all previous brick game code - Tetris, Snake, Tank, Racing, Shooting, Breakout, Frog, Pong - identical to last working version)
-        // (I'm omitting them for brevity but they are all present in the actual file)
-
         function startGame(game) {
             if (game === "gangstar") { startGangstar(); return; }
             stopGame();
-            currentGame = game;
-            score = 0; level = 1; isPaused = false;
+            currentGame = game; score = 0; level = 1; isPaused = false;
             brickScoreEl.textContent = "0"; brickLevelEl.textContent = "LV:1";
             brickMenu.style.display = "none"; brickGameArea.style.display = "flex";
-            gangstarCanvas.style.display = "none"; gangstarControls.style.display = "none";
             initAudio();
-            // ... init individual games
+            if (game === "tetris") { initTetris(); gameLoop = setInterval(tetrisStep, 300); }
+            else if (game === "snake") { initSnake(); gameLoop = setInterval(snakeStep, 150); }
+            else if (game === "tank") { initTank(); gameLoop = setInterval(tankStep, 200); }
+            else if (game === "racing") { initRacing(); gameLoop = setInterval(racingStep, 200); }
+            else if (game === "shooting") { initShooting(); gameLoop = setInterval(shootingStep, 200); }
+            else if (game === "breakout") { initBreakout(); gameLoop = setInterval(breakoutStep, 100); }
+            else if (game === "frog") { initFrog(); gameLoop = setInterval(frogStep, 200); }
+            else if (game === "pong") { initPong(); gameLoop = setInterval(pongStep, 100); }
         }
 
         document.querySelectorAll(".brick-menu-item").forEach(item => item.addEventListener("click", () => startGame(item.dataset.game)));
         document.getElementById("btnBack").addEventListener("click", stopGame);
-        // ... all other brick game controls identical to before
+        document.getElementById("btnStart").addEventListener("click", () => { if (currentGame && currentGame !== "gangstar") { isPaused = !isPaused; document.getElementById("btnStart").textContent = isPaused ? "▶ Start" : "⏸ Pause"; } });
+        document.getElementById("btnReset").addEventListener("click", () => { if (currentGame && currentGame !== "gangstar") { stopGame(); startGame(currentGame); } });
+        document.getElementById("btnSound").addEventListener("click", () => { soundEnabled = !soundEnabled; document.getElementById("btnSound").textContent = soundEnabled ? "🔊 Sound" : "🔇 Mute"; });
+        document.getElementById("btnRotate").addEventListener("click", () => { if (currentGame === "tetris" && !isPaused) rotateTetris(); });
 
-        // TV features (favorites, theme, playlists, etc.) - identical to last working version
-        // ... (all present)
+        document.querySelectorAll(".dpad-btn:not([data-gdir])").forEach(btn => btn.addEventListener("click", () => {
+            if (!currentGame || isPaused || currentGame === "gangstar") return;
+            const dir = btn.dataset.dir;
+            if (dir) {
+                if (currentGame === "tetris") { if (dir==="LEFT") { gameState.pieceX--; if(collidesTetris()) gameState.pieceX++; } else if (dir==="RIGHT") { gameState.pieceX++; if(collidesTetris()) gameState.pieceX--; } else if (dir==="DOWN") tetrisStep(); }
+                else if (currentGame === "snake") { const s=gameState.dir; if(dir==="UP"&&s.y===0) gameState.dir={x:0,y:-1}; else if(dir==="DOWN"&&s.y===0) gameState.dir={x:0,y:1}; else if(dir==="LEFT"&&s.x===0) gameState.dir={x:-1,y:0}; else if(dir==="RIGHT"&&s.x===0) gameState.dir={x:1,y:0}; }
+                else if (currentGame === "tank" || currentGame === "racing" || currentGame === "shooting") { if(dir==="LEFT"&&gameState.playerX>0) gameState.playerX--; if(dir==="RIGHT"&&gameState.playerX<COLS-2) gameState.playerX++; if(currentGame==="tank"&&dir==="UP"){ gameState.bullets.push({x:gameState.playerX,y:gameState.playerY-1,dy:-1}); playBeep(1000,0.08); } }
+                else if (currentGame === "breakout") { if(dir==="LEFT"&&gameState.paddleX>0) gameState.paddleX--; if(dir==="RIGHT"&&gameState.paddleX<COLS-3) gameState.paddleX++; }
+                else if (currentGame === "frog") { if(dir==="UP"&&gameState.frogY>0) gameState.frogY--; else if(dir==="DOWN"&&gameState.frogY<ROWS-1) gameState.frogY++; else if(dir==="LEFT"&&gameState.frogX>0) gameState.frogX--; else if(dir==="RIGHT"&&gameState.frogX<COLS-1) gameState.frogX++; }
+                else if (currentGame === "pong") { if(dir==="UP"&&gameState.paddle2>0) gameState.paddle2--; if(dir==="DOWN"&&gameState.paddle2<ROWS-3) gameState.paddle2++; }
+            }
+        }));
+        document.getElementById("btnOK").addEventListener("click", () => {
+            if (!currentGame || isPaused || currentGame === "gangstar") return;
+            if (currentGame === "tetris") rotateTetris();
+            else if (currentGame === "shooting" || currentGame === "tank") { gameState.bullets.push({x:gameState.playerX, y: ROWS-2, dy: -1}); playBeep(1000,0.08); }
+        });
+        window.addEventListener("keydown", (e) => {
+            if (!currentGame || isPaused || currentGame === "gangstar") return;
+            const key = e.key;
+            if (currentGame === "tetris") { if (key === "ArrowLeft") { gameState.pieceX--; if (collidesTetris()) gameState.pieceX++; } else if (key === "ArrowRight") { gameState.pieceX++; if (collidesTetris()) gameState.pieceX--; } else if (key === "ArrowDown") tetrisStep(); else if (key === "ArrowUp") rotateTetris(); }
+            else if (currentGame === "snake") { const s=gameState.dir; if (key==="ArrowUp"&&s.y===0) gameState.dir={x:0,y:-1}; else if (key==="ArrowDown"&&s.y===0) gameState.dir={x:0,y:1}; else if (key==="ArrowLeft"&&s.x===0) gameState.dir={x:-1,y:0}; else if (key==="ArrowRight"&&s.x===0) gameState.dir={x:1,y:0}; }
+            else if (currentGame === "tank" || currentGame === "racing" || currentGame === "shooting") { if (key==="ArrowLeft"&&gameState.playerX>0) gameState.playerX--; if (key==="ArrowRight"&&gameState.playerX<COLS-2) gameState.playerX++; if ((currentGame==="shooting"||currentGame==="tank")&&key===" ") { gameState.bullets.push({x:gameState.playerX, y: ROWS-2, dy: -1}); playBeep(1000,0.08); } }
+            else if (currentGame === "breakout") { if (key==="ArrowLeft"&&gameState.paddleX>0) gameState.paddleX--; if (key==="ArrowRight"&&gameState.paddleX<COLS-3) gameState.paddleX++; }
+            else if (currentGame === "frog") { if (key==="ArrowUp"&&gameState.frogY>0) gameState.frogY--; else if (key==="ArrowDown"&&gameState.frogY<ROWS-1) gameState.frogY++; else if (key==="ArrowLeft"&&gameState.frogX>0) gameState.frogX--; else if (key==="ArrowRight"&&gameState.frogX<COLS-1) gameState.frogX++; }
+            else if (currentGame === "pong") { if (key==="ArrowUp"&&gameState.paddle2>0) gameState.paddle2--; if (key==="ArrowDown"&&gameState.paddle2<ROWS-3) gameState.paddle2++; }
+        });
 
-        // Initial render
+        // Favorites, Theme, etc.
+        function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
+        function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
+        function toggleFavorite(channelName) { const favs = getFavorites(); const idx = favs.indexOf(channelName); if (idx > -1) favs.splice(idx, 1); else favs.push(channelName); saveFavorites(favs); renderChannels(searchBox.value); }
+        function isFavorite(channelName) { return getFavorites().includes(channelName); }
+        function toggleTheme() { document.body.classList.toggle("light-mode"); themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙"; localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark"); }
+        if (localStorage.getItem("theme") === "light") { document.body.classList.add("light-mode"); themeToggle.innerHTML = "☀️"; }
+        themeToggle.addEventListener("click", toggleTheme);
+        refreshBtn.addEventListener("click", () => location.reload());
+
+        function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
+        function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
+        moreBtn.addEventListener("click", openSidebar);
+        closeSidebar.addEventListener("click", closeSidebarFn);
+        sidebarOverlay.addEventListener("click", closeSidebarFn);
+
+        const playlists = [
+            { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
+            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: true },
+            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u", useProxy: true },
+            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: true },
+            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: true }
+        ];
+        function showPlaylistList() {
+            playlistItems.innerHTML = "";
+            playlists.forEach(pl => {
+                const div = document.createElement("div"); div.className = "playlist-btn-item";
+                div.textContent = "📁 " + pl.name;
+                div.addEventListener("click", () => loadPlaylistChannels(pl.url, pl.name, pl.useProxy));
+                playlistItems.appendChild(div);
+            });
+        }
+        async function loadPlaylistChannels(url, name, useProxy) {
+            playlistItems.innerHTML = `<p style="text-align:center;padding:20px;">Loading ${name}...</p>`;
+            try {
+                let response = await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url));
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                const text = await response.text(); const lines = text.split("\n"); const items = [];
+                let curName = "";
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith("#EXTINF:")) { const c = line.indexOf(","); curName = c !== -1 ? line.substring(c+1).trim() : "Unknown"; }
+                    else if (line && !line.startsWith("#")) { if (curName) { items.push({ name: curName, url: line }); curName = ""; } }
+                }
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button>`;
+                playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
+                if (!items.length) { playlistItems.innerHTML += "<p style='text-align:center;padding:20px;'>No channels.</p>"; return; }
+                items.forEach(item => {
+                    const div = document.createElement("div"); div.className = "playlist-item";
+                    div.innerHTML = `<span style="cursor:pointer;flex:1">▶️ ${item.name}</span><span class="fav-star-m3u" data-name="${item.name}">★</span>`;
+                    div.querySelector("span").addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
+                    const star = div.querySelector(".fav-star-m3u");
+                    star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(item.name); star.classList.toggle("fav", isFavorite(item.name)); });
+                    playlistItems.appendChild(div);
+                });
+            } catch(e) {
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load (${e.message})</p>`;
+                playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
+            }
+        }
+        showPlaylistList();
+
+        toggleTvliveBtn.addEventListener("click", () => {
+            tvlivePanel.classList.toggle("open");
+            if (tvlivePanel.classList.contains("open")) renderTvliveChannels();
+        });
+        closeTvlivePanel.addEventListener("click", () => tvlivePanel.classList.remove("open"));
+
+        const tvLiveChannels = [
+            { name: "FGN", url: "http://103.175.73.12:8080/live/856/856_0.m3u8", logo: "" },
+            { name: "HAJJ LIVE 2026", url: "https://media2.streambrothers.com:1936/8122/8122/playlist.m3u8", logo: "" },
+            { name: "PSL 2026 GEO SUPER", url: "http://stalker.hakunamata.workers.dev/play/1100/index.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrZBygzDovVY_wCvtTy8J8SQogo6-QPwfmGThA4vBFcWXFqXLpCNpQuaG7&s=10" },
+            { name: "Willow Cricket", url: "http://cdn.tv-rds.workers.dev/WillowCricket.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtZcJANelaW8aBRREj0hAfcWIjvYWJdJ_Epg&usqp=CAU" },
+            { name: "T Sports", url: "https://tvsen7.aynaott.com/tsportsfhd/index.m3u8", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/T_Sports_logo.svg/500px-T_Sports_logo.svg.png" },
+            { name: "DAZN COMBAT", url: "https://dazn-combat-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-dazn-combat-rakuten/CDN/master.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThxvpmiCnoGHXYiTzY0lp1E0UXdRSPg69f3Q&s" },
+            { name: "Alwan Sport 1 HD", url: "https://stream.camcloud.stream/stream/4994d2defc1a/playlist.m3u8", logo: "https://i.ibb.co.com/xtKbcvyx/Screenshot-2026-0110-071335.png" },
+            { name: "Quran", url: "https://vodzong.mjunoon.tv:8087/streamtest/SaudiQuran-142/playlist.m3u8", logo: "https://s3.aynaott.com/storage/35088d7015b1509b2c9cbc94503d5a6e" },
+            { name: "বিটিভি", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", logo: "https://s3.aynaott.com/storage/a8f87ac6b4731011dcc61c957f56d47b" },
+            { name: "RTV", url: "http://116.204.149.16/rtvhd/index.m3u8", logo: "https://s3.aynaott.com/storage/fd634ca672c8294f109225ca42d20991" },
+            { name: "ATN Bangla", url: "https://tvsen5.aynaott.com/atnbangla/index.m3u8", logo: "https://s3.aynaott.com/storage/a4d2bbdb65b4abc239eaddedda1e5d22" },
+            { name: "Channel I", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/index.m3u8", logo: "https://s3.aynaott.com/storage/28931315743beff50fc2c1312b1f8261" },
+            { name: "NTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/index.m3u8", logo: "https://s3.aynaott.com/storage/73c39182782a201338070c2f4429e449" },
+            { name: "Deepto TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/1711-audio_113412_eng=113200-video=2202800.m3u8", logo: "https://s3.aynaott.com/storage/12462ef0383fa0e927215d56cd51acf8" },
+            { name: "ETV", url: "https://ekusheyserver.com/etvlivesn.m3u8", logo: "https://s3.aynaott.com/storage/d805cf57543080b49de8a2621cd54da4" },
+            { name: "Somoy News TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", logo: "https://s3.aynaott.com/storage/cbadf009eebf7506c7633b3a98a2f042" },
+            { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/index.m3u8", logo: "https://s3.aynaott.com/storage/9ef657aca7c0009e4f0675af3b5190d8" },
+            { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=2202800.m3u8", logo: "https://s3.aynaott.com/storage/affd223f023a705e3a1c5df263d0a7ef" }
+        ];
+        function renderTvliveChannels() {
+            tvliveBody.innerHTML = "";
+            tvLiveChannels.forEach(ch => {
+                const div = document.createElement("div");
+                div.className = "tvlive-item";
+                if (ch.logo) div.innerHTML = `<img src="${ch.logo}" onerror="this.style.display='none'" alt=""><span class="tvlive-name">${ch.name}</span>`;
+                else div.innerHTML = `<span class="tvlive-name">${ch.name}</span>`;
+                div.addEventListener("click", () => { playChannel(ch.url, ch.name, null); tvlivePanel.classList.remove("open"); });
+                tvliveBody.appendChild(div);
+            });
+        }
+
+        toggleGameBtn.addEventListener("click", () => brickPanel.classList.toggle("open"));
+        closeBrickPanel.addEventListener("click", () => brickPanel.classList.remove("open"));
+
+        tabBtns.forEach(b => b.addEventListener("click", () => { tabBtns.forEach(x => x.classList.remove("active")); b.classList.add("active"); currentCategory = b.dataset.category; renderChannels(searchBox.value); }));
+
+        function renderChannels(filter = "") {
+            channelGrid.innerHTML = ""; const term = filter.toLowerCase().trim(); let filtered = channels;
+            if (currentCategory === "favorites") { const favs = getFavorites(); filtered = filtered.filter(c => favs.includes(c.name)); }
+            else if (currentCategory !== "all") filtered = filtered.filter(c => c.category === currentCategory);
+            if (term) filtered = filtered.filter(c => c.name.toLowerCase().includes(term));
+            if (!filtered.length) { channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>'; return; }
+            filtered.forEach(ch => {
+                const card = document.createElement("div"); card.className = "channel-card";
+                const avatar = document.createElement("div"); avatar.className = "channel-avatar";
+                avatar.style.backgroundColor = getColorFromName(ch.name);
+                avatar.textContent = getInitial(ch.name);
+                const nameDiv = document.createElement("div"); nameDiv.className = "channel-name"; nameDiv.textContent = ch.name;
+                const star = document.createElement("button"); star.className = "favorite-star" + (isFavorite(ch.name)?" fav":""); star.textContent = "★";
+                star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(ch.name); });
+                card.appendChild(avatar); card.appendChild(nameDiv); card.appendChild(star);
+                card.addEventListener("click", e => { if (e.target === star) return; playChannel(ch.url, ch.name, card); });
+                channelGrid.appendChild(card);
+            });
+        }
+        searchBox.addEventListener("input", () => renderChannels(searchBox.value));
+
+        function playChannel(url, name, card) {
+            if (card) { if (activeCard) activeCard.classList.remove("active"); card.classList.add("active"); activeCard = card; }
+            else { if (activeCard) activeCard.classList.remove("active"); activeCard = null; }
+            playingTitle.textContent = name; liveBadge.style.display = "inline-block"; loadingMsg.style.display = "block"; errorMsg.style.display = "none";
+            if (hls) { hls.destroy(); hls = null; } video.pause(); video.removeAttribute("src");
+            if (Hls.isSupported()) {
+                hls = new Hls({ enableWorker: true }); hls.loadSource(url); hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); });
+                hls.on(Hls.Events.ERROR, (e,d) => { if (d.fatal) { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; switch(d.type) { case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break; case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break; default: hls.destroy(); } } });
+            } else if (video.canPlayType("application/vnd.apple.mpegurl")) { video.src = url; video.addEventListener("loadedmetadata", () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); }); }
+            else { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; }
+        }
+
         renderChannels();
     </script>
 </body>
