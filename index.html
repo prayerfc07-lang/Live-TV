@@ -8,7 +8,6 @@
     <meta name="theme-color" content="#e63946">
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        /* ========== SAME AS BEFORE (All existing styles unchanged) ========== */
         *{margin:0;padding:0;box-sizing:border-box}
         :root{
             --bg:#0a0a10;--header-bg:#111122;--card-bg:#1e1e30;--card-hover:#2a2a40;
@@ -49,8 +48,6 @@
         .msg-btn{background:#006aff}.msg-btn:hover{background:#0055cc}
         .tvlive-btn{background:#8e44ad}.tvlive-btn:hover{background:#6c3483}
         .score-link{background:#27ae60}.score-link:hover{background:#219a52}
-        .game-btn{background:#f39c12;border:none;color:white;padding:8px 16px;border-radius:25px;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:0.3s}
-        .game-btn:hover{background:#e67e22}
         .theme-btn,.refresh-btn{background:none;border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;padding:5px 10px;border-radius:50%}
         .theme-btn:hover,.refresh-btn:hover{background:var(--card-hover)}
         .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--overlay-bg);z-index:20;display:none}
@@ -67,48 +64,6 @@
         .playlist-item .fav-star-m3u.fav{color:#f1c40f}
         .back-btn{background:var(--accent);color:white;border:none;padding:8px 12px;border-radius:20px;font-weight:600;cursor:pointer;margin-bottom:10px;display:inline-flex;align-items:center;gap:5px}
         .back-btn:hover{background:#c0392b}
-        /* Brick Panel */
-        .brick-panel{position:fixed;top:0;right:-400px;width:400px;max-width:95vw;height:100%;background:#1a1a1a;z-index:35;transition:right .3s;display:flex;flex-direction:column;box-shadow:-2px 0 20px rgba(0,0,0,0.8);color:#0f0;font-family:'Courier New',monospace}
-        .brick-panel.open{right:0}
-        .brick-header{padding:12px 15px;background:#111;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #0f0;color:#0f0}
-        .brick-header h3{font-size:16px;text-shadow:0 0 5px #0f0}
-        .brick-body{flex:1;overflow-y:auto;padding:15px;display:flex;flex-direction:column;align-items:center;gap:10px}
-        .lcd-screen{width:100%;max-width:340px;aspect-ratio:1/1;background:#0a1a0a;border:4px solid #333;border-radius:8px;position:relative;overflow:hidden;box-shadow:inset 0 0 30px rgba(0,255,0,0.1)}
-        .lcd-screen canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
-        .lcd-overlay{position:absolute;top:5px;left:10px;right:10px;display:flex;justify-content:space-between;color:#0f0;font-size:11px;text-shadow:0 0 5px #0f0;pointer-events:none;z-index:2}
-        .brick-controls{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;max-width:340px}
-        .dpad-container{display:grid;grid-template-columns:70px 70px 70px;grid-template-rows:70px 70px 70px;gap:4px;justify-content:center}
-        .dpad-btn{width:70px;height:70px;background:#222;border:2px solid #0f0;border-radius:10px;color:#0f0;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-shadow:0 0 5px #0f0;transition:0.15s;user-select:none;-webkit-tap-highlight-color:transparent}
-        .dpad-btn:active{background:#0f0;color:#000}
-        .ok-btn{background:#0f0;color:#000;font-weight:bold;font-size:24px}
-        .ok-btn:active{background:#0a0;color:#000}
-        .func-btns{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:5px}
-        .func-btn{padding:8px 14px;background:#222;border:1px solid #0f0;border-radius:20px;color:#0f0;font-size:13px;font-weight:bold;cursor:pointer;text-shadow:0 0 4px #0f0;transition:0.15s;white-space:nowrap;font-family:'Courier New',monospace}
-        .func-btn:active{background:#0f0;color:#000}
-        .func-btn.active-btn{background:#0f0;color:#000}
-        .brick-menu{display:flex;flex-direction:column;gap:6px;width:100%;max-width:340px}
-        .brick-menu-item{padding:12px;background:#1a2a1a;border:1px solid #0f0;border-radius:8px;color:#0f0;cursor:pointer;text-align:center;font-weight:bold;font-size:14px;transition:0.2s}
-        .brick-menu-item:hover{background:#2a3a2a;box-shadow:0 0 10px rgba(0,255,0,0.3)}
-        .gangstar-canvas{border:2px solid #0f0;border-radius:4px;background:#5dbb63 !important}
-        /* Soccer Game Area */
-        .soccer-game-wrapper{display:none;width:100%;max-width:340px;background:linear-gradient(135deg,#0a1a0f,#1a2f1a);border-radius:20px;padding:10px;border:2px solid #0f0}
-        .soccer-game-wrapper canvas{width:100%;height:auto;border-radius:8px;background:#2d7a2d;border:2px solid #c6a144;touch-action:none}
-        .soccer-scoreboard{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.85);border-radius:15px;padding:6px 10px;margin-bottom:6px;color:#f7e05e;font-weight:bold;font-size:0.7rem;border:1px solid #c9a24d;flex-wrap:wrap}
-        .soccer-scoreboard .team-badge{background:#1e3b2a;padding:2px 8px;border-radius:12px;color:white;font-size:0.6rem;border:1px solid #c9a24d}
-        .soccer-scoreboard .score-num{font-size:1.1rem;color:#fff;min-width:20px;text-align:center;text-shadow:0 0 10px rgba(247,224,94,0.6)}
-        .soccer-scoreboard .timer{background:rgba(0,0,0,0.5);padding:2px 10px;border-radius:12px;font-size:0.9rem;color:#ffd966;border:1px solid #c9a24d}
-        .soccer-controls{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;padding:6px;margin-top:6px;background:rgba(0,0,0,0.75);border-radius:15px;border:1px solid #b6963c}
-        .soccer-dpad{display:flex;flex-direction:column;align-items:center;gap:1px}
-        .soccer-dpad-row{display:flex;gap:3px}
-        .s-d-btn{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#5a7a4a,#1e3312);color:white;font-size:1rem;border:1px solid #b6a86b;box-shadow:0 2px 0 #0f1f0a,0 4px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:bold;touch-action:manipulation;transition:0.08s;outline:none}
-        .s-d-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #0f1f0a}
-        .s-a-btn{padding:6px 10px;border-radius:15px;font-size:0.65rem;border:1px solid;box-shadow:0 2px 0 rgba(0,0,0,0.5),0 4px 10px rgba(0,0,0,0.4);cursor:pointer;font-weight:bold;white-space:nowrap;touch-action:manipulation;transition:0.08s;outline:none;color:white}
-        .s-a-btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,0.5)}
-        .btn-pass{background:#3498db;border-color:#5dade2}
-        .btn-shoot{background:#e74c3c;border-color:#f1948a}
-        .btn-sprint{background:#f39c12;color:#1a1a1a;border-color:#f9e79f}
-        .btn-switch{background:#8e44ad;border-color:#bb8fce}
-        .btn-soccer-back{background:#27ae60;border-color:#82e0aa}
 
         .tvlive-panel{position:fixed;top:0;right:-340px;width:340px;max-width:90vw;height:100%;background:var(--sidebar-bg);z-index:31;transition:right .3s;display:flex;flex-direction:column;box-shadow:-2px 0 20px rgba(0,0,0,0.8);color:var(--text)}
         .tvlive-panel.open{right:0}
@@ -119,6 +74,7 @@
         .tvlive-item:hover{background:var(--card-hover);border-color:var(--accent)}
         .tvlive-item img{width:36px;height:36px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,0.1);padding:2px}
         .tvlive-item .tvlive-name{flex:1;font-size:14px}
+
         .main-content{display:flex;flex-direction:column;flex:1;overflow:hidden}
         .video-section{height:55vh;background:black;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         video{width:100%;height:100%;object-fit:contain;background:black}
@@ -141,11 +97,11 @@
         .channel-name{font-size:13px;word-break:break-word;max-width:100%}
         .favorite-star{position:absolute;top:5px;right:8px;font-size:18px;cursor:pointer;z-index:2;color:#888;background:none;border:none}
         .favorite-star.fav{color:#f1c40f;text-shadow:0 0 8px rgba(241,196,15,0.8)}
+
         @media (max-width:800px){
             .video-section{height:40vh}
             .channel-grid{grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px;padding:10px}
-            .brick-panel,.tvlive-panel{width:100%;right:-100%}
-            .dpad-btn{width:55px;height:55px;font-size:22px}
+            .tvlive-panel{width:100%;right:-100%}
         }
         @media (max-width:500px){
             .header{padding:8px 10px}
@@ -173,82 +129,22 @@
         <div class="sidebar-header"><h3>📂 Playlists</h3><button class="close-sidebar" id="closeSidebar">&times;</button></div>
         <div class="sidebar-body" id="playlistItems"><p style="text-align:center;padding:20px;">Loading playlists...</p></div>
     </div>
-    <!-- Brick Game Panel -->
-    <div class="brick-panel" id="brickPanel">
-        <div class="brick-header"><h3>🎮 Games</h3><button class="close-sidebar" id="closeBrickPanel" style="background:none;border:none;color:#0f0;font-size:24px;cursor:pointer">&times;</button></div>
-        <div class="brick-body" id="brickBody">
-            <div id="brickMenu" class="brick-menu">
-                <div class="brick-menu-item" data-game="tetris">🧱 Tetris</div>
-                <div class="brick-menu-item" data-game="snake">🐍 Snake</div>
-                <div class="brick-menu-item" data-game="tank">🔫 Tank Battle</div>
-                <div class="brick-menu-item" data-game="racing">🏎️ Racing</div>
-                <div class="brick-menu-item" data-game="shooting">🔫 Shooting</div>
-                <div class="brick-menu-item" data-game="breakout">🧱 Breakout</div>
-                <div class="brick-menu-item" data-game="frog">🐸 Frog Crossing</div>
-                <div class="brick-menu-item" data-game="pong">🏓 Pong</div>
-                <div class="brick-menu-item" data-game="gangstar">🕹️ Mini Gangstar</div>
-                <div class="brick-menu-item" data-game="soccer">⚽ PRO Soccer</div>
-            </div>
-            <div id="brickGameArea" style="display:none;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px">
-                <div class="lcd-screen"><canvas id="brickCanvas" width="200" height="200"></canvas><div class="lcd-overlay"><span id="brickScore">0</span><span id="brickLevel">LV:1</span></div></div>
-                <div class="brick-controls">
-                    <div class="dpad-container">
-                        <div></div><button class="dpad-btn" data-dir="UP">▲</button><div></div>
-                        <button class="dpad-btn" data-dir="LEFT">◀</button><button class="dpad-btn ok-btn" id="btnOK">OK</button><button class="dpad-btn" data-dir="RIGHT">▶</button>
-                        <div></div><button class="dpad-btn" data-dir="DOWN">▼</button><div></div>
-                    </div>
-                    <div class="func-btns">
-                        <button class="func-btn" id="btnRotate">↻ Rotate</button>
-                        <button class="func-btn" id="btnStart">▶ Start</button>
-                        <button class="func-btn" id="btnReset">↺ Reset</button>
-                        <button class="func-btn" id="btnSound">🔊 Sound</button>
-                        <button class="func-btn" id="btnBack">↩ Menu</button>
-                    </div>
-                </div>
-            </div>
-            <canvas id="gangstarCanvas" width="340" height="200" class="gangstar-canvas" style="display:none;width:100%;max-width:340px;height:auto"></canvas>
-            <div id="gangstarControls" style="display:none;width:100%;max-width:340px">
-                <div class="dpad-container">
-                    <div></div><button class="dpad-btn" data-gdir="UP">▲</button><div></div>
-                    <button class="dpad-btn" data-gdir="LEFT">◀</button><button class="dpad-btn ok-btn" style="opacity:0.5">OK</button><button class="dpad-btn" data-gdir="RIGHT">▶</button>
-                    <div></div><button class="dpad-btn" data-gdir="DOWN">▼</button><div></div>
-                </div>
-                <div style="text-align:center;margin-top:8px"><button class="func-btn" id="btnGangBack">↩ Menu</button></div>
-            </div>
-            <!-- Soccer Game Area -->
-            <div class="soccer-game-wrapper" id="soccerGameArea">
-                <div class="soccer-scoreboard">
-                    <div><span class="team-badge" id="sPlayerTeam">🇧🇷 BRA</span> <span class="score-num" id="sPlayerScore">0</span></div>
-                    <div class="timer" id="sTimer">90</div>
-                    <div><span class="score-num" id="sAiScore">0</span> <span class="team-badge" id="sAiTeam">🇦🇷 ARG</span></div>
-                </div>
-                <canvas id="soccerCanvas" width="340" height="190"></canvas>
-                <div class="soccer-controls">
-                    <div class="soccer-dpad">
-                        <div class="soccer-dpad-row"><button class="s-d-btn" id="sBtnUp">▲</button></div>
-                        <div class="soccer-dpad-row">
-                            <button class="s-d-btn" id="sBtnLeft">◀</button>
-                            <button class="s-d-btn" id="sBtnDown">▼</button>
-                            <button class="s-d-btn" id="sBtnRight">▶</button>
-                        </div>
-                    </div>
-                    <button class="s-a-btn btn-pass" id="sBtnPass">📤 পাস</button>
-                    <button class="s-a-btn btn-shoot" id="sBtnShoot">🥅 শুট</button>
-                    <button class="s-a-btn btn-sprint" id="sBtnSprint">💨 স্প্রিন্ট</button>
-                    <button class="s-a-btn btn-switch" id="sBtnSwitch">🔄 সুইচ</button>
-                    <button class="s-a-btn btn-soccer-back" id="sBtnSoccerBack">↩ Menu</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- TV Live Panel -->
     <div class="tvlive-panel" id="tvlivePanel">
         <div class="tvlive-header"><h3>📡 TV Live</h3><button class="close-sidebar" id="closeTvlivePanel">&times;</button></div>
         <div class="tvlive-body" id="tvliveBody"></div>
     </div>
+
     <div class="header">
         <div style="display:flex;align-items:center;"><button class="more-btn" id="moreBtn">📺 More Live TV</button><div class="logo">Live TV <span>by F. M. Prayer</span></div></div>
-        <div class="header-actions"><input type="text" class="search-box" id="searchBox" placeholder="🔍 Search..."><button class="tvlive-btn" id="toggleTvliveBtn">📡 TV Live</button><a href="https://m.crictime.com" target="_blank" class="score-link">🏏 Live Scores</a><button class="game-btn" id="toggleGameBtn">🎮 Games</button><button class="refresh-btn" id="refreshBtn">🔄</button><button class="theme-btn" id="themeToggle">🌙</button><a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a><a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a></div>
+        <div class="header-actions">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search...">
+            <button class="tvlive-btn" id="toggleTvliveBtn">📡 TV Live</button>
+            <a href="https://m.crictime.com" target="_blank" class="score-link">🏏 Live Scores</a>
+            <button class="refresh-btn" id="refreshBtn">🔄</button>
+            <button class="theme-btn" id="themeToggle">🌙</button>
+            <a href="https://t.me/liveIPTVBangladesh" target="_blank" class="social-btn tg-btn">✈️ Telegram</a>
+            <a href="https://m.me/mohammed.8805" target="_blank" class="social-btn msg-btn">💬 Messenger</a>
+        </div>
     </div>
     <div class="main-content">
         <div class="video-section">
@@ -276,8 +172,10 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // ========== CHANNELS (All channels as before) ==========
+        // ========== CHANNELS ==========
         const channels = [
+            // SPORTS
+            { name: "ফিফা ওয়ার্ল্ডকাপ", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/playlist.m3u8", category: "sports" },
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "TSN 3", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
@@ -297,6 +195,7 @@
             { name: "Bein Sports", url: "https://bein-esp-xumo.amagi.tv/playlistR720P.m3u8", category: "sports" },
             { name: "Sony Max", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
             { name: "Discovery", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
+            // NEWS
             { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
             { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -309,6 +208,7 @@
             { name: "DBC News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1728/output/index.m3u8", category: "news" },
             { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Srktv", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
+            // BANGLA
             { name: "Islamic TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
             { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
@@ -331,6 +231,7 @@
             { name: "ATN News", url: "https://tvsen6.aynaott.com/atnnews/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
             { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
+            // KIDS
             { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
@@ -357,332 +258,155 @@
         const playlistSidebar = document.getElementById("playlistSidebar");
         const closeSidebar = document.getElementById("closeSidebar");
         const playlistItems = document.getElementById("playlistItems");
-        const toggleGameBtn = document.getElementById("toggleGameBtn");
-        const brickPanel = document.getElementById("brickPanel");
-        const closeBrickPanel = document.getElementById("closeBrickPanel");
         const toggleTvliveBtn = document.getElementById("toggleTvliveBtn");
         const tvlivePanel = document.getElementById("tvlivePanel");
         const closeTvlivePanel = document.getElementById("closeTvlivePanel");
         const tvliveBody = document.getElementById("tvliveBody");
-        const brickCanvas = document.getElementById("brickCanvas");
-        const ctx = brickCanvas.getContext("2d");
-        const brickScoreEl = document.getElementById("brickScore");
-        const brickLevelEl = document.getElementById("brickLevel");
-        const brickMenu = document.getElementById("brickMenu");
-        const brickGameArea = document.getElementById("brickGameArea");
-        const gangstarCanvas = document.getElementById("gangstarCanvas");
-        const gangstarControls = document.getElementById("gangstarControls");
-        const gctx = gangstarCanvas.getContext("2d");
-        const soccerGameArea = document.getElementById("soccerGameArea");
-        const soccerCanvas = document.getElementById("soccerCanvas");
-        const sctx = soccerCanvas.getContext("2d");
 
         let hls = null, activeCard = null, currentCategory = "all";
-        let gameLoop = null, currentGame = null, gameState = null;
-        let score = 0, level = 1, isPaused = false, soundEnabled = true;
-        let audioCtx = null;
-        let gangstarKeys = {}, gangstarAnim = null;
-        let player = { x: 50, y: 100, size: 20, speed: 3 };
 
-        // ... (all previous Brick game code: Tetris, Snake, Tank, Racing, Shooting, Breakout, Frog, Pong, Gangstar - identical to last working version) ...
+        // ========== FAVORITES ==========
+        function getFavorites() { try { return JSON.parse(localStorage.getItem("favCh")) || []; } catch(e) { return []; } }
+        function saveFavorites(f) { localStorage.setItem("favCh", JSON.stringify(f)); }
+        function toggleFavorite(channelName) { const favs = getFavorites(); const idx = favs.indexOf(channelName); if (idx > -1) favs.splice(idx, 1); else favs.push(channelName); saveFavorites(favs); renderChannels(searchBox.value); }
+        function isFavorite(channelName) { return getFavorites().includes(channelName); }
 
-        // ========== SOCCER GAME (from your provided code, adapted) ==========
-        const TEAMS = [
-            { name: 'Brazil', code: 'BRA', color: '#FFD700', color2: '#006400', skin: '#F5CBA7', hair: '#2C1810', flag: '🇧🇷' },
-            { name: 'Argentina', code: 'ARG', color: '#75AADB', color2: '#FFFFFF', skin: '#E8C39E', hair: '#3B2314', flag: '🇦🇷' },
-            { name: 'France', code: 'FRA', color: '#0C1C8C', color2: '#ED2939', skin: '#F5D7B3', hair: '#1A1A2E', flag: '🇫🇷' },
-            { name: 'Germany', code: 'GER', color: '#FFFFFF', color2: '#000000', skin: '#FDE0C8', hair: '#8B6914', flag: '🇩🇪' },
-            { name: 'England', code: 'ENG', color: '#FFFFFF', color2: '#CF142B', skin: '#F5D0B0', hair: '#4A3728', flag: '🏴' },
-            { name: 'Portugal', code: 'POR', color: '#B22222', color2: '#006400', skin: '#E8C49A', hair: '#2C1810', flag: '🇵🇹' },
-            { name: 'Netherlands', code: 'NED', color: '#FF6600', color2: '#FFFFFF', skin: '#F5D5B8', hair: '#8B6914', flag: '🇳🇱' },
-            { name: 'Spain', code: 'ESP', color: '#C60B1E', color2: '#FFC400', skin: '#E8C5A0', hair: '#1A1A2E', flag: '🇪🇸' }
+        // ========== THEME ==========
+        function toggleTheme() { document.body.classList.toggle("light-mode"); themeToggle.innerHTML = document.body.classList.contains("light-mode") ? "☀️" : "🌙"; localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark"); }
+        if (localStorage.getItem("theme") === "light") { document.body.classList.add("light-mode"); themeToggle.innerHTML = "☀️"; }
+        themeToggle.addEventListener("click", toggleTheme);
+        refreshBtn.addEventListener("click", () => location.reload());
+
+        // ========== SIDEBAR (PLAYLISTS) ==========
+        function openSidebar() { playlistSidebar.classList.add("open"); sidebarOverlay.classList.add("open"); }
+        function closeSidebarFn() { playlistSidebar.classList.remove("open"); sidebarOverlay.classList.remove("open"); }
+        moreBtn.addEventListener("click", openSidebar);
+        closeSidebar.addEventListener("click", closeSidebarFn);
+        sidebarOverlay.addEventListener("click", closeSidebarFn);
+
+        const playlists = [
+            { name: "Live TV (69di)", url: "https://go.skym3u.top/69di.m3u", useProxy: true },
+            { name: "Sports Channels", url: "https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/refs/heads/main/ALL.m3u", useProxy: true },
+            { name: "Live Event Sports", url: "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/playlist.m3u", useProxy: true },
+            { name: "Akash DTH Bangladesh", url: "https://raw.githubusercontent.com/srhady/Hady/refs/heads/main/akash_live.m3u", useProxy: true },
+            { name: "Bangladeshi TV", url: "https://raw.githubusercontent.com/abusaeeidx/BDxTV/refs/heads/main/roar-zone-playlist.m3u", useProxy: true }
         ];
-        let soccerActive = false, soccerGameActive = false, soccerPlayerTeam, soccerAiTeam;
-        let soccerMatchTime = 90, soccerTimerInterval = null;
-        let soccerPlayerScore = 0, soccerAiScore = 0, soccerSpeedMult = 0.6;
-        let soccerHomePlayers = [], soccerAwayPlayers = [];
-        let soccerBall = { x: 170, y: 95, vx: 0, vy: 0, r: 5, rot: 0 };
-        let soccerControlledIdx = 5;
-        const soccerKeys = { up: false, down: false, left: false, right: false };
-        let soccerSprint = false, soccerPassReq = false, soccerShootReq = false;
-
-        class SoccerPlayer {
-            constructor(x, y, role, side, team) {
-                this.x = x; this.y = y; this.role = role; this.side = side; this.team = team;
-                this.r = 6; this.baseSpeed = role === 'GK' ? 1.0 : role === 'DEF' ? 1.2 : role === 'MID' ? 1.4 : 1.6;
-                this.animOffset = Math.random() * 100; this.number = role === 'GK' ? 1 : Math.floor(Math.random() * 20) + 2;
-            }
-            getSpeed() { return this.baseSpeed * soccerSpeedMult; }
+        function showPlaylistList() {
+            playlistItems.innerHTML = "";
+            playlists.forEach(pl => {
+                const div = document.createElement("div"); div.className = "playlist-btn-item";
+                div.textContent = "📁 " + pl.name;
+                div.addEventListener("click", () => loadPlaylistChannels(pl.url, pl.name, pl.useProxy));
+                playlistItems.appendChild(div);
+            });
         }
-
-        function createSoccerSquad(side, team) {
-            const squad = []; const isHome = side === 'home';
-            const goalX = isHome ? 15 : 325; const goalY = 95; const dir = isHome ? 1 : -1;
-            squad.push(new SoccerPlayer(goalX, goalY, 'GK', side, team));
-            const defX = goalX + dir * 40;
-            [goalY - 40, goalY - 13, goalY + 13, goalY + 40].forEach(y => squad.push(new SoccerPlayer(defX, y, 'DEF', side, team)));
-            const midX = goalX + dir * 110;
-            [goalY - 35, goalY - 11, goalY + 11, goalY + 35].forEach(y => squad.push(new SoccerPlayer(midX, y, 'MID', side, team)));
-            const fwdX = goalX + dir * 170;
-            squad.push(new SoccerPlayer(fwdX, goalY - 18, 'FWD', side, team));
-            squad.push(new SoccerPlayer(fwdX, goalY + 18, 'FWD', side, team));
-            return squad;
-        }
-
-        function resetSoccerBall() { soccerBall.x = 170; soccerBall.y = 95; soccerBall.vx = 0; soccerBall.vy = 0; soccerBall.rot = 0; }
-
-        function startSoccerGame() {
-            stopGame();
-            currentGame = "soccer";
-            brickMenu.style.display = "none"; brickGameArea.style.display = "none";
-            gangstarCanvas.style.display = "none"; gangstarControls.style.display = "none";
-            soccerGameArea.style.display = "block";
-            soccerPlayerTeam = TEAMS[Math.floor(Math.random() * TEAMS.length)];
-            do { soccerAiTeam = TEAMS[Math.floor(Math.random() * TEAMS.length)]; } while (soccerAiTeam === soccerPlayerTeam);
-            soccerHomePlayers = createSoccerSquad('home', soccerPlayerTeam);
-            soccerAwayPlayers = createSoccerSquad('away', soccerAiTeam);
-            resetSoccerBall();
-            soccerPlayerScore = 0; soccerAiScore = 0; soccerMatchTime = 90;
-            soccerControlledIdx = 5; soccerActive = true; soccerGameActive = true;
-            updateSoccerDisplay();
-            if (soccerTimerInterval) clearInterval(soccerTimerInterval);
-            soccerTimerInterval = setInterval(() => {
-                if (!soccerActive) return;
-                soccerMatchTime--;
-                document.getElementById("sTimer").textContent = soccerMatchTime;
-                if (soccerMatchTime <= 0) { soccerMatchTime = 0; soccerActive = false; clearInterval(soccerTimerInterval); }
-            }, 1000);
-            soccerLoop();
-        }
-
-        function updateSoccerDisplay() {
-            document.getElementById("sPlayerTeam").textContent = soccerPlayerTeam.flag + ' ' + soccerPlayerTeam.code;
-            document.getElementById("sAiTeam").textContent = soccerAiTeam.flag + ' ' + soccerAiTeam.code;
-            document.getElementById("sPlayerScore").textContent = soccerPlayerScore;
-            document.getElementById("sAiScore").textContent = soccerAiScore;
-            document.getElementById("sTimer").textContent = soccerMatchTime;
-        }
-
-        function soccerLoop() {
-            if (!soccerGameActive || currentGame !== "soccer") return;
-            if (!soccerActive) { drawSoccerField(); requestAnimationFrame(soccerLoop); return; }
-            updateSoccerAITeam(soccerAwayPlayers, false);
-            updateSoccerHomeAIExceptControlled();
-            moveSoccerControlledPlayer();
-            updateSoccerBall();
-            drawSoccerField();
-            requestAnimationFrame(soccerLoop);
-        }
-
-        function updateSoccerAITeam(squad, isHome) {
-            squad.forEach(p => {
-                let tx = p.x, ty = p.y; const bx = soccerBall.x, by = soccerBall.y;
-                if (p.role === 'GK') { tx = isHome ? 13 : 327; ty = Math.min(175, Math.max(15, by * 0.7 + 47.5)); }
-                else if (p.role === 'DEF') { tx = isHome ? Math.min(bx + 35, 120) : Math.max(bx - 35, 220); ty = by + (p.y > 95 ? -12 : 12); }
-                else if (p.role === 'MID') { tx = bx + (isHome ? -18 : 18); ty = by * 0.6 + p.y * 0.4; }
-                else if (p.role === 'FWD') { tx = isHome ? Math.max(bx - 25, 160) : Math.min(bx + 25, 180); ty = by; }
-                tx = Math.min(330, Math.max(10, tx)); ty = Math.min(180, Math.max(10, ty));
-                const dx = tx - p.x, dy = ty - p.y; const dist = Math.sqrt(dx*dx+dy*dy);
-                if (dist > 1) { p.x += (dx/dist) * p.getSpeed() * 0.85; p.y += (dy/dist) * p.getSpeed() * 0.85; }
-                const db = Math.sqrt((p.x-bx)**2 + (p.y-by)**2);
-                if (db < 16 && Math.random() < 0.03) {
-                    const goalX = isHome ? 10 : 330;
-                    const angle = Math.atan2(95 - p.y + (Math.random()-0.5)*40, goalX - p.x);
-                    const power = 4.5 * soccerSpeedMult;
-                    soccerBall.vx = Math.cos(angle) * power; soccerBall.vy = Math.sin(angle) * power;
+        async function loadPlaylistChannels(url, name, useProxy) {
+            playlistItems.innerHTML = `<p style="text-align:center;padding:20px;">Loading ${name}...</p>`;
+            try {
+                let response = await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url));
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                const text = await response.text(); const lines = text.split("\n"); const items = [];
+                let curName = "";
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith("#EXTINF:")) { const c = line.indexOf(","); curName = c !== -1 ? line.substring(c+1).trim() : "Unknown"; }
+                    else if (line && !line.startsWith("#")) { if (curName) { items.push({ name: curName, url: line }); curName = ""; } }
                 }
-            });
-        }
-
-        function updateSoccerHomeAIExceptControlled() {
-            soccerHomePlayers.forEach((p, i) => {
-                if (i === soccerControlledIdx) return;
-                let tx = p.x, ty = p.y; const bx = soccerBall.x, by = soccerBall.y;
-                if (p.role === 'GK') { tx = 327; ty = Math.min(175, Math.max(15, by * 0.7 + 47.5)); }
-                else if (p.role === 'DEF') { tx = Math.max(bx - 35, 220); ty = by + (p.y > 95 ? -12 : 12); }
-                else if (p.role === 'MID') { tx = bx - 18; ty = by * 0.6 + p.y * 0.4; }
-                else if (p.role === 'FWD') { tx = Math.min(bx + 25, 180); ty = by; }
-                tx = Math.min(330, Math.max(10, tx)); ty = Math.min(180, Math.max(10, ty));
-                const dx = tx - p.x, dy = ty - p.y; const dist = Math.sqrt(dx*dx+dy*dy);
-                if (dist > 1) { p.x += (dx/dist) * p.getSpeed() * 0.8; p.y += (dy/dist) * p.getSpeed() * 0.8; }
-            });
-        }
-
-        function moveSoccerControlledPlayer() {
-            if (!soccerActive || soccerControlledIdx >= soccerHomePlayers.length) return;
-            const p = soccerHomePlayers[soccerControlledIdx];
-            let mx = 0, my = 0;
-            if (soccerKeys.right) mx += 1; if (soccerKeys.left) mx -= 1;
-            if (soccerKeys.down) my += 1; if (soccerKeys.up) my -= 1;
-            if (mx !== 0 || my !== 0) {
-                const len = Math.sqrt(mx*mx + my*my);
-                const speed = soccerSprint ? p.getSpeed() * 1.5 : p.getSpeed();
-                p.x += (mx/len) * speed; p.y += (my/len) * speed;
-                p.x = Math.min(332, Math.max(8, p.x)); p.y = Math.min(182, Math.max(8, p.y));
-            }
-            if (soccerPassReq) {
-                soccerPassReq = false;
-                let best = null, bestDist = 120;
-                soccerHomePlayers.forEach((tp, i) => {
-                    if (i === soccerControlledIdx) return;
-                    const d = Math.sqrt((tp.x-p.x)**2 + (tp.y-p.y)**2);
-                    if (d < bestDist && tp.x < p.x) { bestDist = d; best = tp; }
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button>`;
+                playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
+                if (!items.length) { playlistItems.innerHTML += "<p style='text-align:center;padding:20px;'>No channels.</p>"; return; }
+                items.forEach(item => {
+                    const div = document.createElement("div"); div.className = "playlist-item";
+                    div.innerHTML = `<span style="cursor:pointer;flex:1">▶️ ${item.name}</span><span class="fav-star-m3u" data-name="${item.name}">★</span>`;
+                    div.querySelector("span").addEventListener("click", () => { playChannel(item.url, item.name, null); closeSidebarFn(); });
+                    const star = div.querySelector(".fav-star-m3u");
+                    star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(item.name); star.classList.toggle("fav", isFavorite(item.name)); });
+                    playlistItems.appendChild(div);
                 });
-                if (best) {
-                    const angle = Math.atan2(best.y - p.y, best.x - p.x);
-                    soccerBall.vx = Math.cos(angle) * 5; soccerBall.vy = Math.sin(angle) * 5;
-                    soccerBall.x = p.x + Math.cos(angle) * 12; soccerBall.y = p.y + Math.sin(angle) * 12;
-                }
-            }
-            if (soccerShootReq) {
-                soccerShootReq = false;
-                const angle = Math.atan2(95 - p.y + (Math.random()-0.5)*30, 10 - p.x);
-                const power = 5.5 * soccerSpeedMult;
-                soccerBall.vx = Math.cos(angle) * power; soccerBall.vy = Math.sin(angle) * power;
+            } catch(e) {
+                playlistItems.innerHTML = `<button class="back-btn">⬅️ Back</button><p style="text-align:center;padding:20px;color:#ff6b6b;">Failed to load (${e.message})</p>`;
+                playlistItems.querySelector(".back-btn").addEventListener("click", showPlaylistList);
             }
         }
+        showPlaylistList();
 
-        function updateSoccerBall() {
-            soccerBall.vx *= 0.985; soccerBall.vy *= 0.985;
-            soccerBall.x += soccerBall.vx; soccerBall.y += soccerBall.vy;
-            soccerBall.rot += soccerBall.vx * 0.04;
-            if (soccerBall.y < 5) { soccerBall.y = 5; soccerBall.vy *= -0.5; }
-            if (soccerBall.y > 185) { soccerBall.y = 185; soccerBall.vy *= -0.5; }
-            if (soccerBall.x < 10 && soccerBall.y > 60 && soccerBall.y < 130) { soccerAiScore++; updateSoccerDisplay(); resetSoccerBall(); return; }
-            if (soccerBall.x > 330 && soccerBall.y > 60 && soccerBall.y < 130) { soccerPlayerScore++; updateSoccerDisplay(); resetSoccerBall(); return; }
-            if (soccerBall.x < 5 && !(soccerBall.y > 60 && soccerBall.y < 130)) { soccerBall.x = 5; soccerBall.vx *= -0.4; }
-            if (soccerBall.x > 335 && !(soccerBall.y > 60 && soccerBall.y < 130)) { soccerBall.x = 335; soccerBall.vx *= -0.4; }
-            const allP = soccerHomePlayers.concat(soccerAwayPlayers);
-            allP.forEach(p => {
-                const dx = soccerBall.x - p.x, dy = soccerBall.y - p.y;
-                const dist = Math.sqrt(dx*dx+dy*dy), minDist = soccerBall.r + p.r;
-                if (dist < minDist && dist > 0.01) {
-                    const angle = Math.atan2(dy, dx);
-                    soccerBall.x += Math.cos(angle) * (minDist - dist);
-                    soccerBall.y += Math.sin(angle) * (minDist - dist);
-                    const nx = dx/dist, ny = dy/dist;
-                    const vn = soccerBall.vx * nx + soccerBall.vy * ny;
-                    if (vn < 0) { soccerBall.vx -= 1.5 * vn * nx; soccerBall.vy -= 1.5 * vn * ny; }
-                }
+        // ========== TV LIVE PANEL ==========
+        toggleTvliveBtn.addEventListener("click", () => {
+            tvlivePanel.classList.toggle("open");
+            if (tvlivePanel.classList.contains("open")) renderTvliveChannels();
+        });
+        closeTvlivePanel.addEventListener("click", () => tvlivePanel.classList.remove("open"));
+
+        const tvLiveChannels = [
+            { name: "FGN", url: "http://103.175.73.12:8080/live/856/856_0.m3u8", logo: "" },
+            { name: "HAJJ LIVE 2026", url: "https://media2.streambrothers.com:1936/8122/8122/playlist.m3u8", logo: "" },
+            { name: "PSL 2026 GEO SUPER", url: "http://stalker.hakunamata.workers.dev/play/1100/index.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrZBygzDovVY_wCvtTy8J8SQogo6-QPwfmGThA4vBFcWXFqXLpCNpQuaG7&s=10" },
+            { name: "Willow Cricket", url: "http://cdn.tv-rds.workers.dev/WillowCricket.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtZcJANelaW8aBRREj0hAfcWIjvYWJdJ_Epg&usqp=CAU" },
+            { name: "T Sports", url: "https://tvsen7.aynaott.com/tsportsfhd/index.m3u8", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/T_Sports_logo.svg/500px-T_Sports_logo.svg.png" },
+            { name: "DAZN COMBAT", url: "https://dazn-combat-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-dazn-combat-rakuten/CDN/master.m3u8", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThxvpmiCnoGHXYiTzY0lp1E0UXdRSPg69f3Q&s" },
+            { name: "Alwan Sport 1 HD", url: "https://stream.camcloud.stream/stream/4994d2defc1a/playlist.m3u8", logo: "https://i.ibb.co.com/xtKbcvyx/Screenshot-2026-0110-071335.png" },
+            { name: "Quran", url: "https://vodzong.mjunoon.tv:8087/streamtest/SaudiQuran-142/playlist.m3u8", logo: "https://s3.aynaott.com/storage/35088d7015b1509b2c9cbc94503d5a6e" },
+            { name: "বিটিভি", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", logo: "https://s3.aynaott.com/storage/a8f87ac6b4731011dcc61c957f56d47b" },
+            { name: "RTV", url: "http://116.204.149.16/rtvhd/index.m3u8", logo: "https://s3.aynaott.com/storage/fd634ca672c8294f109225ca42d20991" },
+            { name: "ATN Bangla", url: "https://tvsen5.aynaott.com/atnbangla/index.m3u8", logo: "https://s3.aynaott.com/storage/a4d2bbdb65b4abc239eaddedda1e5d22" },
+            { name: "Channel I", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1723/output/index.m3u8", logo: "https://s3.aynaott.com/storage/28931315743beff50fc2c1312b1f8261" },
+            { name: "NTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/index.m3u8", logo: "https://s3.aynaott.com/storage/73c39182782a201338070c2f4429e449" },
+            { name: "Deepto TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/1711-audio_113412_eng=113200-video=2202800.m3u8", logo: "https://s3.aynaott.com/storage/12462ef0383fa0e927215d56cd51acf8" },
+            { name: "ETV", url: "https://ekusheyserver.com/etvlivesn.m3u8", logo: "https://s3.aynaott.com/storage/d805cf57543080b49de8a2621cd54da4" },
+            { name: "Somoy News TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8", logo: "https://s3.aynaott.com/storage/cbadf009eebf7506c7633b3a98a2f042" },
+            { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/index.m3u8", logo: "https://s3.aynaott.com/storage/9ef657aca7c0009e4f0675af3b5190d8" },
+            { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=2202800.m3u8", logo: "https://s3.aynaott.com/storage/affd223f023a705e3a1c5df263d0a7ef" }
+        ];
+        function renderTvliveChannels() {
+            tvliveBody.innerHTML = "";
+            tvLiveChannels.forEach(ch => {
+                const div = document.createElement("div");
+                div.className = "tvlive-item";
+                if (ch.logo) div.innerHTML = `<img src="${ch.logo}" onerror="this.style.display='none'" alt=""><span class="tvlive-name">${ch.name}</span>`;
+                else div.innerHTML = `<span class="tvlive-name">${ch.name}</span>`;
+                div.addEventListener("click", () => { playChannel(ch.url, ch.name, null); tvlivePanel.classList.remove("open"); });
+                tvliveBody.appendChild(div);
             });
-            const sp = Math.sqrt(soccerBall.vx**2 + soccerBall.vy**2);
-            if (sp > 7) { soccerBall.vx *= 7/sp; soccerBall.vy *= 7/sp; }
         }
 
-        function drawSoccerField() {
-            sctx.fillStyle = "#2d7a2d"; sctx.fillRect(0, 0, 340, 190);
-            sctx.strokeStyle = "#fff"; sctx.lineWidth = 1.5;
-            sctx.strokeRect(5, 5, 330, 180);
-            sctx.beginPath(); sctx.moveTo(170, 5); sctx.lineTo(170, 185); sctx.stroke();
-            sctx.beginPath(); sctx.arc(170, 95, 35, 0, Math.PI*2); sctx.stroke();
-            sctx.fillStyle = "#fff"; sctx.beginPath(); sctx.arc(170, 95, 3, 0, Math.PI*2); sctx.fill();
-            sctx.strokeRect(5, 60, 25, 70); sctx.strokeRect(310, 60, 25, 70);
-            const allP = soccerHomePlayers.concat(soccerAwayPlayers);
-            allP.forEach(p => {
-                sctx.fillStyle = p.side === 'home' ? soccerPlayerTeam.color : soccerAiTeam.color;
-                sctx.beginPath(); sctx.arc(p.x, p.y, p.r, 0, Math.PI*2); sctx.fill();
-                sctx.strokeStyle = p.side === 'home' ? soccerPlayerTeam.color2 : soccerAiTeam.color2;
-                sctx.lineWidth = 1; sctx.stroke();
-                if (p.role === 'GK') {
-                    sctx.fillStyle = p.side === 'home' ? soccerPlayerTeam.color2 : soccerAiTeam.color2;
-                    sctx.fillRect(p.x-2, p.y-2, 4, 4);
-                }
+        // ========== TABS & RENDER ==========
+        tabBtns.forEach(b => b.addEventListener("click", () => { tabBtns.forEach(x => x.classList.remove("active")); b.classList.add("active"); currentCategory = b.dataset.category; renderChannels(searchBox.value); }));
+
+        function renderChannels(filter = "") {
+            channelGrid.innerHTML = ""; const term = filter.toLowerCase().trim(); let filtered = channels;
+            if (currentCategory === "favorites") { const favs = getFavorites(); filtered = filtered.filter(c => favs.includes(c.name)); }
+            else if (currentCategory !== "all") filtered = filtered.filter(c => c.category === currentCategory);
+            if (term) filtered = filtered.filter(c => c.name.toLowerCase().includes(term));
+            if (!filtered.length) { channelGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#888;">No channels found</div>'; return; }
+            filtered.forEach(ch => {
+                const card = document.createElement("div"); card.className = "channel-card";
+                const avatar = document.createElement("div"); avatar.className = "channel-avatar";
+                avatar.style.backgroundColor = getColorFromName(ch.name);
+                avatar.textContent = getInitial(ch.name);
+                const nameDiv = document.createElement("div"); nameDiv.className = "channel-name"; nameDiv.textContent = ch.name;
+                const star = document.createElement("button"); star.className = "favorite-star" + (isFavorite(ch.name)?" fav":""); star.textContent = "★";
+                star.addEventListener("click", e => { e.stopPropagation(); toggleFavorite(ch.name); });
+                card.appendChild(avatar); card.appendChild(nameDiv); card.appendChild(star);
+                card.addEventListener("click", e => { if (e.target === star) return; playChannel(ch.url, ch.name, card); });
+                channelGrid.appendChild(card);
             });
-            sctx.fillStyle = "#fff"; sctx.beginPath(); sctx.arc(soccerBall.x, soccerBall.y, soccerBall.r, 0, Math.PI*2); sctx.fill();
-            sctx.strokeStyle = "#000"; sctx.lineWidth = 1; sctx.stroke();
+        }
+        searchBox.addEventListener("input", () => renderChannels(searchBox.value));
+
+        function playChannel(url, name, card) {
+            if (card) { if (activeCard) activeCard.classList.remove("active"); card.classList.add("active"); activeCard = card; }
+            else { if (activeCard) activeCard.classList.remove("active"); activeCard = null; }
+            playingTitle.textContent = name; liveBadge.style.display = "inline-block"; loadingMsg.style.display = "block"; errorMsg.style.display = "none";
+            if (hls) { hls.destroy(); hls = null; } video.pause(); video.removeAttribute("src");
+            if (Hls.isSupported()) {
+                hls = new Hls({ enableWorker: true }); hls.loadSource(url); hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); });
+                hls.on(Hls.Events.ERROR, (e,d) => { if (d.fatal) { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; switch(d.type) { case Hls.ErrorTypes.NETWORK_ERROR: hls.startLoad(); break; case Hls.ErrorTypes.MEDIA_ERROR: hls.recoverMediaError(); break; default: hls.destroy(); } } });
+            } else if (video.canPlayType("application/vnd.apple.mpegurl")) { video.src = url; video.addEventListener("loadedmetadata", () => { loadingMsg.style.display = "none"; video.play().catch(()=>{}); }); }
+            else { loadingMsg.style.display = "none"; errorMsg.style.display = "block"; }
         }
 
-        function stopSoccerGame() {
-            soccerGameActive = false; soccerActive = false;
-            if (soccerTimerInterval) clearInterval(soccerTimerInterval);
-            soccerGameArea.style.display = "none";
-        }
-
-        // ========== STOP GAME OVERRIDE ==========
-        const origStopGame = stopGame;
-        stopGame = function() {
-            if (currentGame === "soccer") stopSoccerGame();
-            origStopGame();
-        };
-
-        // ========== START GAME OVERRIDE ==========
-        function startGame(game) {
-            if (game === "soccer") { startSoccerGame(); return; }
-            if (game === "gangstar") { startGangstar(); return; }
-            stopGame();
-            currentGame = game; score = 0; level = 1; isPaused = false;
-            brickScoreEl.textContent = "0"; brickLevelEl.textContent = "LV:1";
-            brickMenu.style.display = "none"; brickGameArea.style.display = "flex";
-            gangstarCanvas.style.display = "none"; gangstarControls.style.display = "none";
-            soccerGameArea.style.display = "none";
-            initAudio();
-            if (game === "tetris") { initTetris(); gameLoop = setInterval(tetrisStep, 300); }
-            else if (game === "snake") { initSnake(); gameLoop = setInterval(snakeStep, 150); }
-            else if (game === "tank") { initTank(); gameLoop = setInterval(tankStep, 200); }
-            else if (game === "racing") { initRacing(); gameLoop = setInterval(racingStep, 200); }
-            else if (game === "shooting") { initShooting(); gameLoop = setInterval(shootingStep, 200); }
-            else if (game === "breakout") { initBreakout(); gameLoop = setInterval(breakoutStep, 100); }
-            else if (game === "frog") { initFrog(); gameLoop = setInterval(frogStep, 200); }
-            else if (game === "pong") { initPong(); gameLoop = setInterval(pongStep, 100); }
-        }
-
-        // ========== SOCCER CONTROLS ==========
-        document.getElementById("sBtnUp").addEventListener("touchstart", e => { e.preventDefault(); soccerKeys.up = true; });
-        document.getElementById("sBtnUp").addEventListener("touchend", e => { e.preventDefault(); soccerKeys.up = false; });
-        document.getElementById("sBtnUp").addEventListener("mousedown", e => { e.preventDefault(); soccerKeys.up = true; });
-        document.getElementById("sBtnUp").addEventListener("mouseup", e => { e.preventDefault(); soccerKeys.up = false; });
-        document.getElementById("sBtnDown").addEventListener("touchstart", e => { e.preventDefault(); soccerKeys.down = true; });
-        document.getElementById("sBtnDown").addEventListener("touchend", e => { e.preventDefault(); soccerKeys.down = false; });
-        document.getElementById("sBtnDown").addEventListener("mousedown", e => { e.preventDefault(); soccerKeys.down = true; });
-        document.getElementById("sBtnDown").addEventListener("mouseup", e => { e.preventDefault(); soccerKeys.down = false; });
-        document.getElementById("sBtnLeft").addEventListener("touchstart", e => { e.preventDefault(); soccerKeys.left = true; });
-        document.getElementById("sBtnLeft").addEventListener("touchend", e => { e.preventDefault(); soccerKeys.left = false; });
-        document.getElementById("sBtnLeft").addEventListener("mousedown", e => { e.preventDefault(); soccerKeys.left = true; });
-        document.getElementById("sBtnLeft").addEventListener("mouseup", e => { e.preventDefault(); soccerKeys.left = false; });
-        document.getElementById("sBtnRight").addEventListener("touchstart", e => { e.preventDefault(); soccerKeys.right = true; });
-        document.getElementById("sBtnRight").addEventListener("touchend", e => { e.preventDefault(); soccerKeys.right = false; });
-        document.getElementById("sBtnRight").addEventListener("mousedown", e => { e.preventDefault(); soccerKeys.right = true; });
-        document.getElementById("sBtnRight").addEventListener("mouseup", e => { e.preventDefault(); soccerKeys.right = false; });
-        document.getElementById("sBtnPass").addEventListener("click", () => { soccerPassReq = true; });
-        document.getElementById("sBtnShoot").addEventListener("click", () => { soccerShootReq = true; });
-        document.getElementById("sBtnSprint").addEventListener("touchstart", e => { e.preventDefault(); soccerSprint = true; });
-        document.getElementById("sBtnSprint").addEventListener("touchend", e => { e.preventDefault(); soccerSprint = false; });
-        document.getElementById("sBtnSprint").addEventListener("mousedown", e => { e.preventDefault(); soccerSprint = true; });
-        document.getElementById("sBtnSprint").addEventListener("mouseup", e => { e.preventDefault(); soccerSprint = false; });
-        document.getElementById("sBtnSwitch").addEventListener("click", () => {
-            if (currentGame === "soccer") soccerControlledIdx = (soccerControlledIdx + 1) % soccerHomePlayers.length;
-        });
-        document.getElementById("sBtnSoccerBack").addEventListener("click", () => { stopSoccerGame(); stopGame(); });
-
-        // Keyboard for soccer
-        window.addEventListener("keydown", e => {
-            if (currentGame === "soccer") {
-                if (e.key === "ArrowUp") soccerKeys.up = true;
-                if (e.key === "ArrowDown") soccerKeys.down = true;
-                if (e.key === "ArrowLeft") soccerKeys.left = true;
-                if (e.key === "ArrowRight") soccerKeys.right = true;
-                if (e.key === " ") soccerSprint = true;
-                if (e.key === "p" || e.key === "P") soccerPassReq = true;
-                if (e.key === "o" || e.key === "O") soccerShootReq = true;
-                if (e.key === "Tab") { e.preventDefault(); soccerControlledIdx = (soccerControlledIdx + 1) % soccerHomePlayers.length; }
-                e.preventDefault();
-            }
-            // ... existing keyboard handlers for other games ...
-        });
-        window.addEventListener("keyup", e => {
-            if (currentGame === "soccer") {
-                if (e.key === "ArrowUp") soccerKeys.up = false;
-                if (e.key === "ArrowDown") soccerKeys.down = false;
-                if (e.key === "ArrowLeft") soccerKeys.left = false;
-                if (e.key === "ArrowRight") soccerKeys.right = false;
-                if (e.key === " ") soccerSprint = false;
-                e.preventDefault();
-            }
-        });
-
-        // ... (all remaining existing code: Favorites, Theme, Playlists, TV Live, Render, Play Channel, etc. identical to last working version) ...
-
-        // Initial renders
+        // Initial render
         renderChannels();
     </script>
 </body>
