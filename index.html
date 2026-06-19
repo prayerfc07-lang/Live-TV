@@ -172,10 +172,17 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // ========== CHANNELS ==========
+        // ========== CHANNELS (updated with 8 FIFA world cup channels) ==========
         const channels = [
             // SPORTS
             { name: "ফিফা ওয়ার্ল্ডকাপ", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/playlist.m3u8", category: "sports" },
+            { name: "FIFA World Cup 4K", url: "https://backup.alarafatofficial.workers.dev/?url=https%3A%2F%2Fd1211whpimeups.cloudfront.net%2Fsmil%3Artbgo%2Fchunklist_b4096000_slENG.m3u8&ua=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F124.0.0.0%20Safari%2F537.36&ekey=SPORTIX_SECURE_KEY_2026", category: "sports" },
+            { name: "FIFA World Cup Server 2 (DASH)", url: "https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-m6/cmaf_cenc00/dash-short-hd.mpd", category: "sports" }, // NOTE: DASH format, may not play
+            { name: "FIFA World Cup Server 3 4K", url: "https://cn-tv.appwrite.network/api/stream?url=aHR0cHM6Ly8xbnlhbGVyLnN0cmVhbWhvc3RpbmdjZG4udG9wL3N0cmVhbS85NC9pbmRleC5tM3U4", category: "sports" },
+            { name: "FIFA World Cup Server 4", url: "https://cn-tv.appwrite.network/api/stream?url=aHR0cHM6Ly8xbnlhbGVyLnN0cmVhbWhvc3RpbmdjZG4udG9wL3N0cmVhbS8yMy9pbmRleC5tM3U4", category: "sports" },
+            { name: "FIFA World Cup Server 5", url: "https://cn-tv.appwrite.network/api/stream?url=aHR0cHM6Ly8xbnlhbGVyLnN0cmVhbWhvc3RpbmdjZG4udG9wL3N0cmVhbS8zMi9pbmRleC5tM3U4", category: "sports" },
+            { name: "FIFA World Cup Server 6", url: "https://cn-tv.appwrite.network/api/stream?url=aHR0cHM6Ly9kZnI4MHF6NDM1Y3JjLmNsb3VkZnJvbnQubmV0L01OT1AvQW1hZ2kvQ2F6ZS9DYXplX1RWX0JSLzEwODBwLXZ0dC9pbmRleC5tM3U4", category: "sports" },
+            { name: "FIFA World Cup Server 7", url: "https://cn-tv.appwrite.network/api/stream?url=aHR0cHM6Ly9saXZlMDUubXNkaHQuYXBwL2xpdmUvMjQ1NjE3MzUubTN1OA", category: "sports" },
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "TSN 3", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
