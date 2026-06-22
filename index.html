@@ -171,21 +171,21 @@
         document.getElementById("closePopup").addEventListener("click", () => popup.style.display = "none");
         popup.addEventListener("click", (e) => { if (e.target === popup) popup.style.display = "none"; });
 
-        // UPDATED CHANNEL LIST (Working channels only, expired/jagobd/roarzone removed)
+        // ========== UPDATED CHANNEL LIST ==========
+        // Removed: Unite 8 Sports 2, T Sports HD (zflix), Bein Sports 2 (zflix), 4K Live, Somoy TV (zflix)
+        // Added: New 4K sports channels as requested
         const channels = [
-            // SPORTS (19 items)
-            { name: "Unite 8 Sports 2", url: "http://zflixbd.com:8083/unite8-sports-2/index.m3u8?token=800dfd8c6279934bfbc5a6ae1d70c96d17f1426b-ca136a4dc88938a52238b6b078b2f7a6-1782066854-1782056054", category: "sports" },
-            { name: "T Sports HD", url: "http://zflixbd.com:8083/TSportsHD/index.m3u8?token=479762958067cf9f4f1f6f81c1746731ee282cb1-0b85edde1d274579385c5e4f96991af5-1782066990-1782056190", category: "sports" },
-            { name: "Bein Sports 2", url: "http://zflixbd.com:8083/Feedget/beinspots_2/index.m3u8?token=17a4366edf7fb665688e4b0da4fb3100e056287a-0d25d3f58fab948df88e0200d44c8923-1782066954-1782056154", category: "sports" },
-            { name: "4K Live", url: "http://84.17.50.102/fox/index.m3u8", category: "sports" },
-            { name: "ফিফা ওয়ার্ল্ডকাপ", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/playlist.m3u8", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup 4K", url: "https://backup.alarafatofficial.workers.dev/?url=https%3A%2F%2Fd1211whpimeups.cloudfront.net%2Fsmil%3Artbgo%2Fchunklist_b4096000_slENG.m3u8&ua=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F124.0.0.0%20Safari%2F537.36&ekey=SPORTIX_SECURE_KEY_2026", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup backup", url: "http://84.17.50.102/fox/index.m3u8", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup Server 3 4K", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/94/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup Server 4", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup Server 5", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup Server 6", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
-            { name: "FIFA World Cup Server 7", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://live05.msdht.app/live/24561735.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            // ---- NEW 4K SPORTS (replacing previous ones) ----
+            { name: "Fox 4K", url: "https://vizio.kuvuslov.cymru/hls/fox4k.m3u8", category: "sports" },
+            { name: "Bein Sports Max 4K", url: "http://fastshare1.com/live/1Aoen7elp5/IgMJ60tmAa/744532.ts", category: "sports" },
+            { name: "Dazn", url: "https://1nyaler.streamhostingcdn.top/stream/94/index.m3u8", category: "sports" },
+            { name: "Win Sport", url: "https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8", category: "sports" },
+            { name: "PTV", url: "http://premiumtvs.space/live/jen12345/Jen54321/89.ts", category: "sports" },
+            { name: "Fox S1", url: "http://41.223.30.230/FOXSPORTS1/index.m3u8", category: "sports" },
+            { name: "Go3", url: "http://ytoxw6un.ottclub.xyz/iptv/KCUHA6DGYYVA8ZZFUPQV3KZH/6408/index.m3u8", category: "sports" },
+            { name: "Somoy 4K", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/1702-audio_113322_eng=113200-video=2202800.m3u8", category: "sports" },
+
+            // ---- KEEPING STABLE SPORTS CHANNELS ----
             { name: "TSN 1", url: "https://tvsen7.aynaott.com/tsn1/index.m3u8", category: "sports" },
             { name: "TSN 2", url: "https://tvsen7.aynaott.com/tsn2/tracks-v1a1/mono.ts.m3u8", category: "sports" },
             { name: "TSN 3", url: "https://tvsen7.aynaott.com/tsn3/index.m3u8", category: "sports" },
@@ -197,8 +197,17 @@
             { name: "Sony Max", url: "https://ashtv.com.bd/server/channels/sony_max.m3u8", category: "sports" },
             { name: "Discovery", url: "https://ottbanglaplatform.com/tv/toffee/live.php?id=discovery_sd&e=.m3u8", category: "sports" },
 
-            // NEWS (9 items - expired links removed)
-            { name: "Somoy TV", url: "http://zflixbd.com:8083/SomoyTv/index.m3u8?token=6e44799b35d17e4d3004d8f231cfc7d280422deb-effbc9af8fe72077c7c278a2ef72b336-1782067058-1782056258", category: "news" },
+            // FIFA World Cup channels (stable ones kept)
+            { name: "ফিফা ওয়ার্ল্ডকাপ", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/playlist.m3u8", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup 4K", url: "https://backup.alarafatofficial.workers.dev/?url=https%3A%2F%2Fd1211whpimeups.cloudfront.net%2Fsmil%3Artbgo%2Fchunklist_b4096000_slENG.m3u8&ua=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F124.0.0.0%20Safari%2F537.36&ekey=SPORTIX_SECURE_KEY_2026", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup backup", url: "http://84.17.50.102/fox/index.m3u8", category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup Server 3 4K", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/94/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup Server 4", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup Server 5", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup Server 6", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/1080p-vtt/index.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+            { name: "FIFA World Cup Server 7", url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("https://live05.msdht.app/live/24561735.m3u8"), category: "sports", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/2026_FIFA_World_Cup_logo.svg/1200px-2026_FIFA_World_Cup_logo.svg.png" },
+
+            // ---- NEWS (stable, removed zflix Somoy) ----
             { name: "Star News", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1710/output/index.m3u8", category: "news" },
             { name: "Channel 9", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1729/output/1729-audio_113592_eng=113200-video=1181200.m3u8", category: "news" },
             { name: "Desh TV", url: "https://tvsen6.aynaott.com/deshtv/tracks-v1a1/mono.ts.m3u8", category: "news" },
@@ -209,7 +218,7 @@
             { name: "Ekhon TV", url: "https://tvsen6.aynaott.com/ekhontv/tracks-v1a1/mono.ts.m3u8", category: "news" },
             { name: "Srktv", url: "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8", category: "news" },
 
-            // BANGLA (18 items - kept all stable GPCDN/Aynaott/Amagi links)
+            // ---- BANGLA (stable) ----
             { name: "Islamic TV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1724/output/1724-audio_113542_eng=113200-video=2202800.m3u8", category: "bangla" },
             { name: "BTV", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", category: "bangla" },
             { name: "RTV Live", url: "https://tvsen6.aynaott.com/rtv/tracks-v1a1/mono.ts.m3u8", category: "bangla" },
@@ -231,7 +240,7 @@
             { name: "CNN Now", url: "https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8", category: "bangla" },
             { name: "Star Jalsha", url: "https://tyr.zibobdixserver.top/hls/StarJalshaHD.m3u8", category: "bangla" },
 
-            // KIDS (5 items - stable)
+            // ---- KIDS (stable) ----
             { name: "Tom & Jerry", url: "https://live20.bozztv.com/giatvplayout7/giatv-208314/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Doraemon", url: "https://live20.bozztv.com/giatvplayout7/giatv-209902/tracks-v1a1/mono.ts.m3u8", category: "kids" },
             { name: "Mr Bean", url: "https://amg00627-amg00627c29-rakuten-it-3989.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanitcc-rakutenit/playlist.m3u8", category: "kids" },
